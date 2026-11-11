@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Админка — Sensei Sushi</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c0c0e">
+<link rel="icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+:root{--bg:#0c0c0e;--s1:#16161a;--s2:#212127;--line:#2b2b31;--text:#f6f3ee;--muted:#a39e96;--red:#e3262f;--yel:#ffd23f;--ok:#37d07a;--wa:#1fae5b;--blue:#4b8dff}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:400 15px/1.45 Rubik,system-ui,-apple-system,sans-serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:var(--blue)}
+.wrap{max-width:900px;margin:0 auto;padding:0 14px}
+:focus-visible{outline:2px solid var(--yel);outline-offset:2px;border-radius:8px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:11px;color:var(--text);font:inherit;font-size:16px;padding:11px 12px}
+textarea{resize:vertical;line-height:1.5;font-size:14.5px}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--blue)}
+label.fld{display:grid;gap:5px;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 16px;border-radius:12px;background:var(--s2);font-weight:600;font-size:14.5px}
+.btn.p{background:var(--red);color:#fff}
+.btn.g{background:var(--ok);color:#06301a}
+.btn.o{border:1px solid var(--line);background:none;color:var(--muted)}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+
+.bar{position:sticky;top:0;z-index:20;background:rgba(12,12,14,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:10px;height:58px}
+.bar img{width:34px;height:34px;border-radius:50%}
+.bar b{font-size:15px;font-weight:800;letter-spacing:.05em;margin-right:auto}
+.mode{font-size:11.5px;padding:5px 9px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.mode.cloud{color:var(--ok);border-color:rgba(55,208,122,.4)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;max-width:900px;margin:0 auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;height:38px;padding:0 14px;border-radius:99px;background:var(--s1);border:1px solid var(--line);color:var(--muted);font-size:14px}
+.tabs button[aria-selected=true]{background:var(--text);color:#141418;border-color:var(--text);font-weight:600}
+h2.t{font-size:19px;font-weight:800;margin:18px 0 10px}
+.muted{color:var(--muted);font-size:13px}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.note{background:rgba(75,141,255,.09);border:1px solid rgba(75,141,255,.3);border-radius:12px;padding:11px 13px;font-size:13.5px;color:#cfe0ff;margin-bottom:12px}
+.warn{background:rgba(255,210,63,.08);border:1px solid rgba(255,210,63,.3);border-radius:12px;padding:11px 13px;font-size:13.5px;color:#ffe79a;margin-bottom:12px}
+.bad{background:rgba(255,90,95,.1);border:1px solid rgba(255,90,95,.35);border-radius:12px;padding:11px 13px;font-size:13.5px;color:#ffb3b5;margin-bottom:12px}
+
+/* заказы */
+.o{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px}
+.o.new{border-color:rgba(227,38,47,.65);box-shadow:0 0 0 3px rgba(227,38,47,.08)}
+.o-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.o-top b{font-size:16px}
+.o-top .tm{color:var(--muted);font-size:12.5px;margin-left:auto}
+.badge{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:99px;background:var(--s2);color:var(--muted)}
+.badge.new{background:var(--red);color:#fff}
+.badge.cook{background:var(--yel);color:#1a1a1a}
+.badge.way{background:var(--blue);color:#fff}
+.badge.done{background:var(--ok);color:#06301a}
+.badge.cancel{background:#3a2a2b;color:#ff9a9d}
+.o ul{list-style:none;margin:9px 0;font-size:14px}
+.o li{display:flex;justify-content:space-between;gap:8px;padding:3px 0}
+.o li span{color:var(--muted)}
+.o .meta{font-size:13.5px;color:#ddd8d0;display:grid;gap:3px;margin:8px 0}
+.o .sum{font-weight:800;font-size:16px;margin-top:6px}
+.o .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.o .acts a,.o .acts button{height:38px;padding:0 12px;border-radius:10px;background:var(--s2);font-size:13.5px;display:inline-flex;align-items:center;gap:5px;font-weight:500;text-decoration:none;color:var(--text)}
+.o .acts .on{background:var(--text);color:#141418;font-weight:700}
+.stat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat div{flex:1;min-width:120px;background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:20px;font-weight:800}
+.stat small{color:var(--muted);font-size:12px}
+
+/* меню */
+.m{display:flex;gap:11px;align-items:center;background:var(--s1);border:1px solid var(--line);border-radius:13px;padding:9px;margin-bottom:9px}
+.m.off{opacity:.45}
+.m img{width:48px;height:60px;object-fit:cover;border-radius:9px;flex:none;background:var(--s2)}
+.m .n{flex:1;min-width:0}
+.m .n b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m .n small{color:var(--muted);font-size:12.5px}
+.m .ar{display:grid;gap:3px;flex:none}
+.m .ar button{width:30px;height:26px;border-radius:7px;background:var(--s2);font-size:12px}
+.m .ed{width:40px;height:40px;border-radius:10px;background:var(--s2);flex:none;font-size:17px}
+.sw{position:relative;width:46px;height:27px;flex:none}
+.sw input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.sw i{position:absolute;inset:0;border-radius:99px;background:#3a3a42;transition:.18s}
+.sw i::after{content:"";position:absolute;width:21px;height:21px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.18s}
+.sw input:checked+i{background:var(--ok)}
+.sw input:checked+i::after{transform:translateX(19px)}
+.sw input:focus-visible+i{outline:2px solid var(--yel)}
+
+/* модалка */
+.dlg{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.dlg[hidden]{display:none}
+.dlg-bg{position:absolute;inset:0;background:rgba(0,0,0,.65)}
+.dlg-box{position:relative;width:100%;max-width:620px;max-height:93vh;max-height:93dvh;overflow:auto;background:var(--s1);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:16px 14px calc(14px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+@media(min-width:720px){.dlg{align-items:center;padding:20px}.dlg-box{border-radius:20px;max-height:88vh}}
+.dlg h3{font-size:19px;font-weight:800;margin-bottom:12px;padding-right:44px}
+.x{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;background:var(--s2);font-size:22px;z-index:2}
+.save-bar{position:sticky;bottom:calc(-14px - env(safe-area-inset-bottom));margin:14px -14px calc(-14px - env(safe-area-inset-bottom));padding:12px 14px calc(14px + env(safe-area-inset-bottom));background:var(--s1);border-top:1px solid var(--line);display:flex;gap:8px}
+.save-bar .btn{flex:1;height:48px}
+
+/* вход */
+.gate{max-width:380px;margin:12vh auto;padding:0 16px;text-align:center}
+.gate img{width:84px;height:84px;border-radius:50%;margin:0 auto 16px}
+.gate h1{font-size:22px;font-weight:800;margin-bottom:6px}
+.gate p{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+.gate .btn{width:100%;margin-top:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120%);z-index:90;background:var(--text);color:#141418;font-weight:600;font-size:14px;padding:12px 18px;border-radius:12px;transition:transform .25s;max-width:92vw;text-align:center}
+.toast.on{transform:translate(-50%,0)}
+.foot-note{color:var(--muted);font-size:12.5px;margin:18px 0 8px;text-align:center}
+code{background:var(--s2);padding:1px 5px;border-radius:5px;font-size:13px}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px;overflow:auto;font-size:12px;line-height:1.5;max-height:260px}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate" hidden>
+  <img src="img/logo.png" alt="">
+  <h1>Админка</h1>
+  <p id="gateHint"></p>
+  <div id="gateFields"></div>
+  <button class="btn p" id="gateBtn" type="button">Войти</button>
+  <p class="foot-note"><a href="index.html">← вернуться на сайт</a></p>
+</div>
+
+<div id="app" hidden>
+  <header class="bar">
+    <div class="wrap bar-in">
+      <img src="img/logo.png" alt="">
+      <b>Админка</b>
+      <span class="mode" id="mode"></span>
+      <button class="btn o" id="exit" style="height:36px;padding:0 11px">Выйти</button>
+    </div>
+    <div class="tabs" id="tabs" role="tablist">
+      <button role="tab" data-tab="orders" aria-selected="true">Заказы</button>
+      <button role="tab" data-tab="menu" aria-selected="false">Меню</button>
+      <button role="tab" data-tab="settings" aria-selected="false">Настройки</button>
+      <button role="tab" data-tab="cloud" aria-selected="false">Подключение</button>
+    </div>
+  </header>
+  <main class="wrap" id="view"></main>
+</div>
+
+<div class="dlg" id="dlg" hidden>
+  <div class="dlg-bg" data-close></div>
+  <div class="dlg-box" id="dlgBox"><button class="x" type="button" data-close aria-label="Закрыть">×</button><div id="dlgBody"></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="js/store.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s);};
+var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+var fmt=function(n){return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
+function ls(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null;}if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on');},2600);}
+
+var DATA=null, tab='orders', orders=[], seen=ls('sensei_seen')||[], timer=null;
+
+/* ===== вход ===== */
+function showGate(){
+  $('#app').hidden=true; $('#gate').hidden=false;
+  var cloud=Store.isCloud();
+  $('#gateHint').textContent=cloud
+    ? 'Вход по почте и паролю, которые заведены в базе.'
+    : 'Введите код доступа. Сайт работает без базы, поэтому код — простая защита от случайных людей.';
+  $('#gateFields').innerHTML=cloud
+    ? '<label class="fld">Почта<input id="gEmail" type="email" autocomplete="username"></label>'+
+      '<label class="fld">Пароль<input id="gPass" type="password" autocomplete="current-password"></label>'
+    : '<label class="fld">Код доступа<input id="gPin" type="password" inputmode="numeric" autocomplete="current-password"></label>';
+  var f=$('#gateFields').querySelector('input'); if(f)f.focus();
+}
+function tryLogin(){
+  if(Store.isCloud()){
+    var e=$('#gEmail').value.trim(), p=$('#gPass').value;
+    if(!e||!p) return toast('Заполните почту и пароль');
+    $('#gateBtn').disabled=true;
+    Store.login(e,p).then(boot).catch(function(err){toast('Не вышло: '+err.message);})
+      .then(function(){$('#gateBtn').disabled=false;});
+  }else{
+    var pin=ls('sensei_pin')||'1111';
+    if($('#gPin').value===String(pin)){ ls('sensei_local_ok',Date.now()); boot(); }
+    else toast('Неверный код');
+  }
+}
+function loggedIn(){
+  if(Store.isCloud()) return Store.authed();
+  var t=ls('sensei_local_ok'); return !!(t && Date.now()-t < 12*36e5);
+}
+
+/* ===== запуск ===== */
+function boot(){
+  $('#gate').hidden=true; $('#app').hidden=false;
+  var m=$('#mode');
+  m.textContent=Store.isCloud()?'облако':'локально';
+  m.className='mode'+(Store.isCloud()?' cloud':'');
+  Store.loadMenu(true).then(function(d){ DATA=d; render(); }).catch(function(e){ toast('Меню не загрузилось: '+e.message); DATA={settings:{},sets:[]}; render(); });
+}
+if(loggedIn()) boot(); else showGate();
+$('#gateBtn').onclick=tryLogin;
+$('#gateFields').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
+$('#exit').onclick=function(){ Store.logout(); ls('sensei_local_ok',null); location.reload(); };
+$('#tabs').addEventListener('click',function(e){
+  var b=e.target.closest('[data-tab]'); if(!b)return;
+  tab=b.dataset.tab;
+  [].forEach.call($('#tabs').children,function(x){x.setAttribute('aria-selected',x===b);});
+  render();
+});
+
+function render(){
+  clearInterval(timer); timer=null;
+  if(tab==='orders') viewOrders();
+  else if(tab==='menu') viewMenu();
+  else if(tab==='settings') viewSettings();
+  else viewCloud();
+}
+
+/* ===== ЗАКАЗЫ ===== */
+var STATUSES=[['new','Новый','new'],['cook','Готовится','cook'],['way','В пути','way'],['done','Доставлен','done'],['cancel','Отменён','cancel']];
+function stName(k){var s=STATUSES.filter(function(x){return x[0]===k;})[0];return s?s[1]:k;}
+
+function viewOrders(){
+  $('#view').innerHTML='<h2 class="t">Заказы</h2>'+
+    (Store.isCloud()?'':'<div class="warn">Сайт работает без базы, поэтому сюда попадают только заказы, сделанные <b>в этом браузере</b>. Чтобы видеть все заказы с любого устройства — подключите базу во вкладке «Подключение».</div>')+
+    '<div class="stat" id="stat"></div><div id="olist" class="muted">Загружаю…</div>';
+  loadOrders();
+  if(Store.isCloud()) timer=setInterval(function(){loadOrders(true);},15000);
+}
+function loadOrders(quiet){
+  Store.listOrders(100).then(function(list){
+    var fresh=list.filter(function(o){return o.status==='new'&&seen.indexOf(String(o.id))<0;});
+    if(quiet&&fresh.length) beep();
+    orders=list; paintOrders();
+  }).catch(function(e){ $('#olist').innerHTML='<div class="bad">Не удалось получить заказы: '+esc(e.message)+'</div>'; });
+}
+function beep(){
+  try{
+    var C=window.AudioContext||window.webkitAudioContext; if(!C)return;
+    var a=new C(),o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.value=880;
+    g.gain.setValueAtTime(.001,a.currentTime);g.gain.exponentialRampToValueAtTime(.25,a.currentTime+.03);
+    g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.6);
+    o.start();o.stop(a.currentTime+.62);
+  }catch(e){}
+}
+function paintOrders(){
+  var today=new Date().toDateString();
+  var td=orders.filter(function(o){return new Date(o.created_at).toDateString()===today&&o.status!=='cancel';});
+  var nw=orders.filter(function(o){return o.status==='new';}).length;
+  $('#stat').innerHTML=
+    '<div><b>'+nw+'</b><small>новых</small></div>'+
+    '<div><b>'+td.length+'</b><small>заказов сегодня</small></div>'+
+    '<div><b>'+fmt(td.reduce(function(a,o){return a+(+o.total||0);},0))+'</b><small>на сумму</small></div>';
+  if(!orders.length){ $('#olist').innerHTML='<div class="card muted">Заказов пока нет.</div>'; return; }
+  $('#olist').innerHTML=orders.map(orderHTML).join('');
+  seen=orders.map(function(o){return String(o.id);}).slice(0,200); ls('sensei_seen',seen);
+}
+function orderHTML(o){
+  var d=new Date(o.created_at);
+  var tm=d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  var cls=(STATUSES.filter(function(s){return s[0]===o.status;})[0]||[])[2]||'';
+  var tel=String(o.phone||'').replace(/\D/g,'');
+  return '<article class="o'+(o.status==='new'?' new':'')+'">'+
+    '<div class="o-top"><b>'+esc(o.name||'Без имени')+'</b><span class="badge '+cls+'">'+esc(stName(o.status))+'</span><span class="tm">'+tm+'</span></div>'+
+    '<ul>'+(o.items||[]).map(function(i){return '<li>Сет «'+esc(i.name)+'» × '+(+i.qty||1)+'<span>'+fmt((+i.price||0)*(+i.qty||1))+'</span></li>';}).join('')+'</ul>'+
+    '<div class="meta"><div>📞 '+esc(o.phone||'')+'</div><div>📍 '+esc(o.address||'')+'</div>'+
+      '<div>🕐 '+esc(o.when||'')+' · 💳 '+esc(o.pay||'')+(o.first?' · 🎁 первый заказ':'')+'</div>'+
+      (o.comment?'<div>💬 '+esc(o.comment)+'</div>':'')+'</div>'+
+    '<div class="sum">Итого: '+fmt(o.total)+'</div>'+
+    '<div class="acts">'+
+      (tel?'<a href="tel:+'+tel+'">📞 Позвонить</a><a href="https://wa.me/'+tel+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+
+      STATUSES.map(function(s){return '<button type="button" data-st="'+s[0]+'" data-oid="'+esc(o.id)+'" class="'+(o.status===s[0]?'on':'')+'">'+s[1]+'</button>';}).join('')+
+    '</div></article>';
+}
+
+/* ===== МЕНЮ ===== */
+function viewMenu(){
+  var sets=DATA.sets||[];
+  $('#view').innerHTML='<h2 class="t">Меню — '+sets.length+' сетов</h2>'+
+    '<p class="muted" style="margin-bottom:12px">Выключателем справа сет прячется с сайта (стоп-лист). Стрелками меняется порядок в админке; на сайте сеты всё равно идут от дешёвых к дорогим.</p>'+
+    '<div class="row" style="margin-bottom:12px"><button class="btn p" id="addSet">+ Добавить сет</button>'+
+      '<button class="btn o" id="allOn">Включить все</button></div>'+
+    '<div id="mlist"></div>'+
+    '<p class="foot-note">Не забудьте нажать «Сохранить» после правок.</p>'+
+    '<div class="row" style="margin:10px 0 20px"><button class="btn g" id="saveMenu" style="flex:1;height:50px">Сохранить меню</button></div>';
+  paintMenu();
+}
+function paintMenu(){
+  $('#mlist').innerHTML=(DATA.sets||[]).map(function(s,i){
+    return '<div class="m'+(s.on===false?' off':'')+'">'+
+      '<div class="ar"><button type="button" data-mv="'+i+'" data-d="-1" aria-label="Выше">▲</button><button type="button" data-mv="'+i+'" data-d="1" aria-label="Ниже">▼</button></div>'+
+      '<img src="'+esc(s.img)+'" alt="" loading="lazy">'+
+      '<div class="n"><b>'+esc(s.name)+'</b><small>'+fmt(s.price)+(s.old>s.price?' · было '+fmt(s.old):'')+(s.tag?' · '+esc(s.tag):'')+'</small></div>'+
+      '<button class="ed" type="button" data-ed="'+i+'" aria-label="Изменить">✎</button>'+
+      '<label class="sw"><input type="checkbox" data-on="'+i+'"'+(s.on===false?'':' checked')+' aria-label="В наличии"><i></i></label>'+
+    '</div>';
+  }).join('');
+}
+function groupsToText(gs){
+  return (gs||[]).map(function(g){
+    return ((g.icon?g.icon+' ':'')+(g.title||''))+'\n'+(g.items||[]).map(function(i){return i[0]+(i[1]?' | '+i[1]:'');}).join('\n');
+  }).join('\n\n');
+}
+function textToGroups(t){
+  return String(t||'').split(/\n\s*\n/).map(function(b){
+    var lines=b.split('\n').map(function(x){return x.trim();}).filter(Boolean);
+    if(!lines.length)return null;
+    var head=lines.shift(), m=head.match(/^([^\wЀ-ӿ]+)\s*(.*)$/);
+    return {icon:m?m[1].trim():'', title:m?m[2]:head,
+      items:lines.map(function(l){var p=l.split('|');return [p[0].trim(), (p[1]||'').trim()];})};
+  }).filter(Boolean);
+}
+function editSet(i){
+  var s=i<0?{id:'',name:'',price:0,old:0,tag:'',tagColor:'red',img:'img/',on:true,note:'',chips:[],groups:[]}:DATA.sets[i];
+  dlg('<h3>'+(i<0?'Новый сет':'Сет «'+esc(s.name)+'»')+'</h3>'+
+    '<label class="fld">Название<input id="e-name" value="'+esc(s.name)+'"></label>'+
+    '<div class="row"><label class="fld" style="flex:1">Цена, ₸<input id="e-price" type="number" inputmode="numeric" value="'+(s.price||0)+'"></label>'+
+    '<label class="fld" style="flex:1">Старая цена<input id="e-old" type="number" inputmode="numeric" value="'+(s.old||0)+'" placeholder="0 — не показывать"></label></div>'+
+    '<div class="row"><label class="fld" style="flex:2">Метка на фото<input id="e-tag" value="'+esc(s.tag)+'" placeholder="🔥 Хит"></label>'+
+    '<label class="fld" style="flex:1">Цвет<select id="e-tc"><option value="red"'+(s.tagColor!=='y'?' selected':'')+'>Красный</option><option value="y"'+(s.tagColor==='y'?' selected':'')+'>Жёлтый</option></select></label></div>'+
+    '<label class="fld">Коротко на карточке (через запятую)<input id="e-chips" value="'+esc((s.chips||[]).join(', '))+'" placeholder="🍣 60, 🍕 2, 🍗 16"></label>'+
+    '<label class="fld">Фото<input id="e-img" value="'+esc(s.img)+'" placeholder="img/название.jpg"><span class="muted">Файл должен лежать в папке img репозитория. Можно вставить и ссылку на картинку.</span></label>'+
+    '<label class="fld">Состав<textarea id="e-gr" rows="12" placeholder="🍣 Роллы · 60 шт&#10;Филадельфия | 10 шт&#10;Цезарь темпура | 20 шт&#10;&#10;🍕 Пиццы&#10;Пепперони | 1 шт">'+esc(groupsToText(s.groups))+'</textarea>'+
+      '<span class="muted">Первая строка блока — заголовок, дальше «что | сколько». Пустая строка начинает новый блок.</span></label>'+
+    '<label class="fld">Примечание (жёлтой строкой в составе)<input id="e-note" value="'+esc(s.note||'')+'" placeholder="Количество ограничено"></label>'+
+    '<div class="save-bar">'+(i<0?'':'<button class="btn o" id="e-del" style="flex:0 0 46px">🗑</button>')+
+      '<button class="btn g" id="e-ok">Готово</button></div>');
+  $('#e-ok').onclick=function(){
+    var name=$('#e-name').value.trim(); if(!name)return toast('Нужно название');
+    var o={
+      id: s.id || ('set-'+Date.now().toString(36)),
+      name:name, price:+$('#e-price').value||0, old:+$('#e-old').value||0,
+      tag:$('#e-tag').value.trim(), tagColor:$('#e-tc').value,
+      img:$('#e-img').value.trim()||'img/logo.png', on:s.on!==false, note:$('#e-note').value.trim(),
+      chips:$('#e-chips').value.split(',').map(function(x){return x.trim();}).filter(Boolean),
+      groups:textToGroups($('#e-gr').value)
+    };
+    if(i<0) DATA.sets.push(o); else DATA.sets[i]=o;
+    closeDlg(); paintMenu(); toast('Изменено — не забудьте сохранить');
+  };
+  if(i>=0) $('#e-del').onclick=function(){
+    if(!confirm('Удалить сет «'+s.name+'»?'))return;
+    DATA.sets.splice(i,1); closeDlg(); paintMenu(); toast('Удалено — не забудьте сохранить');
+  };
+}
+
+/* ===== НАСТРОЙКИ ===== */
+function viewSettings(){
+  var s=DATA.settings||{};
+  $('#view').innerHTML='<h2 class="t">Настройки</h2>'+
+    '<div class="card">'+
+      '<label class="fld">Название<input id="s-name" value="'+esc(s.name||'')+'"></label>'+
+      '<label class="fld">Город<input id="s-city" value="'+esc(s.city||'')+'"></label>'+
+      '<label class="fld">Номер WhatsApp (только цифры)<input id="s-wa" inputmode="numeric" value="'+esc(s.wa||'')+'" placeholder="77756678331"></label>'+
+      '<label class="fld">Телефон как показывать<input id="s-phone" value="'+esc(s.phone||'')+'"></label>'+
+      '<label class="fld">Instagram<input id="s-ig" value="'+esc(s.instagram||'')+'"></label>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="row"><label class="fld" style="flex:1">Открытие<input id="s-open" type="time" value="'+esc(s.open||'11:00')+'"></label>'+
+      '<label class="fld" style="flex:1">Закрытие<input id="s-close" type="time" value="'+esc(s.close||'23:40')+'"></label></div>'+
+      '<label class="fld">Подарок (пустое поле — убрать)<input id="s-gift" value="'+esc(s.gift||'')+'"></label>'+
+      '<label class="fld">Строка про доставку в корзине<input id="s-dn" value="'+esc(s.deliveryNote||'')+'"></label>'+
+      '<label class="fld">Способы оплаты (через запятую)<input id="s-pay" value="'+esc((s.pay||[]).join(', '))+'"></label>'+
+    '</div>'+
+    '<div class="card">'+
+      '<label class="fld">Объявление жёлтой полосой наверху сайта<input id="s-ann" value="'+esc(s.announce||'')+'" placeholder="Сегодня доставка бесплатно!"></label>'+
+      '<label class="fld" style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--text)">'+
+        '<label class="sw"><input type="checkbox" id="s-pause"'+(s.paused?' checked':'')+'><i></i></label> Поставить приём заказов на паузу</label>'+
+    '</div>'+
+    '<div class="row" style="margin:10px 0 20px"><button class="btn g" id="saveSet" style="flex:1;height:50px">Сохранить настройки</button></div>'+
+    '<h2 class="t">Код доступа в админку</h2>'+
+    '<div class="card"><label class="fld">Код (только для локального режима)<input id="s-pin" value="'+esc(ls('sensei_pin')||'1111')+'" inputmode="numeric"></label>'+
+      '<button class="btn o" id="savePin">Сменить код</button>'+
+      '<p class="muted" style="margin-top:9px">Код хранится в этом браузере и настоящей защитой не является: админка — обычная страница сайта. Настоящая защита появляется, когда подключена база — там вход по почте и паролю.</p></div>';
+}
+
+/* ===== ПОДКЛЮЧЕНИЕ ===== */
+var SQL='-- Выполните это в Supabase → SQL Editor\n'+
+'create table if not exists menu (\n  id int primary key default 1,\n  data jsonb not null,\n  updated_at timestamptz default now()\n);\n'+
+'insert into menu (id, data) values (1, \'{}\'::jsonb) on conflict (id) do nothing;\n\n'+
+'create table if not exists orders (\n  id bigint generated always as identity primary key,\n  created_at timestamptz default now(),\n  status text default \'new\',\n  name text, phone text, address text,\n  "when" text, pay text, "first" boolean,\n  comment text, items jsonb, total numeric\n);\n\n'+
+'alter table menu enable row level security;\nalter table orders enable row level security;\n\n'+
+'-- меню: читают все, меняет только вошедший админ\n'+
+'create policy "menu read"   on menu   for select using (true);\n'+
+'create policy "menu write"  on menu   for update to authenticated using (true) with check (true);\n\n'+
+'-- заказы: создать может любой гость, видит и меняет только админ\n'+
+'create policy "order create" on orders for insert with check (true);\n'+
+'create policy "order read"   on orders for select to authenticated using (true);\n'+
+'create policy "order update" on orders for update to authenticated using (true) with check (true);';
+
+function viewCloud(){
+  var c=Store.getCloud()||{};
+  $('#view').innerHTML='<h2 class="t">Подключение базы</h2>'+
+    (Store.isCloud()
+      ? '<div class="note">База подключена. Заказы приходят сюда с любого устройства, а правки меню сразу видны на сайте всем.</div>'
+      : '<div class="warn">База не подключена. Сайт работает, заказы уходят в WhatsApp, но в админке их не видно, а правки меню сохраняются только в этом браузере.</div>')+
+    '<div class="card">'+
+      '<p class="muted" style="margin-bottom:12px">Нужен бесплатный проект на <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>. Ключ <b>anon public</b> — он и задуман открытым, его можно держать на сайте.</p>'+
+      '<label class="fld">Адрес проекта (Project URL)<input id="c-url" value="'+esc(c.url||'')+'" placeholder="https://xxxx.supabase.co"></label>'+
+      '<label class="fld">Ключ anon public<input id="c-key" value="'+esc(c.key||'')+'" placeholder="eyJhbGci..."></label>'+
+      '<div class="row"><button class="btn p" id="c-save">Сохранить и проверить</button>'+
+        (Store.isCloud()?'<button class="btn o" id="c-off">Отключить</button>':'')+'</div>'+
+    '</div>'+
+    '<h2 class="t">Шаги настройки</h2>'+
+    '<div class="card"><ol style="padding-left:18px;font-size:14px;line-height:1.8">'+
+      '<li>Создайте проект на supabase.com</li>'+
+      '<li>Откройте <b>SQL Editor</b> и выполните код ниже</li>'+
+      '<li>В <b>Authentication → Users</b> добавьте пользователя с вашей почтой и паролем — это вход в админку</li>'+
+      '<li>В <b>Settings → API</b> скопируйте Project URL и ключ anon public в поля выше</li>'+
+      '<li>Вернитесь во вкладку «Меню» и нажмите «Сохранить меню» — оно уедет в базу</li>'+
+    '</ol></div>'+
+    '<div class="card"><div class="row" style="margin-bottom:10px"><button class="btn o" id="c-copy">Скопировать SQL</button></div><pre id="sql">'+esc(SQL)+'</pre></div>'+
+    '<h2 class="t">Файл меню</h2>'+
+    '<div class="card"><p class="muted" style="margin-bottom:11px">Можно скачать меню файлом и положить его в репозиторий как <code>data/menu.json</code> — тогда оно станет меню по умолчанию для всех, даже без базы.</p>'+
+      '<div class="row"><button class="btn o" id="c-dl">Скачать menu.json</button>'+
+      '<button class="btn o" id="c-up">Загрузить из файла</button>'+
+      '<button class="btn o" id="c-reset">Сбросить к файлу сайта</button></div>'+
+      '<input type="file" id="c-file" accept="application/json,.json" hidden></div>';
+  $('#sql').textContent=SQL;
+}
+
+/* ===== модалка ===== */
+function dlg(html){ $('#dlgBody').innerHTML=html; $('#dlg').hidden=false; document.body.style.overflow='hidden'; $('#dlgBox').scrollTop=0; }
+function closeDlg(){ $('#dlg').hidden=true; document.body.style.overflow=''; }
+
+/* ===== сохранение ===== */
+function save(msg){
+  return Store.saveMenu(DATA).then(function(){ toast(msg||'Сохранено'); })
+    .catch(function(e){ toast('Не сохранилось: '+e.message); });
+}
+
+/* ===== клики ===== */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button,[data-close]'); if(!t)return;
+
+  if(t.hasAttribute('data-close')) return closeDlg();
+
+  if(t.dataset.st){
+    var id=t.dataset.oid, st=t.dataset.st;
+    Store.setStatus(isNaN(+id)?id:+id,st).then(function(){
+      orders.forEach(function(o){if(String(o.id)===String(id))o.status=st;});
+      paintOrders();
+    }).catch(function(err){toast('Не вышло: '+err.message);});
+    return;
+  }
+  if(t.dataset.mv!==undefined){
+    var i=+t.dataset.mv, d=+t.dataset.d, j=i+d;
+    if(j<0||j>=DATA.sets.length)return;
+    var a=DATA.sets[i]; DATA.sets[i]=DATA.sets[j]; DATA.sets[j]=a; paintMenu(); return;
+  }
+  if(t.dataset.ed!==undefined) return editSet(+t.dataset.ed);
+
+  switch(t.id){
+    case 'addSet': return editSet(-1);
+    case 'allOn': DATA.sets.forEach(function(s){s.on=true;}); paintMenu(); return;
+    case 'saveMenu': return save('Меню сохранено');
+    case 'savePin': ls('sensei_pin',$('#s-pin').value.trim()||'1111'); return toast('Код изменён');
+    case 'saveSet': {
+      var S=DATA.settings;
+      S.name=$('#s-name').value.trim(); S.city=$('#s-city').value.trim();
+      S.wa=$('#s-wa').value.replace(/\D/g,''); S.phone=$('#s-phone').value.trim();
+      S.instagram=$('#s-ig').value.trim(); S.open=$('#s-open').value; S.close=$('#s-close').value;
+      S.gift=$('#s-gift').value.trim(); S.deliveryNote=$('#s-dn').value.trim();
+      S.pay=$('#s-pay').value.split(',').map(function(x){return x.trim();}).filter(Boolean);
+      S.announce=$('#s-ann').value.trim(); S.paused=$('#s-pause').checked;
+      return save('Настройки сохранены');
+    }
+    case 'c-save': {
+      Store.setCloud({url:$('#c-url').value,key:$('#c-key').value});
+      if(!Store.isCloud()){ return toast('Заполните оба поля'); }
+      return Store.test().then(function(){ toast('База отвечает. Войдите заново.'); setTimeout(function(){location.reload();},1200); })
+        .catch(function(err){ toast('Не отвечает: '+err.message); });
+    }
+    case 'c-off': Store.setCloud(null); toast('Отключено'); setTimeout(function(){location.reload();},900); return;
+    case 'c-copy': {
+      var ok=function(){toast('SQL скопирован');};
+      if(navigator.clipboard) navigator.clipboard.writeText(SQL).then(ok,function(){sel();});
+      else sel();
+      function sel(){var r=document.createRange();r.selectNode($('#sql'));var s=getSelection();s.removeAllRanges();s.addRange(r);toast('Выделено — скопируйте вручную');}
+      return;
+    }
+    case 'c-dl': {
+      var blob=new Blob([JSON.stringify(DATA,null,1)],{type:'application/json'});
+      var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='menu.json'; a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href);},2000); return;
+    }
+    case 'c-up': return $('#c-file').click();
+    case 'c-reset': {
+      if(!confirm('Вернуть меню к файлу data/menu.json? Локальные правки пропадут.'))return;
+      Store.resetMenu().then(function(d){DATA=d;toast('Сброшено — нажмите «Сохранить меню»');tab='menu';render();}); return;
+    }
+  }
+});
+document.addEventListener('change',function(e){
+  if(e.target.dataset && e.target.dataset.on!==undefined){
+    DATA.sets[+e.target.dataset.on].on=e.target.checked;
+    e.target.closest('.m').classList.toggle('off',!e.target.checked);
+    return;
+  }
+  if(e.target.id==='c-file'){
+    var f=e.target.files[0]; if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){ try{ DATA=JSON.parse(r.result); toast('Загружено — нажмите «Сохранить меню»'); tab='menu'; render(); }catch(err){ toast('Файл не читается'); } };
+    r.readAsText(f);
+  }
+});
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!$('#dlg').hidden) closeDlg(); });
+})();
+</script>
+</body>
+</html>

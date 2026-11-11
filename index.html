@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sensei Sushi — сеты с доставкой по Петропавловску</title>
-<meta name="description" content="Суши, пицца и крылышки с доставкой по Петропавловску. 11 сетов от 6 500 ₸. Заказ через WhatsApp. Работаем 11:00–23:40.">
+<meta name="description" content="Суши, пицца и крылышки с доставкой по Петропавловску. Сеты от 5 490 ₸. Заказ через WhatsApp. Работаем 11:00–23:40.">
 <meta name="theme-color" content="#0c0c0e">
 <meta property="og:title" content="Sensei Sushi — Петропавловск">
 <meta property="og:description" content="Сеты: роллы, пицца, крылышки. Доставка по городу, заказ через WhatsApp.">
@@ -25,7 +25,6 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
 :focus-visible{outline:2px solid var(--yel);outline-offset:2px;border-radius:8px}
 
-/* Шапка */
 .bar{position:sticky;top:0;z-index:20;background:rgba(12,12,14,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .bar-in{display:flex;align-items:center;gap:8px;height:60px}
 .brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
@@ -38,11 +37,11 @@ a{color:inherit;text-decoration:none}
 .status.off i{background:#ff5a5f;box-shadow:0 0 0 3px rgba(255,90,95,.2)}
 .wa{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 13px;border-radius:99px;background:var(--wa);color:#fff;font-weight:700;font-size:13.5px;flex:none}
 .wa svg{width:18px;height:18px}
-@media(max-width:420px){.wa span{display:none}.wa{width:38px;padding:0}}
 @media(max-width:430px){.status .more-t{display:none}}
+@media(max-width:420px){.wa span{display:none}.wa{width:38px;padding:0}}
 @media(max-width:380px){.brand b{font-size:14px;letter-spacing:.04em}.status{padding:6px 9px}}
 
-/* Вступление */
+.announce{background:var(--yel);color:#1a1a1a;font-weight:600;font-size:13.5px;padding:9px 16px;text-align:center}
 .intro{position:relative;padding-top:22px;overflow:hidden}
 .enso{position:absolute;right:-50px;top:-30px;width:220px;height:220px;opacity:.22;pointer-events:none}
 .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:700}
@@ -54,11 +53,14 @@ a{color:inherit;text-decoration:none}
 .how li{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12.5px;line-height:1.3;color:#d9d4cc}
 .how b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;margin-bottom:6px}
 
-/* Сеты */
 .head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 4px}
 .head h2{font-size:22px;font-weight:800}
 .head span{color:var(--muted);font-size:13px;text-align:right}
-.legend{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+.legend{color:var(--muted);font-size:12.5px;margin-bottom:12px}
+.filters{display:flex;gap:7px;overflow-x:auto;padding-bottom:12px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;font-size:13px;padding:8px 13px;border-radius:99px;background:var(--s1);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.filters button[aria-pressed=true]{background:var(--text);border-color:var(--text);color:#141418;font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr);gap:16px}}
 @media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
@@ -71,7 +73,7 @@ a{color:inherit;text-decoration:none}
 .ph{position:relative;aspect-ratio:4/5;background:#1c1c20;overflow:hidden}
 .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .card:hover .ph img{transform:scale(1.03)}
-.tag{position:absolute;left:8px;top:8px;font-size:11.5px;font-weight:700;padding:4px 8px;border-radius:99px;background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.tag{position:absolute;left:8px;top:8px;max-width:calc(100% - 52px);font-size:11.5px;font-weight:700;padding:4px 8px;border-radius:99px;background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .tag.y{background:var(--yel);color:#1a1a1a}
 .qtag{position:absolute;right:8px;top:8px;min-width:26px;height:26px;padding:0 7px;border-radius:99px;background:#fff;color:var(--red);font-size:13px;font-weight:800;display:grid;place-items:center}
 .ct{padding:10px 12px 0}
@@ -80,6 +82,7 @@ a{color:inherit;text-decoration:none}
 .chips span{font-size:12px;padding:3px 7px;border-radius:7px;background:var(--s2);color:#e2ddd5;white-space:nowrap}
 .pr{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
 .price{font-size:17px;font-weight:800;white-space:nowrap}
+.price s{display:block;font-size:12px;font-weight:400;color:var(--muted)}
 .more{font-size:12.5px;color:var(--muted);white-space:nowrap}
 .buy{padding:10px 12px 12px}
 .add{width:100%;height:40px;border-radius:12px;background:var(--red);color:#fff;font-weight:700;font-size:14px;transition:transform .1s}
@@ -88,8 +91,10 @@ a{color:inherit;text-decoration:none}
 .step button{height:100%;font-size:21px;font-weight:500;border-radius:12px}
 .step button:active{background:#2c2c33}
 .step b{text-align:center;font-size:15px}
+.skel{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);height:330px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.nores{color:var(--muted);padding:20px 0;text-align:center;grid-column:1/-1}
 
-/* Нижняя кнопка корзины */
 .cartbar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:14px 12px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(rgba(12,12,14,0),rgba(12,12,14,.96) 40%);transform:translateY(130%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .cartbar.show{transform:none}
 .cartbar button{width:100%;max-width:560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;height:56px;padding:0 18px;border-radius:16px;background:var(--red);color:#fff;font-weight:700;font-size:16px;box-shadow:0 10px 30px rgba(227,38,47,.35)}
@@ -97,7 +102,6 @@ a{color:inherit;text-decoration:none}
 .cartbar.bump button{animation:bump .35s}
 @keyframes bump{40%{transform:scale(1.04)}}
 
-/* Окно */
 .sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .sheet[hidden]{display:none}
 .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.62);animation:fade .2s}
@@ -125,6 +129,7 @@ a{color:inherit;text-decoration:none}
 .row2{display:grid;grid-template-columns:132px 1fr;gap:10px}
 .row2 .step{height:54px;border-radius:14px}
 .big{display:flex;align-items:center;justify-content:center;width:100%;height:54px;border-radius:14px;background:var(--red);color:#fff;font-weight:700;font-size:16px;text-align:center}
+.big[disabled]{opacity:.5}
 .big.wa-big{background:var(--wa)}
 .ghost{display:block;width:100%;height:48px;margin-top:8px;border-radius:14px;border:1px solid var(--line);color:var(--muted);font-weight:500}
 
@@ -163,7 +168,6 @@ a{color:inherit;text-decoration:none}
 .empty div{font-size:44px;margin-bottom:8px}
 .empty .big{margin-top:16px}
 
-/* Подвал */
 .foot{margin-top:40px;padding-top:22px;padding-bottom:12px;border-top:1px solid var(--line);display:grid;gap:14px;color:var(--muted);font-size:13.5px}
 .foot-top{display:flex;gap:12px;align-items:center}
 .foot-top img{width:48px;height:48px;border-radius:50%}
@@ -179,25 +183,26 @@ a{color:inherit;text-decoration:none}
   <div class="wrap bar-in">
     <a class="brand" href="#" aria-label="Sensei Sushi — наверх">
       <img src="img/logo.png" alt="" width="40" height="40">
-      <span><b>SENSEI SUSHI</b><small>Петропавловск</small></span>
+      <span><b id="bName">SENSEI SUSHI</b><small id="bCity">Петропавловск</small></span>
     </a>
     <span class="status" id="status"><i></i><span><span class="main-t">Открыто</span><span class="more-t"></span></span></span>
-    <a class="wa" href="https://wa.me/77756678331" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">
+    <a class="wa" id="waTop" href="#" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2L9 9.5Z"/></svg>
       <span>WhatsApp</span>
     </a>
   </div>
+  <div class="announce" id="announce" hidden></div>
 </header>
 
 <main>
   <section class="wrap intro">
     <svg class="enso" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="none" stroke="#e3262f" stroke-width="16" stroke-linecap="round" stroke-dasharray="440 70" transform="rotate(-70 100 100)"/></svg>
     <p class="eyebrow">Сделано мастером</p>
-    <h1>Сеты с доставкой по Петропавловску</h1>
+    <h1>Сеты с доставкой по <span id="hCity">Петропавловску</span></h1>
     <ul class="facts">
       <li>🍣 Суши · 🍕 Пицца · 🍗 Крылышки</li>
-      <li>🕐 11:00–23:40</li>
-      <li class="gift">🎁 Подарок при первом заказе</li>
+      <li id="fHours">🕐 11:00–23:40</li>
+      <li class="gift" id="fGift">🎁 Подарок при первом заказе</li>
     </ul>
     <ol class="how" aria-label="Как заказать">
       <li><b>1</b>Выберите сет</li>
@@ -207,21 +212,19 @@ a{color:inherit;text-decoration:none}
   </section>
 
   <section class="wrap" aria-labelledby="sets-title">
-    <div class="head"><h2 id="sets-title">Сеты</h2><span>от 6 500 до 14 990 ₸</span></div>
+    <div class="head"><h2 id="sets-title">Сеты</h2><span id="range"></span></div>
     <p class="legend">🍣 — роллов в сете, 🍕 — пицц, 🍗 — крылышек. Нажмите на сет, чтобы увидеть весь состав.</p>
-    <div class="grid" id="grid"></div>
+    <div class="filters" id="filters" role="group" aria-label="Фильтры"></div>
+    <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
   </section>
 </main>
 
 <footer class="wrap foot">
   <div class="foot-top">
     <img src="img/logo.png" alt="" width="48" height="48">
-    <div><b>SENSEI SUSHI</b>Суши, пицца и крылышки с доставкой по Петропавловску. Работаем 11:00–23:40.</div>
+    <div><b id="fName">SENSEI SUSHI</b><span id="fAbout">Суши, пицца и крылышки с доставкой.</span></div>
   </div>
-  <div class="foot-links">
-    <a href="https://wa.me/77756678331" target="_blank" rel="noopener">💬 +7 775 667 83 31</a>
-    <a href="https://www.instagram.com/sensei_sushi_petropavl/" target="_blank" rel="noopener">📷 Instagram</a>
-  </div>
+  <div class="foot-links" id="footLinks"></div>
 </footer>
 
 <div class="cartbar" id="cartbar">
@@ -236,285 +239,298 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
+<script src="js/store.js"></script>
 <script>
 (function(){
 'use strict';
 
-/* ===== НАСТРОЙКИ — меняйте тут ===== */
-var WA = '77756678331';              // номер WhatsApp для заказов (без +)
-var OPEN = '11:00', CLOSE = '23:40'; // часы работы
-var UTC_OFFSET = 5;                  // часовой пояс Петропавловска (UTC+5)
+var SETS=[], byId={}, ST={}, filter='all';
+var $=function(s){return document.querySelector(s);};
+var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+var fmt=function(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
+var mins=function(t){var p=String(t||'0:0').split(':');return (+p[0])*60+(+p[1]);};
 
-/* ===== СЕТЫ =====
-   id    — имя фото в папке img (img/<id>.jpg)
-   tag   — метка на фото: ['текст'] красная, ['текст','y'] жёлтая
-   chips — коротко, что внутри (видно на карточке)
-   groups— полный состав: [иконка, заголовок, [[название, кол-во], ...]] */
-var SETS = [
- {id:'semya', name:'Семья', price:6500, chips:['🍗 16','🍕 2','🍟 фри'], groups:[
-   ['🍗','Курица и закуски',[['Крылышки','16 шт'],['Наггетсы','6 шт'],['Картофель фри','150 г']]],
-   ['🍕','Пиццы',[['Пицца','2 шт']]]]},
- {id:'koroleva', name:'Королева', price:6800, tag:['🚚 Доставка 0 ₸','y'], chips:['🍣 50','5 вкусов'], groups:[
-   ['🍣','Роллы · 50 шт',[['Цезарь запечённый','10 шт'],['Цезарь темпура','10 шт'],['Саке темпура','10 шт'],['Аляска','10 шт'],['Филадельфия','10 шт']]]]},
- {id:'bari-bar', name:'Бари Бар', price:6990, tag:['🔥 Хит'], chips:['🍣 60','🍕 1','🍟 закуски'], groups:[
-   ['🍣','Роллы · 60 шт',[['Филадельфия','10 шт'],['Цезарь темпура','20 шт'],['Темпура','20 шт'],['Цезарь запечённый','10 шт']]],
-   ['🍟','Горячие закуски',[['Наггетсы',''],['Картофельные шарики',''],['Корн-дог',''],['Картофель фри','']]],
-   ['🎁','Пицца в подарок',[['Грибная пицца','0 ₸']]]], note:'Акция: количество сетов ограничено'},
- {id:'papa', name:'Па-Па', price:8490, chips:['🍣 60','🍕 2','🎁 закуски'], groups:[
-   ['🍣','Роллы · 60 шт',[['Цезарь темпура','20 шт'],['Темпура','10 шт'],['Запечённый Динамит','10 шт'],['Асахи','10 шт'],['Аляска','10 шт']]],
-   ['🍕','Пиццы',[['Маргарита','1 шт'],['Пепперони','1 шт']]],
-   ['🎁','В подарок',[['Наггетсы','4 шт'],['Картофель фри','1 порция'],['Корн-доги','4 шт'],['Картофельные шарики','1 порция']]]]},
- {id:'aleks', name:'Алекс', price:8600, chips:['🍣 40','🍗 16','🍕 1'], groups:[
-   ['🍣','Роллы · 40 шт',[['Филадельфия','10 шт'],['Цезарь','10 шт'],['Цезарь запечённый','10 шт'],['Калифорния запечённая','10 шт']]],
-   ['🍗','Курица',[['Крылышки','16 шт']]],
-   ['🍕','Пицца',[['Пепперони','1 шт']]]]},
- {id:'aidahar', name:'Айдахар', price:8900, tag:['🔥 Хит'], chips:['🍣 70','🍕 2','🍗 16'], groups:[
-   ['🍣','Роллы · 70 шт',[['Филадельфия','10 шт'],['Каппа маки запечённый','10 шт'],['Калифорния','10 шт'],['Цезарь темпура','10 шт'],['Америка темпура','10 шт'],['Калифорния запечённая','10 шт'],['Сяке темпура','10 шт']]],
-   ['🍕','Пиццы 30 см',[['4 сезона','1 шт'],['Куриная','1 шт']]],
-   ['🍗','Курица',[['Чикен','16 шт']]]]},
- {id:'yuzhnyi', name:'Южный', price:9790, chips:['🍣 70','🍕 3'], groups:[
-   ['🍣','Роллы · 70 шт',[['Филадельфия','10 шт'],['Калифорния','10 шт'],['Чука','10 шт'],['Цезарь темпура','20 шт'],['Саке темпура','10 шт'],['Краб темпура','10 шт']]],
-   ['🍕','Пиццы',[['Пицца','3 шт']]]]},
- {id:'seoul', name:'Сеул', price:9990, tag:['🔥 Хит'], chips:['🍣 70','🍕 2','🍗 8'], groups:[
-   ['🍣','Роллы · 70 шт',[['Лосось жареный','10 шт'],['Темпура','20 шт'],['Цезарь жареный','20 шт'],['Цезарь запечённый','10 шт'],['Калифорния запечённая','10 шт']]],
-   ['🍕','Пиццы 30 см',[['Пепперони','1 шт'],['Маргарита','1 шт']]],
-   ['🍗','Курица и закуски',[['Крылышки','8 шт'],['Картофель фри','150 г']]],
-   ['🎁','В подарок',[['Кола','1 л']]]]},
- {id:'delikates', name:'Деликатес', price:9999, chips:['🍕 4','🍗 16','🍣 роллы'], groups:[
-   ['🍕','Пиццы · 4 шт',[['С курицей и грибами в сырном соусе',''],['Пепперони',''],['4 сезона',''],['Куриная','']]],
-   ['🍗','Курица',[['Чикен','16 шт']]],
-   ['🍣','Суши',[['Филадельфия',''],['Филадельфия гриль',''],['Блэк Джек',''],['Калифорния',''],['Запечённый Цезарь темпура',''],['Запечённый суши-бургер','']]]]},
- {id:'pozitiv', name:'Позитив', price:10990, chips:['🍣 40','🍕 2','🍗 16'], groups:[
-   ['🍣','Роллы · 40 шт',[['Калифорния','10 шт'],['Филадельфия','10 шт'],['Цезарь темпура','10 шт'],['Саке темпура','10 шт']]],
-   ['🍕','Пиццы',[['Пицца','2 шт']]],
-   ['🍗','Курица и закуски',[['Крылышки','16 шт'],['Наггетсы','6 шт'],['Картофель фри','']]]]},
- {id:'imperator', name:'Император', price:14990, tag:['👑 Для компании','y'], chips:['🍣 100','🍕 4'], groups:[
-   ['🍣','Роллы · 100 шт',[['Филадельфия','10 шт'],['Калифорния','10 шт'],['Бонито','10 шт'],['Каппа маки','10 шт'],['Цезарь запечённый','10 шт'],['Цезарь темпура','20 шт'],['Фреш темпура','10 шт'],['Темпура краб','20 шт']]],
-   ['🍕','Пиццы',[['Пицца','4 шт']]]]}
+function ls(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+var cart=ls('sensei_cart')||{}, draft=ls('sensei_client')||{};
+
+/* ---------- старт ---------- */
+Store.loadMenu().then(start).catch(function(){
+  $('#grid').innerHTML='<p class="nores">Не удалось загрузить меню. Обновите страницу или напишите нам в WhatsApp.</p>';
+});
+
+function start(data){
+  ST=data.settings||{};
+  SETS=(data.sets||[]).filter(function(s){return s.on!==false;}).sort(function(a,b){return a.price-b.price;});
+  SETS.forEach(function(s){byId[s.id]=s;});
+  Object.keys(cart).forEach(function(id){if(!byId[id]||!(cart[id]>0))delete cart[id];});
+  ls('sensei_cart',cart);
+  paintChrome(); paintFilters(); paintGrid(); paintStatus(); paintBar();
+  setInterval(paintStatus,60000);
+}
+
+function paintChrome(){
+  var wa='https://wa.me/'+(ST.wa||'');
+  $('#bName').textContent=ST.name||'SENSEI SUSHI';
+  $('#fName').textContent=ST.name||'SENSEI SUSHI';
+  $('#bCity').textContent=ST.city||'';
+  $('#hCity').textContent=ST.city?(ST.city.replace(/вск$/,'вску')):'городу';
+  document.title=(ST.name||'Sensei Sushi')+' — сеты с доставкой';
+  $('#waTop').href=wa;
+  $('#fHours').textContent='🕐 '+(ST.open||'11:00')+'–'+(ST.close||'23:40');
+  if(ST.gift){$('#fGift').textContent='🎁 '+ST.gift;}else{$('#fGift').hidden=true;}
+  $('#fAbout').textContent='Суши, пицца и крылышки с доставкой'+(ST.city?' по '+$('#hCity').textContent:'')+'. Работаем '+(ST.open||'11:00')+'–'+(ST.close||'23:40')+'.';
+  var links='<a href="'+wa+'" target="_blank" rel="noopener">💬 '+esc(ST.phone||ST.wa||'')+'</a>';
+  if(ST.instagram) links+='<a href="'+esc(ST.instagram)+'" target="_blank" rel="noopener">📷 Instagram</a>';
+  $('#footLinks').innerHTML=links;
+  if(ST.announce){var a=$('#announce');a.textContent=ST.announce;a.hidden=false;}
+  if(SETS.length){
+    var p=SETS.map(function(s){return s.price;});
+    $('#range').textContent='от '+fmt(Math.min.apply(null,p))+' до '+fmt(Math.max.apply(null,p));
+  }
+}
+
+/* ---------- фильтры ---------- */
+var FILTERS=[
+  {k:'all',t:'Все',f:function(){return true;}},
+  {k:'hit',t:'🔥 Хиты',f:function(s){return !!s.tag;}},
+  {k:'cheap',t:'До 7 000 ₸',f:function(s){return s.price<7000;}},
+  {k:'wings',t:'🍗 С крылышками',f:function(s){return /🍗/.test(s.chips.join(' '));}},
+  {k:'pizza',t:'🍕 От 2 пицц',f:function(s){return /🍕\s*[2-9]/.test(s.chips.join(' '));}},
+  {k:'big',t:'👑 Для компании',f:function(s){return s.price>=9000;}}
 ];
-/* ===== дальше код, менять не нужно ===== */
-
-var byId = {}; SETS.forEach(function(s){ byId[s.id] = s; });
-var $ = function(s){ return document.querySelector(s); };
-var esc = function(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-var fmt = function(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₸'; };
-var mins = function(t){ var p = t.split(':'); return +p[0]*60 + +p[1]; };
-
-function store(k, v){ try{ if(v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); }catch(e){ return null; } }
-
-var cart = store('sensei_cart') || {};
-Object.keys(cart).forEach(function(id){ if(!byId[id] || !(cart[id] > 0)) delete cart[id]; });
-var draft = store('sensei_client') || {};
-
-/* --- открыто / закрыто --- */
-function nowMin(){ var d = new Date(Date.now() + UTC_OFFSET*36e5); return d.getUTCHours()*60 + d.getUTCMinutes(); }
-function isOpen(){ var m = nowMin(); return m >= mins(OPEN) && m < mins(CLOSE); }
-function paintStatus(){
-  var el = $('#status'), o = isOpen();
-  el.classList.toggle('off', !o);
-  el.querySelector('.main-t').textContent = o ? 'Открыто' : 'Закрыто';
-  el.querySelector('.more-t').textContent = o ? ' до ' + CLOSE : ' · с ' + OPEN;
+function paintFilters(){
+  $('#filters').innerHTML=FILTERS.map(function(f){
+    var n=SETS.filter(f.f).length;
+    return n?'<button type="button" data-f="'+f.k+'" aria-pressed="'+(filter===f.k)+'">'+f.t+' <span style="opacity:.6">'+n+'</span></button>':'';
+  }).join('');
 }
 
-/* --- карточки --- */
+/* ---------- карточки ---------- */
 function buyHTML(id){
-  var q = cart[id] || 0;
-  return q ? '<div class="step"><button type="button" data-dec="'+id+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+id+'" aria-label="Добавить ещё">+</button></div>'
-           : '<button type="button" class="add" data-inc="'+id+'">+ В заказ</button>';
+  var q=cart[id]||0;
+  return q?'<div class="step"><button type="button" data-dec="'+id+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+id+'" aria-label="Добавить ещё">+</button></div>'
+          :'<button type="button" class="add" data-inc="'+id+'">+ В заказ</button>';
 }
-function chipsHTML(s){ return '<p class="chips">' + s.chips.map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('') + '</p>'; }
+function chipsHTML(s){return '<p class="chips">'+s.chips.map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</p>';}
+function priceHTML(s){return '<b class="price">'+fmt(s.price)+(s.old&&s.old>s.price?'<s>'+fmt(s.old)+'</s>':'')+'</b>';}
 function cardHTML(s){
-  return '<article class="card" id="c-'+s.id+'">' +
-    '<button type="button" class="open" data-open="'+s.id+'" aria-label="Сет '+esc(s.name)+', '+fmt(s.price)+' — открыть состав">' +
-      '<div class="ph"><img src="img/'+s.id+'.jpg" alt="Сет «'+esc(s.name)+'»" width="480" height="600" loading="lazy">' +
-        (s.tag ? '<span class="tag '+(s.tag[1]||'')+'">'+esc(s.tag[0])+'</span>' : '') +
-        '<span class="qtag" hidden></span></div>' +
-      '<div class="ct"><h3>'+esc(s.name)+'</h3>' + chipsHTML(s) +
-        '<p class="pr"><b class="price">'+fmt(s.price)+'</b><span class="more">Состав ›</span></p></div>' +
-    '</button>' +
+  return '<article class="card'+(cart[s.id]?' in':'')+'" id="c-'+s.id+'">'+
+    '<button type="button" class="open" data-open="'+s.id+'" aria-label="Сет '+esc(s.name)+', '+fmt(s.price)+' — открыть состав">'+
+      '<div class="ph"><img src="'+esc(s.img)+'" alt="Сет «'+esc(s.name)+'»" width="480" height="600" loading="lazy">'+
+        (s.tag?'<span class="tag '+(s.tagColor==='y'?'y':'')+'">'+esc(s.tag)+'</span>':'')+
+        '<span class="qtag"'+(cart[s.id]?'':' hidden')+'>×'+(cart[s.id]||'')+'</span></div>'+
+      '<div class="ct"><h3>'+esc(s.name)+'</h3>'+chipsHTML(s)+
+        '<p class="pr">'+priceHTML(s)+'<span class="more">Состав ›</span></p></div>'+
+    '</button>'+
     '<div class="buy" id="b-'+s.id+'">'+buyHTML(s.id)+'</div></article>';
 }
+function paintGrid(){
+  var f=FILTERS.filter(function(x){return x.k===filter;})[0]||FILTERS[0];
+  var list=SETS.filter(f.f);
+  $('#grid').innerHTML=list.length?list.map(cardHTML).join(''):'<p class="nores">Здесь пока пусто — попробуйте другой фильтр.</p>';
+}
 function paintCard(id){
-  var c = document.getElementById('c-'+id); if(!c) return;
-  var q = cart[id] || 0;
-  document.getElementById('b-'+id).innerHTML = buyHTML(id);
-  c.classList.toggle('in', q > 0);
-  var t = c.querySelector('.qtag'); t.hidden = !q; t.textContent = '×' + q;
+  var c=document.getElementById('c-'+id); if(!c) return;
+  var q=cart[id]||0;
+  document.getElementById('b-'+id).innerHTML=buyHTML(id);
+  c.classList.toggle('in',q>0);
+  var t=c.querySelector('.qtag'); t.hidden=!q; t.textContent='×'+q;
 }
-$('#grid').innerHTML = SETS.slice().sort(function(a,b){ return a.price - b.price; }).map(cardHTML).join('');
-Object.keys(cart).forEach(paintCard);
 
-/* --- корзина --- */
-function count(){ return Object.keys(cart).reduce(function(a,id){ return a + cart[id]; }, 0); }
-function total(){ return Object.keys(cart).reduce(function(a,id){ return a + cart[id]*byId[id].price; }, 0); }
+/* ---------- корзина ---------- */
+function count(){return Object.keys(cart).reduce(function(a,id){return a+cart[id];},0);}
+function total(){return Object.keys(cart).reduce(function(a,id){return a+cart[id]*byId[id].price;},0);}
 function paintBar(bump){
-  var n = count(), bar = $('#cartbar');
-  bar.classList.toggle('show', n > 0 && !sheetOpen);
-  $('#cnt').textContent = n; $('#sum').textContent = fmt(total());
-  if(bump){ bar.classList.remove('bump'); void bar.offsetWidth; bar.classList.add('bump'); }
+  var n=count(),bar=$('#cartbar');
+  bar.classList.toggle('show',n>0&&!sheetOpen);
+  $('#cnt').textContent=n; $('#sum').textContent=fmt(total());
+  if(bump){bar.classList.remove('bump');void bar.offsetWidth;bar.classList.add('bump');}
 }
-function setQty(id, q){
-  q = Math.max(0, Math.min(20, q));
-  var up = q > (cart[id] || 0);
-  if(q) cart[id] = q; else delete cart[id];
-  store('sensei_cart', cart);
+function setQty(id,q){
+  q=Math.max(0,Math.min(20,q));
+  var up=q>(cart[id]||0);
+  if(q)cart[id]=q; else delete cart[id];
+  ls('sensei_cart',cart);
   paintCard(id); paintBar(up);
-  if(view === 'detail' && cur === id) paintDetailCta();
-  if(view === 'cart') paintItems();
+  if(view==='detail'&&cur===id) paintDetailCta();
+  if(view==='cart') paintItems();
 }
 
-/* --- окно (состав / оформление) --- */
-var sheet = $('#sheet'), body = $('#sheetBody'), box = $('#box');
-var sheetOpen = false, view = '', cur = '', lastFocus = null, lastUrl = '';
+/* ---------- окно ---------- */
+var sheet=$('#sheet'),body=$('#sheetBody'),box=$('#box');
+var sheetOpen=false,view='',cur='',lastFocus=null;
 function openSheet(){
   if(!sheetOpen){
-    sheetOpen = true; lastFocus = document.activeElement;
-    sheet.hidden = false; document.body.style.overflow = 'hidden';
-    try{ history.pushState({sheet:1}, ''); }catch(e){}
+    sheetOpen=true; lastFocus=document.activeElement;
+    sheet.hidden=false; document.body.style.overflow='hidden';
+    try{history.pushState({sheet:1},'');}catch(e){}
   }
-  box.scrollTop = 0; box.focus({preventScroll:true}); paintBar();
+  box.scrollTop=0; box.focus({preventScroll:true}); paintBar();
 }
 function hideSheet(){
   if(!sheetOpen) return;
-  sheetOpen = false; view = ''; sheet.hidden = true; document.body.style.overflow = '';
-  paintBar(); if(lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true});
+  sheetOpen=false; view=''; sheet.hidden=true; document.body.style.overflow='';
+  paintBar(); if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
 }
-function closeSheet(){ if(history.state && history.state.sheet){ history.back(); } else { hideSheet(); } }
-window.addEventListener('popstate', hideSheet);
+function closeSheet(){ if(history.state&&history.state.sheet){history.back();} else {hideSheet();} }
+window.addEventListener('popstate',hideSheet);
+
+function isOpenNow(){
+  if(ST.paused) return false;
+  var d=new Date(Date.now()+(ST.tz==null?5:ST.tz)*36e5), m=d.getUTCHours()*60+d.getUTCMinutes();
+  var o=mins(ST.open||'11:00'), c=mins(ST.close||'23:40');
+  return c>o ? (m>=o&&m<c) : (m>=o||m<c);
+}
+function paintStatus(){
+  var el=$('#status'),o=isOpenNow();
+  el.classList.toggle('off',!o);
+  el.querySelector('.main-t').textContent=ST.paused?'Пауза':(o?'Открыто':'Закрыто');
+  el.querySelector('.more-t').textContent=ST.paused?'':(o?' до '+(ST.close||''):' · с '+(ST.open||''));
+}
 
 function showDetail(id){
-  var s = byId[id]; view = 'detail'; cur = id;
-  body.innerHTML = '<div class="grab"></div>' +
-    '<div class="d-top"><img src="img/'+s.id+'.jpg" alt="Сет «'+esc(s.name)+'»"><div><h3 id="sheetTitle">Сет «'+esc(s.name)+'»</h3>' +
-    '<b class="price">'+fmt(s.price)+'</b>' + chipsHTML(s) + '</div></div>' +
-    s.groups.map(function(g){
-      return '<section class="grp"><h4>'+g[0]+' '+esc(g[1])+'</h4><ul>' +
-        g[2].map(function(i){ return '<li>'+esc(i[0])+'<span>'+esc(i[1])+'</span></li>'; }).join('') + '</ul></section>';
-    }).join('') +
-    (s.note ? '<p class="note">⏳ '+esc(s.note)+'</p>' : '') +
+  var s=byId[id]; view='detail'; cur=id;
+  body.innerHTML='<div class="grab"></div>'+
+    '<div class="d-top"><img src="'+esc(s.img)+'" alt="Сет «'+esc(s.name)+'»"><div><h3 id="sheetTitle">Сет «'+esc(s.name)+'»</h3>'+
+    priceHTML(s)+chipsHTML(s)+'</div></div>'+
+    (s.groups||[]).map(function(g){
+      return '<section class="grp"><h4>'+esc(g.icon||'')+' '+esc(g.title||'')+'</h4><ul>'+
+        (g.items||[]).map(function(i){return '<li>'+esc(i[0])+'<span>'+esc(i[1])+'</span></li>';}).join('')+'</ul></section>';
+    }).join('')+
+    (s.note?'<p class="note">⏳ '+esc(s.note)+'</p>':'')+
     '<div class="cta" id="dcta"></div>';
   paintDetailCta(); openSheet();
 }
 function paintDetailCta(){
-  var s = byId[cur], q = cart[cur] || 0, el = $('#dcta'); if(!el) return;
-  el.innerHTML = q
-    ? '<div class="row2"><div class="step"><button type="button" data-dec="'+cur+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+cur+'" aria-label="Добавить ещё">+</button></div>' +
-      '<button type="button" class="big" data-cart>Оформить · '+fmt(total())+'</button></div>'
-    : '<button type="button" class="big" data-inc="'+cur+'">Добавить в заказ · '+fmt(s.price)+'</button>';
+  var s=byId[cur],q=cart[cur]||0,el=$('#dcta'); if(!el)return;
+  el.innerHTML=q
+    ?'<div class="row2"><div class="step"><button type="button" data-dec="'+cur+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+cur+'" aria-label="Добавить ещё">+</button></div>'+
+     '<button type="button" class="big" data-cart>Оформить · '+fmt(total())+'</button></div>'
+    :'<button type="button" class="big" data-inc="'+cur+'">Добавить в заказ · '+fmt(s.price)+'</button>';
 }
 
 function showCart(){
-  view = 'cart';
-  if(!count()){ return showEmpty(); }
-  var o = isOpen();
-  body.innerHTML = '<div class="grab"></div><h3 class="h3" id="sheetTitle">Ваш заказ</h3>' +
-    '<div id="items"></div>' +
-    '<div class="total"><div>Итого<small>доставку подтвердит оператор</small></div><span id="tot"></span></div>' +
-    (o ? '' : '<p class="closed">Сейчас мы закрыты. Оформите предзаказ — привезём после '+OPEN+' или ко времени.</p>') +
-    '<form class="f" id="form" novalidate>' +
-      '<label id="f-name">Имя<input name="name" autocomplete="given-name" placeholder="Как к вам обращаться" maxlength="40"><span class="err">Напишите имя</span></label>' +
-      '<label id="f-phone">Телефон<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 7__ ___ __ __"><span class="err">Нужен номер из 11 цифр</span></label>' +
-      '<label id="f-address">Адрес доставки<input name="address" autocomplete="street-address" placeholder="Улица, дом, квартира, подъезд" maxlength="120"><span class="err">Напишите адрес</span></label>' +
-      '<div class="lbl">Когда привезти<div class="seg">' +
-        '<label><input type="radio" name="when" value="asap" '+(o?'checked':'')+'><span>'+(o?'Как можно скорее':'После открытия')+'</span></label>' +
-        '<label><input type="radio" name="when" value="time" '+(o?'':'checked')+'><span>Ко времени</span></label></div></div>' +
-      '<label id="f-time" '+(o?'hidden':'')+'>Время<input name="time" type="time" min="'+OPEN+'" max="'+CLOSE+'"><span class="err">Выберите время с '+OPEN+' до '+CLOSE+'</span></label>' +
-      '<div class="lbl">Оплата<div class="seg">' +
-        '<label><input type="radio" name="pay" value="Kaspi" checked><span>Kaspi</span></label>' +
-        '<label><input type="radio" name="pay" value="Наличными"><span>Наличными</span></label></div></div>' +
-      '<label class="chk"><input type="checkbox" name="first"> 🎁 Это мой первый заказ — хочу подарок</label>' +
-      '<label>Комментарий<textarea name="comment" rows="2" maxlength="300" placeholder="Например: позвонить за 10 минут"></textarea></label>' +
-      '<button class="big wa-big" type="submit">Отправить заказ в WhatsApp</button>' +
-      '<p class="hint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить».</p>' +
+  view='cart';
+  if(!count()) return showEmpty();
+  var o=isOpenNow();
+  body.innerHTML='<div class="grab"></div><h3 class="h3" id="sheetTitle">Ваш заказ</h3>'+
+    '<div id="items"></div>'+
+    '<div class="total"><div>Итого<small>'+esc(ST.deliveryNote||'доставку подтвердит оператор')+'</small></div><span id="tot"></span></div>'+
+    (ST.paused?'<p class="closed">Приём заказов временно на паузе. Напишите нам в WhatsApp — подскажем, когда возобновим.</p>'
+      :(o?'':'<p class="closed">Сейчас мы закрыты. Оформите предзаказ — привезём после '+esc(ST.open||'')+' или ко времени.</p>'))+
+    '<form class="f" id="form" novalidate>'+
+      '<label id="f-name">Имя<input name="name" autocomplete="given-name" placeholder="Как к вам обращаться" maxlength="40"><span class="err">Напишите имя</span></label>'+
+      '<label id="f-phone">Телефон<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 7__ ___ __ __"><span class="err">Нужен номер из 11 цифр</span></label>'+
+      '<label id="f-address">Адрес доставки<input name="address" autocomplete="street-address" placeholder="Улица, дом, квартира, подъезд" maxlength="120"><span class="err">Напишите адрес</span></label>'+
+      '<div class="lbl">Когда привезти<div class="seg">'+
+        '<label><input type="radio" name="when" value="asap" '+(o?'checked':'')+'><span>'+(o?'Как можно скорее':'После открытия')+'</span></label>'+
+        '<label><input type="radio" name="when" value="time" '+(o?'':'checked')+'><span>Ко времени</span></label></div></div>'+
+      '<label id="f-time" '+(o?'hidden':'')+'>Время<input name="time" type="time" min="'+esc(ST.open||'')+'" max="'+esc(ST.close||'')+'"><span class="err">Выберите время с '+esc(ST.open||'')+' до '+esc(ST.close||'')+'</span></label>'+
+      '<div class="lbl">Оплата<div class="seg">'+
+        (ST.pay||['Kaspi','Наличными']).map(function(p,i){
+          return '<label><input type="radio" name="pay" value="'+esc(p)+'"'+(i?'':' checked')+'><span>'+esc(p)+'</span></label>';}).join('')+
+      '</div></div>'+
+      (ST.gift?'<label class="chk"><input type="checkbox" name="first"> 🎁 Это мой первый заказ — хочу подарок</label>':'')+
+      '<label>Комментарий<textarea name="comment" rows="2" maxlength="300" placeholder="Например: позвонить за 10 минут"></textarea></label>'+
+      '<button class="big wa-big" type="submit">Отправить заказ в WhatsApp</button>'+
+      '<p class="hint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить».</p>'+
     '</form>';
-  var f = $('#form');
-  ['name','phone','address'].forEach(function(k){ if(draft[k]) f[k].value = draft[k]; });
+  var f=$('#form');
+  ['name','phone','address'].forEach(function(k){if(draft[k])f[k].value=draft[k];});
   paintItems(); openSheet();
 }
 function paintItems(){
-  if(!count()){ return showEmpty(); }
-  $('#items').innerHTML = Object.keys(cart).map(function(id){
-    var s = byId[id], q = cart[id];
-    return '<div class="ci"><img src="img/'+id+'.jpg" alt=""><div class="n"><b>Сет «'+esc(s.name)+'»</b><small>'+fmt(s.price)+(q>1?' × '+q:'')+'</small></div>' +
+  if(!count()) return showEmpty();
+  $('#items').innerHTML=Object.keys(cart).map(function(id){
+    var s=byId[id],q=cart[id];
+    return '<div class="ci"><img src="'+esc(s.img)+'" alt=""><div class="n"><b>Сет «'+esc(s.name)+'»</b><small>'+fmt(s.price)+(q>1?' × '+q:'')+'</small></div>'+
       '<div class="step"><button type="button" data-dec="'+id+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+id+'" aria-label="Добавить ещё">+</button></div></div>';
   }).join('');
-  $('#tot').textContent = fmt(total());
+  $('#tot').textContent=fmt(total());
 }
 function showEmpty(){
-  view = 'empty';
-  body.innerHTML = '<div class="grab"></div><div class="empty"><div>🍣</div><h3 class="h3" id="sheetTitle" style="padding:0">Заказ пока пустой</h3><p>Выберите сет и нажмите «В заказ».</p>' +
+  view='empty';
+  body.innerHTML='<div class="grab"></div><div class="empty"><div>🍣</div><h3 class="h3" id="sheetTitle" style="padding:0">Заказ пока пустой</h3><p>Выберите сет и нажмите «В заказ».</p>'+
     '<button type="button" class="big" data-close>Выбрать сет</button></div>';
   openSheet();
 }
 function showDone(url){
-  view = 'done';
-  body.innerHTML = '<div class="done"><div class="ok">✓</div><h3 id="sheetTitle">Заказ готов</h3>' +
-    '<p>Мы открыли WhatsApp с текстом заказа — нажмите там «Отправить». Оператор подтвердит заказ, время и стоимость доставки.</p>' +
-    '<a class="big wa-big" href="'+url+'" target="_blank" rel="noopener">Открыть WhatsApp ещё раз</a>' +
+  view='done';
+  body.innerHTML='<div class="done"><div class="ok">✓</div><h3 id="sheetTitle">Заказ готов</h3>'+
+    '<p>Мы открыли WhatsApp с текстом заказа — нажмите там «Отправить». Оператор подтвердит заказ, время и стоимость доставки.</p>'+
+    '<a class="big wa-big" href="'+esc(url)+'" target="_blank" rel="noopener">Открыть WhatsApp ещё раз</a>'+
     '<button type="button" class="ghost" data-close>Вернуться к меню</button></div>';
   openSheet();
 }
 
-/* --- телефон --- */
-function phoneDigits(v){ var d = v.replace(/\D/g,''); if(!d) return ''; if(d[0]==='8') d = '7'+d.slice(1); if(d[0]!=='7') d = '7'+d; return d.slice(0,11); }
+/* ---------- телефон ---------- */
+function phoneDigits(v){var d=String(v).replace(/\D/g,'');if(!d)return '';if(d[0]==='8')d='7'+d.slice(1);if(d[0]!=='7')d='7'+d;return d.slice(0,11);}
 function phonePretty(v){
-  var d = phoneDigits(v); if(!d) return '';
-  var o = '+7'; if(d.length>1) o += ' '+d.slice(1,4); if(d.length>4) o += ' '+d.slice(4,7); if(d.length>7) o += ' '+d.slice(7,9); if(d.length>9) o += ' '+d.slice(9,11);
+  var d=phoneDigits(v); if(!d)return '';
+  var o='+7'; if(d.length>1)o+=' '+d.slice(1,4); if(d.length>4)o+=' '+d.slice(4,7); if(d.length>7)o+=' '+d.slice(7,9); if(d.length>9)o+=' '+d.slice(9,11);
   return o;
 }
 
-/* --- отправка --- */
+/* ---------- отправка ---------- */
 function submit(f){
-  var ok = true;
-  function check(id, good){ document.getElementById(id).classList.toggle('bad', !good); if(!good && ok){ ok = false; var i = document.querySelector('#'+id+' input'); if(i) i.focus(); } }
-  var name = f.name.value.trim(), phone = phoneDigits(f.phone.value), address = f.address.value.trim();
-  var when = f.when.value, time = f.time.value;
-  check('f-name', name.length > 1);
-  check('f-phone', phone.length === 11);
-  check('f-address', address.length > 4);
-  if(when === 'time') check('f-time', !!time && mins(time) >= mins(OPEN) && mins(time) <= mins(CLOSE));
-  if(!ok) return;
+  var ok=true;
+  function check(id,good){document.getElementById(id).classList.toggle('bad',!good);if(!good&&ok){ok=false;var i=document.querySelector('#'+id+' input');if(i)i.focus();}}
+  var name=f.name.value.trim(),phone=phoneDigits(f.phone.value),address=f.address.value.trim();
+  var when=f.when.value,time=f.time.value;
+  check('f-name',name.length>1);
+  check('f-phone',phone.length===11);
+  check('f-address',address.length>4);
+  if(when==='time') check('f-time',!!time&&mins(time)>=mins(ST.open||'0:00')&&mins(time)<=mins(ST.close||'23:59'));
+  if(!ok)return;
 
-  draft = {name:name, phone:f.phone.value, address:address}; store('sensei_client', draft);
-  var L = ['Здравствуйте! Заказ с сайта 🍣', ''];
-  Object.keys(cart).forEach(function(id){ var s = byId[id]; L.push('• Сет «'+s.name+'» × '+cart[id]+' = '+fmt(s.price*cart[id])); });
-  L.push('', 'Итого: '+fmt(total())+' (без доставки)', '',
-    '👤 '+name, '📞 '+phonePretty(phone), '📍 '+address,
-    '🕐 '+(when === 'time' ? 'Ко времени: '+time : (isOpen() ? 'Как можно скорее' : 'Предзаказ, после открытия')),
-    '💳 Оплата: '+f.pay.value);
-  if(f.first.checked) L.push('🎁 Первый заказ — подарок');
-  var c = f.comment.value.trim(); if(c) L.push('💬 '+c);
-  var url = 'https://wa.me/'+WA+'?text='+encodeURIComponent(L.join('\n'));
-  var w = window.open(url, '_blank');
-  if(!w) location.href = url;
-  Object.keys(cart).forEach(function(id){ delete cart[id]; paintCard(id); });
-  store('sensei_cart', cart);
+  draft={name:name,phone:f.phone.value,address:address}; ls('sensei_client',draft);
+  var items=Object.keys(cart).map(function(id){return {id:id,name:byId[id].name,price:byId[id].price,qty:cart[id]};});
+  var whenTxt=when==='time'?('Ко времени: '+time):(isOpenNow()?'Как можно скорее':'Предзаказ, после открытия');
+  var first=!!(f.first&&f.first.checked), comment=f.comment.value.trim();
+
+  var L=['Здравствуйте! Заказ с сайта 🍣',''];
+  items.forEach(function(i){L.push('• Сет «'+i.name+'» × '+i.qty+' = '+fmt(i.price*i.qty));});
+  L.push('','Итого: '+fmt(total())+' (без доставки)','',
+    '👤 '+name,'📞 '+phonePretty(phone),'📍 '+address,'🕐 '+whenTxt,'💳 Оплата: '+f.pay.value);
+  if(first) L.push('🎁 Первый заказ — подарок');
+  if(comment) L.push('💬 '+comment);
+
+  var url='https://wa.me/'+(ST.wa||'')+'?text='+encodeURIComponent(L.join('\n'));
+  var w=window.open(url,'_blank');
+  if(!w) location.href=url;
+
+  Store.createOrder({name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
+    first:first,comment:comment,items:items,total:total()});
+
+  Object.keys(cart).forEach(function(id){delete cart[id];paintCard(id);});
+  ls('sensei_cart',cart);
   showDone(url); paintBar();
 }
 
-/* --- события --- */
-document.addEventListener('click', function(e){
-  var t = e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],#cartBtn');
-  if(!t) return;
-  if(t.dataset.inc){ setQty(t.dataset.inc, (cart[t.dataset.inc]||0) + 1); }
-  else if(t.dataset.dec){ setQty(t.dataset.dec, (cart[t.dataset.dec]||0) - 1); }
-  else if(t.dataset.open){ showDetail(t.dataset.open); }
-  else if(t.hasAttribute('data-close')){ closeSheet(); }
-  else { showCart(); }
+/* ---------- события ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],[data-f],#cartBtn');
+  if(!t)return;
+  if(t.dataset.f!==undefined){
+    filter=t.dataset.f; paintFilters(); paintGrid();
+    document.getElementById('sets-title').scrollIntoView({block:'start'});
+  }
+  else if(t.dataset.inc){setQty(t.dataset.inc,(cart[t.dataset.inc]||0)+1);}
+  else if(t.dataset.dec){setQty(t.dataset.dec,(cart[t.dataset.dec]||0)-1);}
+  else if(t.dataset.open){showDetail(t.dataset.open);}
+  else if(t.hasAttribute('data-close')){closeSheet();}
+  else {showCart();}
 });
-document.addEventListener('submit', function(e){ if(e.target.id === 'form'){ e.preventDefault(); submit(e.target); } });
-document.addEventListener('input', function(e){
-  var f = e.target.form; if(!f || f.id !== 'form') return;
-  if(e.target.name === 'phone'){ var v = phonePretty(e.target.value); if(v !== e.target.value) e.target.value = v; }
-  var l = e.target.closest('.bad'); if(l) l.classList.remove('bad');
+document.addEventListener('submit',function(e){if(e.target.id==='form'){e.preventDefault();submit(e.target);}});
+document.addEventListener('input',function(e){
+  var f=e.target.form; if(!f||f.id!=='form')return;
+  if(e.target.name==='phone'){var v=phonePretty(e.target.value);if(v!==e.target.value)e.target.value=v;}
+  var l=e.target.closest('.bad'); if(l)l.classList.remove('bad');
 });
-document.addEventListener('change', function(e){
-  if(e.target.name === 'when'){ var tw = $('#f-time'); tw.hidden = e.target.value !== 'time'; }
+document.addEventListener('change',function(e){
+  if(e.target.name==='when'){var tw=$('#f-time');tw.hidden=e.target.value!=='time';if(!tw.hidden)e.target.form.time.focus();}
 });
-document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && sheetOpen) closeSheet(); });
-
-paintStatus(); setInterval(paintStatus, 60000);
-paintBar();
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheetOpen)closeSheet();});
 })();
 </script>
 </body>
