@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 4,
+ "rev": 5,
  "settings": {
   "name": "SENSEI SUSHI",
   "city": "Петропавловск",
@@ -1944,6 +1944,36 @@
    ],
    "cat": "sets",
    "desc": ""
+  },
+  {
+   "id": "akatama-chicken",
+   "cat": "new",
+   "name": "Акатама с курицей",
+   "price": 2200,
+   "old": 0,
+   "desc": "Новинка. Привозим горячей",
+   "tag": "",
+   "tagColor": "red",
+   "img": "img/akatama.jpg",
+   "on": true,
+   "note": "",
+   "chips": [],
+   "groups": []
+  },
+  {
+   "id": "akatama-salmon",
+   "cat": "new",
+   "name": "Акатама с сёмгой",
+   "price": 2200,
+   "old": 0,
+   "desc": "Новинка. Привозим горячей",
+   "tag": "",
+   "tagColor": "red",
+   "img": "img/akatama.jpg",
+   "on": true,
+   "note": "",
+   "chips": [],
+   "groups": []
   }
  ]
 }
