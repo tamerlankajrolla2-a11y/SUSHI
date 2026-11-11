@@ -185,7 +185,7 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding
 <input type="file" id="jsonFile" accept="application/json,.json" hidden>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="js/store.js"></script>
+<script src="js/store.js?v=4"></script>
 <script>
 (function(){
 'use strict';
@@ -456,7 +456,7 @@ function editItem(id){
     '<label class="fld">Название<input id="e-name" value="'+esc(s.name)+'"></label>'+
     '<label class="fld">Раздел<select id="e-cat">'+DATA.cats.map(function(x){return '<option value="'+esc(x.id)+'"'+(x.id===s.cat?' selected':'')+'>'+esc(x.name)+'</option>';}).join('')+'</select></label>'+
     '<div class="row"><label class="fld">Цена, ₸<input id="e-price" type="number" inputmode="numeric" value="'+(s.price||'')+'"></label>'+
-    '<label class="fld">Старая цена, ₸<input id="e-old" type="number" inputmode="numeric" value="'+(s.old||'')+'" placeholder="нет"><span class="muted">'+(DATA.promo.mega&&DATA.promo.mega.on&&DATA.promo.mega.add>0?'Сейчас включена «Мега выгода» — зачёркнутая цена считается сама: цена + '+fmt(DATA.promo.mega.add)+'. Поле нужно, только если хотите показать больше':'Если цена была выше — покажется зачёркнутой')+'</span></label></div>'+
+    '<label class="fld">Старая цена, ₸<input id="e-old" type="number" inputmode="numeric" value="'+(s.old||'')+'" placeholder="нет"><span class="muted">'+(DATA.promo.mega&&DATA.promo.mega.on&&DATA.promo.mega.add>0?'Сейчас включена «Мега выгода» — зачёркнутая цена считается сама: цена + '+fmt(DATA.promo.mega.add)+'. Это поле пока не используется':'Если цена была выше — покажется зачёркнутой')+'</span></label></div>'+
     '<label class="fld">Описание<input id="e-desc" value="'+esc(s.desc)+'" placeholder="8 шт · лосось, сливочный сыр, огурец"></label>'+
     '<div class="ph-ed"><div class="ph-prev" id="e-prev"></div><div class="r">'+
       '<div class="row"><button class="btn o s" type="button" id="e-up">📷 Загрузить фото</button><button class="btn o s" type="button" id="e-rm">Убрать</button></div>'+
@@ -536,7 +536,7 @@ function viewPromo(){
       SW('Показывать на всех товарах','promo.mega.on')+
       F('Надпись','promo.mega.title',{ph:'Мега выгода'})+
       F('Зачёркнутая цена выше настоящей на, ₸','promo.mega.add',{t:'num',im:'numeric',ph:'2000'})+
-      '<p class="muted">На каждой позиции появится надпись, а под ценой — зачёркнутая цена (настоящая + эта сумма). Если у позиции своя «Старая цена» ещё выше — покажется она. Наверху сайта — плашка «… на всё меню», в корзине — строка «Ваша выгода».</p></div>'+
+      '<p class="muted">На каждой позиции появится надпись, а под ценой — зачёркнутая цена (настоящая + эта сумма). Например: цена 6 000 ₸ → зачёркнутая 8 000 ₸. Наверху сайта — плашка «… на всё меню», в корзине — строка «Ваша выгода».</p></div>'+
     '<div class="card"><h3 class="c">🎁 Подарок на первый заказ</h3>'+
       SW('Показывать на сайте и в корзине','promo.gift.on')+
       F('Что дарим','promo.gift.title',{ph:'Суши-бургер в подарок'})+
@@ -554,7 +554,7 @@ function viewPromo(){
       '<button class="btn o" id="p-add">+ Промокод</button></div>'+
     '<div class="card"><h3 class="c">📣 Объявление</h3>'+
       F('Жёлтая полоса наверху сайта','settings.announce',{ph:'Сегодня доставка бесплатно!',hint:'Пустое поле — полоса не показывается.'})+'</div>'+
-    '<div class="card"><h3 class="c">💸 Зачёркнутая цена у одной позиции</h3><p class="muted">Можно поставить и вручную: «Меню» → ✎ → «Старая цена». Пока включена «Мега выгода», показывается бóльшая из двух: ручная или настоящая + сумма из «Мега выгоды».</p></div>';
+    '<div class="card"><h3 class="c">💸 Зачёркнутая цена у одной позиции</h3><p class="muted">Можно поставить и вручную: «Меню» → ✎ → «Старая цена». Пока включена «Мега выгода», ручная старая цена не используется — у всех зачёркнутая цена = цена + сумма из «Мега выгоды».</p></div>';
 }
 
 /* ===== НАСТРОЙКИ ===== */

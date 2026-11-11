@@ -291,7 +291,7 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<script src="js/store.js"></script>
+<script src="js/store.js?v=4"></script>
 <script>
 (function(){
 'use strict';
@@ -395,11 +395,10 @@ function buyHTML(id,compact){
           :'<button type="button" class="add" data-inc="'+id+'"'+(compact?' aria-label="Добавить в заказ">+':'>+ В заказ')+'</button>';
 }
 function chipsHTML(s){return s.chips.length?'<p class="chips">'+s.chips.map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</p>':'';}
-// зачёркнутая цена: своя «старая цена» или, при «Мега выгоде», настоящая + сумма (берётся бóльшая)
+// зачёркнутая цена: при «Мега выгоде» всегда настоящая + сумма (6 000 → 8 000), иначе своя «старая цена»
 function oldOf(s){
-  var o=s.old>s.price?s.old:0;
-  if(MEGA&&s.price>0) o=Math.max(o,s.price+MEGA.add);
-  return o;
+  if(MEGA&&s.price>0) return s.price+MEGA.add;
+  return s.old>s.price?s.old:0;
 }
 function megaLabel(){return MEGA?'⚡ '+esc(MEGA.title||'Мега выгода'):'';}
 function priceHTML(s){var o=oldOf(s);return '<b class="price">'+fmt(s.price)+(o?'<s>'+fmt(o)+'</s>':'')+'</b>';}

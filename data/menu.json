@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 3,
+ "rev": 4,
  "settings": {
   "name": "SENSEI SUSHI",
   "city": "Петропавловск",
@@ -141,8 +141,8 @@
    "id": "dzhekpot",
    "name": "Джекпот",
    "price": 5500,
-   "old": 8790,
-   "tag": "💥 Выгода 3 290 ₸",
+   "old": 0,
+   "tag": "",
    "tagColor": "y",
    "img": "img/dzhekpot.jpg",
    "on": true,
