@@ -37,6 +37,14 @@ a{color:inherit;text-decoration:none}
 .status.off i{background:#ff5a5f;box-shadow:0 0 0 3px rgba(255,90,95,.2)}
 .wa{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 13px;border-radius:99px;background:var(--wa);color:#fff;font-weight:700;font-size:13.5px;flex:none}
 .wa svg{width:18px;height:18px}
+.setb{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 12px;border-radius:99px;background:var(--s1);border:1px solid var(--line);font-size:13.5px;font-weight:600;flex:none}
+.setb:hover{border-color:#3d3d45}
+@media(max-width:560px){.setb span{display:none}.setb{width:38px;padding:0}}
+.mi{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px;color:inherit}
+.mi:hover{border-color:#3d3d45}
+.mi .ic{flex:none;width:44px;height:44px;border-radius:13px;background:var(--s2);display:grid;place-items:center;font-size:21px}
+.mi b{display:block;font-size:16px;font-weight:700}
+.mi small{display:block;font-size:13px;color:var(--muted);margin-top:1px}
 @media(max-width:430px){.status .more-t{display:none}}
 @media(max-width:420px){.wa span{display:none}.wa{width:38px;padding:0}}
 @media(max-width:380px){.brand b{font-size:14px;letter-spacing:.04em}.status{padding:6px 9px}}
@@ -240,6 +248,7 @@ a{color:inherit;text-decoration:none}
       <span><b id="bName">SENSEI SUSHI</b><small id="bCity">Петропавловск</small></span>
     </a>
     <span class="status" id="status"><i></i><span><span class="main-t">Открыто</span><span class="more-t"></span></span></span>
+    <button class="setb" id="setBtn" type="button" data-settings aria-label="Настройки"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Настройки</span></button>
     <a class="wa" id="waTop" href="#" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2L9 9.5Z"/></svg>
       <span>WhatsApp</span>
@@ -606,6 +615,16 @@ function paintSums(){
   var low=ST.minOrder>0&&k.sub<ST.minOrder, btn=$('#sendBtn');
   if(btn){btn.disabled=low; $('#sendHint').textContent=low?('Минимальный заказ — '+fmt(ST.minOrder)+'. Добавьте ещё на '+fmt(ST.minOrder-k.sub)+'.'):'Откроется WhatsApp с готовым текстом — останется нажать «Отправить».';}
 }
+function showSettings(){
+  view='settings';
+  var hasAbout=!$('#about').hidden;
+  body.innerHTML='<div class="grab"></div><h3 class="h3" id="sheetTitle">Настройки</h3>'+
+    '<button type="button" class="mi" data-act="order"><span class="ic">🛒</span><span><b>Заказать</b><small>'+(count()?'Ваш заказ: '+count()+' шт · '+fmt(subtotal()):'Меню, корзина и заказ в WhatsApp')+'</small></span></button>'+
+    (hasAbout?'<button type="button" class="mi" data-act="about"><span class="ic">ℹ️</span><span><b>О нас</b><small>Кто мы, часы работы, оплата</small></span></button>':'')+
+    '<a class="mi" href="'+esc('https://wa.me/'+(ST.wa||''))+'" target="_blank" rel="noopener"><span class="ic">💬</span><span><b>Связаться</b><small>WhatsApp '+esc(ST.phone||'')+'</small></span></a>'+
+    '<a class="mi" href="admin.html"><span class="ic">🔐</span><span><b>Админка</b><small>Вход для владельца: меню, цены, заказы</small></span></a>';
+  openSheet();
+}
 function showEmpty(){
   view='empty';
   body.innerHTML='<div class="grab"></div><div class="empty"><div>🍣</div><h3 class="h3" id="sheetTitle" style="padding:0">Заказ пока пустой</h3><p>Выберите блюда и нажмите «В заказ».</p>'+
@@ -673,9 +692,12 @@ function submit(f){
 
 /* ---------- события ---------- */
 document.addEventListener('click',function(e){
-  var t=e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],[data-f],[data-cat],#cartBtn,#codeBtn');
+  var t=e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],[data-f],[data-cat],[data-settings],[data-act],#cartBtn,#codeBtn');
   if(!t)return;
-  if(t.id==='codeBtn'){code=$('#codeIn').value.trim();ls('sensei_code',code);paintSums();}
+  if(t.hasAttribute('data-settings')){showSettings();}
+  else if(t.dataset.act==='order'){ if(count()) showCart(); else { closeSheet(); setTimeout(function(){$('#cats').hidden?$('#menu').scrollIntoView():$('#cats').scrollIntoView();},60);} }
+  else if(t.dataset.act==='about'){ closeSheet(); setTimeout(function(){$('#about').scrollIntoView();},60); }
+  else if(t.id==='codeBtn'){code=$('#codeIn').value.trim();ls('sensei_code',code);paintSums();}
   else if(t.dataset.cat!==undefined){
     cat=t.dataset.cat; filter='all'; paintCats(); paintSection();
     var y=$('#cats').getBoundingClientRect().top+window.pageYOffset-$('#bar').offsetHeight;
