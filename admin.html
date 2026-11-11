@@ -186,7 +186,7 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding
 <input type="file" id="jsonFile" accept="application/json,.json" hidden>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="js/store.js?v=5"></script>
+<script src="js/store.js?v=6"></script>
 <script>
 (function(){
 'use strict';
@@ -206,34 +206,18 @@ var mCat='sets', mQ='', oSt='all', oPer='today', oQ='';
 /* ===== вход ===== */
 function showGate(){
   $('#app').hidden=true; $('#gate').hidden=false;
-  var cloud=Store.isCloud();
-  $('#gateHint').textContent=cloud
-    ? 'Вход по почте и паролю, которые заведены в базе.'
-    : 'Введите пароль администратора.';
-  $('#gateFields').innerHTML=cloud
-    ? '<label class="fld">Почта<input id="gEmail" type="email" autocomplete="username"></label>'+
-      '<label class="fld">Пароль<input id="gPass" type="password" autocomplete="current-password"></label>'
-    : '<label class="fld">Пароль <span class="muted">вводите английскими буквами</span><input id="gPin" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false"></label>';
+  $('#gateHint').textContent='Введите пароль администратора.';
+  $('#gateFields').innerHTML='<label class="fld">Пароль <span class="muted">вводите английскими буквами</span><input id="gPin" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false"></label>';
   var f=$('#gateFields').querySelector('input'); if(f)f.focus();
 }
 function tryLogin(){
-  if(Store.isCloud()){
-    var e=$('#gEmail').value.trim(), p=$('#gPass').value;
-    if(!e||!p) return toast('Заполните почту и пароль');
-    $('#gateBtn').disabled=true;
-    Store.login(e,p).then(boot).catch(function(err){toast('Не вышло: '+err.message);})
-      .then(function(){$('#gateBtn').disabled=false;});
-  }else{
-    sha($('#gPin').value.trim()).then(function(h){
-      if(h===(ls('sensei_pass_h')||PASS_H)){ ls('sensei_auth',Date.now()); boot(); }
-      else toast('Неверный пароль. Проверьте, что включена английская раскладка');
-    }).catch(function(){ toast('Браузер не поддерживает вход, откройте сайт в Chrome'); });
-  }
+  var p=$('#gPin').value.trim(); if(!p) return toast('Введите пароль');
+  $('#gateBtn').disabled=true;
+  Store.login(p).then(boot).catch(function(err){
+    toast(err.status===401?'Неверный пароль. Проверьте, что включена английская раскладка':'Нет связи с сервером: '+err.message);
+  }).then(function(){$('#gateBtn').disabled=false;});
 }
-function loggedIn(){
-  if(Store.isCloud()) return Store.authed();
-  var t=ls('sensei_auth'); return !!(t && Date.now()-t < 12*36e5);
-}
+function loggedIn(){ return Store.authed(); }
 
 /* ===== запуск и сохранение ===== */
 function boot(){
@@ -241,7 +225,7 @@ function boot(){
   var m=$('#mode');
   m.textContent=Store.isCloud()?'облако':'локально';
   m.className='mode'+(Store.isCloud()?' cloud':'');
-  Store.loadMenu(true,true).then(function(d){ DATA=d; }).catch(function(e){ toast('Меню не загрузилось: '+e.message); DATA=Store.normalize({}); })
+  Store.loadMenu(true).then(function(d){ DATA=d; }).catch(function(e){ toast('Меню не загрузилось: '+e.message); DATA=Store.normalize({}); })
     .then(function(){ render(); if(!Store.isCloud()) Store.fileRev().then(function(r){fileRev=r; if(tab==='menu')render();}).catch(function(){}); });
 }
 var saveT=null;
@@ -256,7 +240,7 @@ function touch(){
 if(loggedIn()) boot(); else showGate();
 $('#gateBtn').onclick=tryLogin;
 $('#gateFields').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
-$('#exit').onclick=function(){ Store.logout(); ls('sensei_auth',null); location.reload(); };
+$('#exit').onclick=function(){ Store.logout(); location.reload(); };
 $('#tabs').addEventListener('click',function(e){
   var b=e.target.closest('[data-tab]'); if(!b)return; go(b.dataset.tab);
 });
@@ -598,17 +582,17 @@ function viewAbout(){
 
 /* ===== АДМИНКА ===== */
 function viewAdmin(){
-  viewCloud();
-  var own=!!ls('sensei_pass_h');
-  $('#view').insertAdjacentHTML('afterbegin',
+  $('#view').innerHTML=
     '<h2 class="t">Админка</h2>'+
+    '<div class="note">✅ Сайт подключён к серверу. Всё, что меняете здесь, сразу видно на сайте у всех, а заказы приходят сюда с любого устройства.</div>'+
     '<div class="card"><h3 class="c">🔑 Пароль для входа</h3>'+
-      '<p class="muted" style="margin-bottom:10px">Сейчас: '+(own?'свой пароль, заданный в этом браузере':'стандартный пароль')+'. Вводить английскими буквами.</p>'+
+      '<p class="muted" style="margin-bottom:10px">Пароль общий для всех устройств. Вводить английскими буквами, минимум 6 символов.</p>'+
       '<label class="fld">Новый пароль<input id="s-p1" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false"></label>'+
       '<label class="fld">Ещё раз<input id="s-p2" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false"></label>'+
-      '<div class="row"><button class="btn o" id="savePass">Сменить пароль</button>'+(own?'<button class="btn o" id="resetPass">Вернуть стандартный</button>':'')+'</div>'+
-      '<p class="muted" style="margin-top:9px">Пока база не подключена, новый пароль действует только в этом браузере, на других устройствах — стандартный.</p></div>'+
-    '<div class="card"><h3 class="c">🚪 Выход</h3><p class="muted" style="margin-bottom:10px">Вход держится 12 часов, потом пароль спросят снова.</p><button class="btn o" id="logout2">Выйти из админки</button></div>');
+      '<button class="btn o" id="savePass">Сменить пароль</button>'+
+      '<p class="muted" style="margin-top:9px">После смены пароля на других устройствах нужно будет войти заново.</p></div>'+
+    '<div class="card"><h3 class="c">📄 Меню из файла сайта</h3><p class="muted" style="margin-bottom:10px">Заменит текущее меню на версию из файла data/menu.json в репозитории. Нужно, только если меню обновляли через GitHub.</p><button class="btn o" id="takeNew">Взять меню из файла</button></div>'+
+    '<div class="card"><h3 class="c">🚪 Выход</h3><p class="muted" style="margin-bottom:10px">Вход держится 12 часов, потом пароль спросят снова.</p><button class="btn o" id="logout2">Выйти из админки</button></div>';
 }
 
 /* ===== ПОДКЛЮЧЕНИЕ ===== */
@@ -712,14 +696,14 @@ document.addEventListener('click',function(e){
       if(a.length<6) return toast('Пароль — минимум 6 символов');
       if(a!==b2) return toast('Пароли не совпадают');
       if(/[а-яё]/i.test(a)) return toast('Пароль только английскими буквами и цифрами');
-      return sha(a).then(function(h){ ls('sensei_pass_h',h); toast('Пароль изменён'); viewAdmin(); });
+      return Store.changePassword(a).then(function(){ toast('Пароль изменён. Войдите с новым паролем'); setTimeout(function(){Store.logout();location.reload();},1500); })
+        .catch(function(err){ toast('Не вышло: '+err.message); });
     }
-    case 'resetPass': ls('sensei_pass_h',null); toast('Пароль сброшен на стандартный'); return viewAdmin();
     case 'logout2': $('#exit').click(); return;
     case 'dlMenu': DATA.rev=(+DATA.rev||1)+1; touch(); return download(JSON.stringify(DATA,null,1),'menu.json','application/json'); // новая версия файла: сайт у всех возьмёт её вместо старых копий
     case 'takeNew': {
-      if(!confirm('Взять меню из файла сайта? Правки, сделанные в этом браузере, заменятся.'))return;
-      return Store.resetMenu().then(function(d){DATA=d;fileRev=d.rev;if(Store.isCloud())touch();toast('Готово');go('menu');})
+      if(!confirm('Заменить текущее меню на версию из файла сайта? Все правки из админки пропадут.'))return;
+      return Store.resetMenu().then(function(d){DATA=d;fileRev=d.rev;toast('Готово');go('menu');})
         .catch(function(err){toast('Не вышло: '+err.message);});
     }
     case 'c-save': {
