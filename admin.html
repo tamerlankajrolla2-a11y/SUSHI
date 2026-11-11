@@ -170,8 +170,9 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding
       <button role="tab" data-tab="orders" aria-selected="true">Заказы<span class="dot" id="dot" hidden></span></button>
       <button role="tab" data-tab="menu" aria-selected="false">Меню</button>
       <button role="tab" data-tab="promo" aria-selected="false">Акции</button>
+      <button role="tab" data-tab="about" aria-selected="false">О нас</button>
       <button role="tab" data-tab="settings" aria-selected="false">Настройки</button>
-      <button role="tab" data-tab="cloud" aria-selected="false">Подключение</button>
+      <button role="tab" data-tab="admin" aria-selected="false">Админка</button>
     </div>
   </header>
   <main class="wrap" id="view"></main>
@@ -185,7 +186,7 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding
 <input type="file" id="jsonFile" accept="application/json,.json" hidden>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="js/store.js?v=4"></script>
+<script src="js/store.js?v=5"></script>
 <script>
 (function(){
 'use strict';
@@ -197,6 +198,8 @@ function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');cle
 function getPath(o,p){return p.split('.').reduce(function(a,k){return a==null?a:a[k];},o);}
 function setPath(o,p,v){var a=p.split('.');for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v;}
 
+var PASS_H='c209cab06004063d5203407b0895a183a88a248aa45062b9c94da73dd63a07e5'; // sha-256 стандартного пароля
+function sha(t){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');});}
 var DATA=null, tab='orders', orders=[], seen=ls('sensei_seen')||[], timer=null, fileRev=0;
 var mCat='sets', mQ='', oSt='all', oPer='today', oQ='';
 
@@ -206,11 +209,11 @@ function showGate(){
   var cloud=Store.isCloud();
   $('#gateHint').textContent=cloud
     ? 'Вход по почте и паролю, которые заведены в базе.'
-    : 'Введите код доступа. Сайт работает без базы, поэтому код — простая защита от случайных людей.';
+    : 'Введите пароль администратора.';
   $('#gateFields').innerHTML=cloud
     ? '<label class="fld">Почта<input id="gEmail" type="email" autocomplete="username"></label>'+
       '<label class="fld">Пароль<input id="gPass" type="password" autocomplete="current-password"></label>'
-    : '<label class="fld">Код доступа<input id="gPin" type="password" inputmode="numeric" autocomplete="current-password"></label>';
+    : '<label class="fld">Пароль <span class="muted">вводите английскими буквами</span><input id="gPin" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false"></label>';
   var f=$('#gateFields').querySelector('input'); if(f)f.focus();
 }
 function tryLogin(){
@@ -221,14 +224,15 @@ function tryLogin(){
     Store.login(e,p).then(boot).catch(function(err){toast('Не вышло: '+err.message);})
       .then(function(){$('#gateBtn').disabled=false;});
   }else{
-    var pin=ls('sensei_pin')||'1111';
-    if($('#gPin').value===String(pin)){ ls('sensei_local_ok',Date.now()); boot(); }
-    else toast('Неверный код');
+    sha($('#gPin').value.trim()).then(function(h){
+      if(h===(ls('sensei_pass_h')||PASS_H)){ ls('sensei_auth',Date.now()); boot(); }
+      else toast('Неверный пароль. Проверьте, что включена английская раскладка');
+    }).catch(function(){ toast('Браузер не поддерживает вход, откройте сайт в Chrome'); });
   }
 }
 function loggedIn(){
   if(Store.isCloud()) return Store.authed();
-  var t=ls('sensei_local_ok'); return !!(t && Date.now()-t < 12*36e5);
+  var t=ls('sensei_auth'); return !!(t && Date.now()-t < 12*36e5);
 }
 
 /* ===== запуск и сохранение ===== */
@@ -252,7 +256,7 @@ function touch(){
 if(loggedIn()) boot(); else showGate();
 $('#gateBtn').onclick=tryLogin;
 $('#gateFields').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
-$('#exit').onclick=function(){ Store.logout(); ls('sensei_local_ok',null); location.reload(); };
+$('#exit').onclick=function(){ Store.logout(); ls('sensei_auth',null); location.reload(); };
 $('#tabs').addEventListener('click',function(e){
   var b=e.target.closest('[data-tab]'); if(!b)return; go(b.dataset.tab);
 });
@@ -266,8 +270,9 @@ function render(){
   if(tab==='orders') viewOrders();
   else if(tab==='menu') viewMenu();
   else if(tab==='promo') viewPromo();
+  else if(tab==='about') viewAbout();
   else if(tab==='settings') viewSettings();
-  else viewCloud();
+  else viewAdmin();
 }
 
 /* ===== поля с привязкой к данным ===== */
@@ -574,10 +579,36 @@ function viewSettings(){
       F('Если цена не указана — что писать в корзине','settings.delivery.note',{ph:'доставку подтвердит оператор'})+
       F('Минимальная сумма заказа, ₸','settings.minOrder',{t:'num',im:'numeric',ph:'нет'})+
       '<p class="muted">Если указать цену доставки, корзина сама прибавит её к заказу и покажет, сколько осталось до бесплатной.</p></div>'+
-    '<h2 class="t">Код доступа в админку</h2>'+
-    '<div class="card"><label class="fld">Код (только для локального режима)<input id="s-pin" value="'+esc(ls('sensei_pin')||'1111')+'" inputmode="numeric"></label>'+
-      '<button class="btn o" id="savePin">Сменить код</button>'+
-      '<p class="muted" style="margin-top:9px">Код хранится в этом браузере и настоящей защитой не является: админка — обычная страница сайта. Настоящая защита появляется, когда подключена база, там вход по почте и паролю.</p></div>';
+'';
+}
+
+/* ===== О НАС ===== */
+function viewAbout(){
+  var a=DATA.about;
+  $('#view').innerHTML='<h2 class="t">О нас</h2>'+
+    '<div class="card">'+
+      SW('Показывать блок «О нас» на сайте','about.on')+
+      F('Заголовок','about.title',{ph:'О нас'})+
+      '<label class="fld">Текст<textarea data-b="about.text" rows="6" placeholder="Расскажите о себе: кто готовит, из чего, почему у вас вкусно">'+esc(a.text)+'</textarea></label>'+
+      F('Адрес / откуда доставка','about.address',{ph:'Петропавловск, ул. …',hint:'Пустое поле — адрес не показывается.'})+
+      F('Плюсы (через запятую)','about.points',{t:'list',ph:'🍣 Готовим после заказа, 🚚 Привозим горячим'})+
+      '<p class="muted">Часы работы, оплата, телефон и Instagram подставятся сами из «Настроек».</p>'+
+    '</div>';
+}
+
+/* ===== АДМИНКА ===== */
+function viewAdmin(){
+  viewCloud();
+  var own=!!ls('sensei_pass_h');
+  $('#view').insertAdjacentHTML('afterbegin',
+    '<h2 class="t">Админка</h2>'+
+    '<div class="card"><h3 class="c">🔑 Пароль для входа</h3>'+
+      '<p class="muted" style="margin-bottom:10px">Сейчас: '+(own?'свой пароль, заданный в этом браузере':'стандартный пароль')+'. Вводить английскими буквами.</p>'+
+      '<label class="fld">Новый пароль<input id="s-p1" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false"></label>'+
+      '<label class="fld">Ещё раз<input id="s-p2" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false"></label>'+
+      '<div class="row"><button class="btn o" id="savePass">Сменить пароль</button>'+(own?'<button class="btn o" id="resetPass">Вернуть стандартный</button>':'')+'</div>'+
+      '<p class="muted" style="margin-top:9px">Пока база не подключена, новый пароль действует только в этом браузере, на других устройствах — стандартный.</p></div>'+
+    '<div class="card"><h3 class="c">🚪 Выход</h3><p class="muted" style="margin-bottom:10px">Вход держится 12 часов, потом пароль спросят снова.</p><button class="btn o" id="logout2">Выйти из админки</button></div>');
 }
 
 /* ===== ПОДКЛЮЧЕНИЕ ===== */
@@ -602,7 +633,7 @@ var SQL='-- Выполните это в Supabase → SQL Editor (можно з�
 
 function viewCloud(){
   var c=Store.getCloud()||{};
-  $('#view').innerHTML='<h2 class="t">Подключение базы</h2>'+
+  $('#view').innerHTML='<h2 class="t" style="margin-top:18px">Подключение базы</h2>'+
     (Store.isCloud()
       ? '<div class="note">База подключена. Заказы приходят сюда с любого устройства, а правки меню сразу видны на сайте всем.</div>'
       : '<div class="warn">База не подключена. Сайт работает, заказы уходят в WhatsApp, но в админке их не видно, а правки меню сохраняются только в этом браузере.</div>')+
@@ -676,7 +707,15 @@ document.addEventListener('click',function(e){
     case 'manageCats': return manageCats();
     case 'c-add': DATA.cats.push({id:'c'+Date.now().toString(36),name:'Новый раздел',icon:'🍽',view:'list',sort:'manual',on:true}); touch(); return manageCats();
     case 'p-add': DATA.promo.codes.push({code:'',type:'percent',value:10,min:0,on:true}); touch(); return viewPromo();
-    case 'savePin': ls('sensei_pin',$('#s-pin').value.trim()||'1111'); return toast('Код изменён');
+    case 'savePass': {
+      var a=$('#s-p1').value.trim(), b2=$('#s-p2').value.trim();
+      if(a.length<6) return toast('Пароль — минимум 6 символов');
+      if(a!==b2) return toast('Пароли не совпадают');
+      if(/[а-яё]/i.test(a)) return toast('Пароль только английскими буквами и цифрами');
+      return sha(a).then(function(h){ ls('sensei_pass_h',h); toast('Пароль изменён'); viewAdmin(); });
+    }
+    case 'resetPass': ls('sensei_pass_h',null); toast('Пароль сброшен на стандартный'); return viewAdmin();
+    case 'logout2': $('#exit').click(); return;
     case 'dlMenu': DATA.rev=(+DATA.rev||1)+1; touch(); return download(JSON.stringify(DATA,null,1),'menu.json','application/json'); // новая версия файла: сайт у всех возьмёт её вместо старых копий
     case 'takeNew': {
       if(!confirm('Взять меню из файла сайта? Правки, сделанные в этом браузере, заменятся.'))return;

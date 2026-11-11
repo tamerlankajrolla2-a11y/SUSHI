@@ -92,6 +92,13 @@ window.Store = (function () {
     d.promo.mega.on = d.promo.mega.on !== false;
     d.promo.mega.add = +d.promo.mega.add || 0;
     if (d.promo.mega.title == null) d.promo.mega.title = 'Мега выгода';
+    // блок «О нас»
+    var ab = d.about = d.about || {};
+    ab.on = ab.on !== false;
+    if (ab.title == null) ab.title = 'О нас';
+    if (ab.text == null) ab.text = 'Sensei Sushi — суши, пицца и крылышки с доставкой по Петропавловску. Готовим каждый заказ и привозим горячим.';
+    ab.address = ab.address || '';
+    ab.points = Array.isArray(ab.points) ? ab.points : [];
     if (!s.delivery) s.delivery = { price: 0, freeFrom: 0, note: s.deliveryNote || 'доставку подтвердит оператор' };
     s.delivery.price = +s.delivery.price || 0;
     s.delivery.freeFrom = +s.delivery.freeFrom || 0;

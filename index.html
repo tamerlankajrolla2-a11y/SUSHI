@@ -217,6 +217,11 @@ a{color:inherit;text-decoration:none}
 .sums small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 .sums .fb{display:block;font-size:12.5px;color:var(--yel)}
 
+.about{margin-top:36px}
+.about h2{font-size:22px;font-weight:800;margin-bottom:10px}
+.about p{white-space:pre-line;color:#ddd8d0;font-size:15px;line-height:1.55;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.about-pts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.about-pts li{font-size:13.5px;padding:8px 12px;border-radius:12px;background:var(--s1);border:1px solid var(--line)}
 .foot{margin-top:40px;padding-top:22px;padding-bottom:12px;border-top:1px solid var(--line);display:grid;gap:14px;color:var(--muted);font-size:13.5px}
 .foot-top{display:flex;gap:12px;align-items:center}
 .foot-top img{width:48px;height:48px;border-radius:50%}
@@ -271,6 +276,12 @@ a{color:inherit;text-decoration:none}
   </section>
 </main>
 
+<section class="wrap about" id="about" hidden aria-labelledby="aboutT">
+  <h2 id="aboutT">О нас</h2>
+  <p id="aboutText"></p>
+  <ul class="about-pts" id="aboutPts"></ul>
+</section>
+
 <footer class="wrap foot">
   <div class="foot-top">
     <img src="img/logo.png" alt="" width="48" height="48">
@@ -291,12 +302,12 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<script src="js/store.js?v=4"></script>
+<script src="js/store.js?v=5"></script>
 <script>
 (function(){
 'use strict';
 
-var ITEMS=[], CATS=[], byId={}, catById={}, ST={}, PROMO={}, GIFT={}, MEGA=null, cat='', filter='all';
+var ITEMS=[], CATS=[], byId={}, catById={}, ST={}, PROMO={}, GIFT={}, MEGA=null, ABOUT=null, cat='', filter='all';
 var $=function(s){return document.querySelector(s);};
 var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
 var fmt=function(n){return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
@@ -312,6 +323,7 @@ Store.loadMenu().then(start).catch(function(){
 
 function start(data){
   ST=data.settings||{}; PROMO=data.promo||{}; GIFT=(PROMO.gift&&PROMO.gift.on&&PROMO.gift.title)?PROMO.gift:null;
+  ABOUT=data.about||null;
   MEGA=(PROMO.mega&&PROMO.mega.on&&PROMO.mega.add>0)?PROMO.mega:null;
   ITEMS=(data.items||[]).filter(function(s){return s.on!==false;});
   ITEMS.forEach(function(s){byId[s.id]=s;});
@@ -343,8 +355,20 @@ function paintChrome(){
   $('#fAbout').textContent='Суши, пицца и крылышки с доставкой'+(ST.city?' по '+$('#hCity').textContent:'')+'. Работаем '+(ST.open||'11:00')+'–'+(ST.close||'23:40')+'.';
   var links='<a href="'+wa+'" target="_blank" rel="noopener">💬 '+esc(ST.phone||ST.wa||'')+'</a>';
   if(ST.instagram) links+='<a href="'+esc(ST.instagram)+'" target="_blank" rel="noopener">📷 Instagram</a>';
-  $('#footLinks').innerHTML=links;
+
   if(ST.announce){var a=$('#announce');a.textContent=ST.announce;a.hidden=false;}
+  var AB=ABOUT;
+  if(AB&&AB.on&&(AB.text||AB.points.length)){
+    $('#aboutT').textContent=AB.title||'О нас';
+    $('#aboutText').textContent=AB.text||''; $('#aboutText').hidden=!AB.text;
+    var pts=(AB.points||[]).slice();
+    if(AB.address) pts.unshift('📍 '+AB.address);
+    pts.push('🕐 '+(ST.open||'11:00')+'–'+(ST.close||'23:40'));
+    if(ST.pay&&ST.pay.length) pts.push('💳 '+ST.pay.join(', '));
+    $('#aboutPts').innerHTML=pts.map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+    $('#about').hidden=false;
+  }
+  $('#footLinks').innerHTML=links;
 }
 
 /* ---------- разделы ---------- */
