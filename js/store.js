@@ -87,6 +87,11 @@ window.Store = (function () {
     d.promo = d.promo || {};
     if (!d.promo.gift) d.promo.gift = { on: !!s.gift, title: s.gift || 'Подарок при первом заказе', text: '' };
     d.promo.codes = d.promo.codes || [];
+    // «Мега выгода»: зачёркнутая цена = настоящая + add, надпись на всех товарах
+    if (!d.promo.mega) d.promo.mega = { on: true, title: 'Мега выгода', add: 2000 };
+    d.promo.mega.on = d.promo.mega.on !== false;
+    d.promo.mega.add = +d.promo.mega.add || 0;
+    if (d.promo.mega.title == null) d.promo.mega.title = 'Мега выгода';
     if (!s.delivery) s.delivery = { price: 0, freeFrom: 0, note: s.deliveryNote || 'доставку подтвердит оператор' };
     s.delivery.price = +s.delivery.price || 0;
     s.delivery.freeFrom = +s.delivery.freeFrom || 0;

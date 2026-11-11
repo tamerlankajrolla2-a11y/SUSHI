@@ -74,6 +74,9 @@ a{color:inherit;text-decoration:none}
 .card:hover .ph img{transform:scale(1.03)}
 .tag{position:absolute;left:8px;top:8px;max-width:calc(100% - 52px);font-size:11.5px;font-weight:700;padding:4px 8px;border-radius:99px;background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .tag.y{background:var(--yel);color:#1a1a1a}
+.mega{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 16px);font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:linear-gradient(90deg,#e3262f,#ff7a1a);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mega-d{display:inline-block;margin-top:7px;font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:5px 10px;border-radius:99px;background:linear-gradient(90deg,#e3262f,#ff7a1a);color:#fff}
+.price s{text-decoration-color:#ff5a5f;text-decoration-thickness:1.5px}
 .qtag{position:absolute;right:8px;top:8px;min-width:26px;height:26px;padding:0 7px;border-radius:99px;background:#fff;color:var(--red);font-size:13px;font-weight:800;display:grid;place-items:center}
 .ct{padding:10px 12px 0}
 .ct h3{font-size:16px;font-weight:700;line-height:1.2}
@@ -169,6 +172,9 @@ a{color:inherit;text-decoration:none}
 .promo i{font-style:normal;font-size:26px;line-height:1}
 .promo b{display:block;color:var(--yel);font-size:15.5px;line-height:1.2}
 .promo span{font-size:12.5px;color:#e6dfc9}
+.promo.mg{background:linear-gradient(90deg,rgba(227,38,47,.26),rgba(255,122,26,.07));border-color:rgba(255,90,70,.55)}
+.promo.mg b{color:#fff;text-transform:uppercase;letter-spacing:.03em}
+.sums .sv{color:var(--yel);font-weight:700;padding-top:8px!important}
 
 .cats{position:sticky;top:var(--hh,60px);z-index:15;background:rgba(12,12,14,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin-top:20px;border-bottom:1px solid var(--line)}
 .cats-in{display:flex;gap:7px;overflow-x:auto;padding:9px 16px;max-width:1120px;margin:0 auto;scrollbar-width:none}
@@ -191,6 +197,7 @@ a{color:inherit;text-decoration:none}
 .li .tx .price s{display:inline;margin-left:7px}
 .li .lt{font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:99px;background:var(--red);color:#fff;margin-left:6px;vertical-align:1px;white-space:nowrap}
 .li .lt.y{background:var(--yel);color:#1a1a1a}
+.li .lt.mg{background:linear-gradient(90deg,#e3262f,#ff7a1a);text-transform:uppercase;letter-spacing:.03em}
 .li .by{flex:none}
 .li .add{width:40px;height:40px;border-radius:12px;font-size:23px;font-weight:500;padding:0;line-height:1}
 .li .step{width:108px;grid-template-columns:36px 1fr 36px}
@@ -245,6 +252,7 @@ a{color:inherit;text-decoration:none}
       <li>🍣 Суши · 🍕 Пицца · 🍗 Крылышки</li>
       <li id="fHours">🕐 11:00–23:40</li>
     </ul>
+    <div class="promo mg" id="mega" hidden><i>⚡</i><div><b id="megaT"></b><span id="megaS"></span></div></div>
     <div class="promo" id="promo" hidden><i>🎁</i><div><b id="promoT"></b><span id="promoS"></span></div></div>
     <ol class="how" aria-label="Как заказать">
       <li><b>1</b><span id="how1">Выберите сет</span></li>
@@ -288,7 +296,7 @@ a{color:inherit;text-decoration:none}
 (function(){
 'use strict';
 
-var ITEMS=[], CATS=[], byId={}, catById={}, ST={}, PROMO={}, GIFT={}, cat='', filter='all';
+var ITEMS=[], CATS=[], byId={}, catById={}, ST={}, PROMO={}, GIFT={}, MEGA=null, cat='', filter='all';
 var $=function(s){return document.querySelector(s);};
 var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
 var fmt=function(n){return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
@@ -304,6 +312,7 @@ Store.loadMenu().then(start).catch(function(){
 
 function start(data){
   ST=data.settings||{}; PROMO=data.promo||{}; GIFT=(PROMO.gift&&PROMO.gift.on&&PROMO.gift.title)?PROMO.gift:null;
+  MEGA=(PROMO.mega&&PROMO.mega.on&&PROMO.mega.add>0)?PROMO.mega:null;
   ITEMS=(data.items||[]).filter(function(s){return s.on!==false;});
   ITEMS.forEach(function(s){byId[s.id]=s;});
   CATS=(data.cats||[]).filter(function(c){return c.on!==false&&ITEMS.some(function(i){return i.cat===c.id;});});
@@ -329,6 +338,7 @@ function paintChrome(){
   document.title=(ST.name||'Sensei Sushi')+' — доставка суши и пиццы'+(ST.city?', '+ST.city:'');
   $('#waTop').href=wa;
   $('#fHours').textContent='🕐 '+(ST.open||'11:00')+'–'+(ST.close||'23:40');
+  if(MEGA){$('#megaT').textContent=(MEGA.title||'Мега выгода')+' на всё меню';$('#megaS').textContent='Экономия от '+fmt(MEGA.add)+' на каждой позиции';$('#mega').hidden=false;}
   if(GIFT){$('#promoT').textContent=GIFT.title;$('#promoS').textContent=GIFT.text||'';$('#promo').hidden=false;}
   $('#fAbout').textContent='Суши, пицца и крылышки с доставкой'+(ST.city?' по '+$('#hCity').textContent:'')+'. Работаем '+(ST.open||'11:00')+'–'+(ST.close||'23:40')+'.';
   var links='<a href="'+wa+'" target="_blank" rel="noopener">💬 '+esc(ST.phone||ST.wa||'')+'</a>';
@@ -385,7 +395,14 @@ function buyHTML(id,compact){
           :'<button type="button" class="add" data-inc="'+id+'"'+(compact?' aria-label="Добавить в заказ">+':'>+ В заказ')+'</button>';
 }
 function chipsHTML(s){return s.chips.length?'<p class="chips">'+s.chips.map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</p>':'';}
-function priceHTML(s){return '<b class="price">'+fmt(s.price)+(s.old&&s.old>s.price?'<s>'+fmt(s.old)+'</s>':'')+'</b>';}
+// зачёркнутая цена: своя «старая цена» или, при «Мега выгоде», настоящая + сумма (берётся бóльшая)
+function oldOf(s){
+  var o=s.old>s.price?s.old:0;
+  if(MEGA&&s.price>0) o=Math.max(o,s.price+MEGA.add);
+  return o;
+}
+function megaLabel(){return MEGA?'⚡ '+esc(MEGA.title||'Мега выгода'):'';}
+function priceHTML(s){var o=oldOf(s);return '<b class="price">'+fmt(s.price)+(o?'<s>'+fmt(o)+'</s>':'')+'</b>';}
 function imgHTML(s){
   return s.img?'<img src="'+esc(s.img)+'" alt="'+esc(ttl(s))+'" width="480" height="600" loading="lazy">'
               :'<div class="noimg" aria-hidden="true">'+esc((catById[s.cat]||{}).icon||'🍣')+'</div>';
@@ -395,6 +412,7 @@ function cardHTML(s){
     '<button type="button" class="open" data-open="'+s.id+'" aria-label="'+esc(ttl(s))+', '+fmt(s.price)+' — открыть состав">'+
       '<div class="ph">'+imgHTML(s)+
         (s.tag?'<span class="tag '+(s.tagColor==='y'?'y':'')+'">'+esc(s.tag)+'</span>':'')+
+        (MEGA&&s.price>0?'<span class="mega">'+megaLabel()+'</span>':'')+
         '<span class="qtag"'+(cart[s.id]?'':' hidden')+'>×'+(cart[s.id]||'')+'</span></div>'+
       '<div class="ct"><h3>'+esc(s.name)+'</h3>'+chipsHTML(s)+
         '<p class="pr">'+priceHTML(s)+'<span class="more">'+(s.groups.length?'Состав':'Подробнее')+' ›</span></p></div>'+
@@ -407,6 +425,7 @@ function rowHTML(s){
   return '<article class="li'+(cart[s.id]?' in':'')+'" id="c-'+s.id+'">'+
     (s.img?'<button type="button" class="th" data-open="'+s.id+'" aria-label="'+esc(s.name)+' — подробнее"><img src="'+esc(s.img)+'" alt="" loading="lazy"></button>':'')+
     '<'+tag+' class="tx"><b>'+esc(s.name)+'</b>'+(s.tag?'<span class="lt '+(s.tagColor==='y'?'y':'')+'">'+esc(s.tag)+'</span>':'')+
+      (MEGA&&s.price>0?'<span class="lt mg">'+megaLabel()+'</span>':'')+
       (s.desc?'<small>'+esc(s.desc)+'</small>':'')+priceHTML(s)+'</'+(det?'button':'div')+'>'+
     '<div class="by" id="b-'+s.id+'">'+buyHTML(s.id,true)+'</div></article>';
 }
@@ -487,7 +506,7 @@ function showDetail(id){
   var s=byId[id]; view='detail'; cur=id;
   body.innerHTML='<div class="grab"></div>'+
     '<div class="d-top">'+(s.img?'<img src="'+esc(s.img)+'" alt="'+esc(ttl(s))+'">':'')+'<div><h3 id="sheetTitle">'+esc(ttl(s))+'</h3>'+
-    priceHTML(s)+chipsHTML(s)+'</div></div>'+
+    priceHTML(s)+(MEGA&&oldOf(s)?'<span class="mega-d">'+megaLabel()+' · −'+fmt(oldOf(s)-s.price)+'</span>':'')+chipsHTML(s)+'</div></div>'+
     (s.desc?'<p class="d-desc">'+esc(s.desc)+'</p>':'')+
     (s.groups||[]).map(function(g){
       return '<section class="grp"><h4>'+esc(g.icon||'')+' '+esc(g.title||'')+'</h4><ul>'+
@@ -553,6 +572,8 @@ function paintSums(){
   if(k.del!==null) h+='<div>Доставка<span>'+(k.del?fmt(k.del):'бесплатно')+'</span></div>';
   h+='<div class="tt"><div>Итого'+(k.del===null?'<small>'+esc(dl.note||'доставку подтвердит оператор')+'</small>':'')+'</div><span>'+fmt(k.total)+'</span></div>';
   if(k.del>0&&dl.freeFrom>0) h+='<span class="fb">До бесплатной доставки осталось '+fmt(dl.freeFrom-(k.sub-k.disc))+'</span>';
+  var save=Object.keys(cart).reduce(function(a,id){var s=byId[id],o=oldOf(s);return a+(o?(o-s.price)*cart[id]:0);},0);
+  if(MEGA&&save>0) h+='<div class="sv">⚡ Ваша выгода<span>'+fmt(save)+'</span></div>';
   $('#sums').innerHTML=h;
   var m=$('#codeMsg');
   if(m){
