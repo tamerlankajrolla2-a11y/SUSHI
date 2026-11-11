@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sensei Sushi — сеты с доставкой по Петропавловску</title>
-<meta name="description" content="Суши, пицца и крылышки с доставкой по Петропавловску. Сеты от 5 490 ₸. Заказ через WhatsApp. Работаем 11:00–23:40.">
+<meta name="description" content="Суши, пицца и крылышки с доставкой по Петропавловску. Сеты, роллы и пицца. Суши-бургер в подарок на первый заказ. Заказ через WhatsApp. Работаем 11:00–23:40.">
 <meta name="theme-color" content="#0c0c0e">
 <meta property="og:title" content="Sensei Sushi — Петропавловск">
 <meta property="og:description" content="Сеты: роллы, пицца, крылышки. Доставка по городу, заказ через WhatsApp.">
@@ -48,7 +48,6 @@ a{color:inherit;text-decoration:none}
 .intro h1{position:relative;font-size:clamp(26px,6.6vw,42px);line-height:1.06;font-weight:800;letter-spacing:-.01em;margin-top:6px;max-width:15em}
 .facts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .facts li{font-size:13px;padding:7px 11px;border-radius:99px;background:var(--s1);border:1px solid var(--line)}
-.facts .gift{border-color:rgba(255,210,63,.4);color:var(--yel)}
 .how{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;max-width:620px}
 .how li{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12.5px;line-height:1.3;color:#d9d4cc}
 .how b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;margin-bottom:6px}
@@ -141,8 +140,6 @@ a{color:inherit;text-decoration:none}
 .ci .n b{display:block;font-size:14.5px;font-weight:600}
 .ci .n small{color:var(--muted);font-size:12.5px}
 .ci .step{width:112px;height:36px;grid-template-columns:36px 1fr 36px;flex:none}
-.total{display:flex;justify-content:space-between;align-items:center;padding:12px 0 2px;border-top:1px solid var(--line);font-weight:800;font-size:19px}
-.total small{display:block;font-weight:400;color:var(--muted);font-size:12px}
 .closed{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(255,90,95,.1);border:1px solid rgba(255,90,95,.35);font-size:13.5px;color:#ffb3b5}
 .f{display:grid;gap:12px;margin-top:14px}
 .f label,.lbl{display:grid;gap:5px;font-size:13px;color:var(--muted)}
@@ -168,6 +165,51 @@ a{color:inherit;text-decoration:none}
 .empty div{font-size:44px;margin-bottom:8px}
 .empty .big{margin-top:16px}
 
+.promo{display:flex;align-items:center;gap:11px;margin-top:12px;padding:11px 13px;border-radius:14px;background:linear-gradient(90deg,rgba(255,210,63,.17),rgba(255,210,63,.05));border:1px solid rgba(255,210,63,.42);max-width:620px}
+.promo i{font-style:normal;font-size:26px;line-height:1}
+.promo b{display:block;color:var(--yel);font-size:15.5px;line-height:1.2}
+.promo span{font-size:12.5px;color:#e6dfc9}
+
+.cats{position:sticky;top:var(--hh,60px);z-index:15;background:rgba(12,12,14,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin-top:20px;border-bottom:1px solid var(--line)}
+.cats-in{display:flex;gap:7px;overflow-x:auto;padding:9px 16px;max-width:1120px;margin:0 auto;scrollbar-width:none}
+.cats-in::-webkit-scrollbar{display:none}
+.cats button{flex:none;height:38px;padding:0 14px;border-radius:99px;background:var(--s1);border:1px solid var(--line);font-size:14px;white-space:nowrap}
+.cats button[aria-selected=true]{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.cats + section .head{margin-top:18px}
+
+.noimg{width:100%;height:100%;display:grid;place-items:center;font-size:54px;background:linear-gradient(160deg,#1f1f25,#17171b)}
+.list{display:grid;gap:8px}
+@media(min-width:720px){.list{grid-template-columns:1fr 1fr;gap:10px}}
+.li{display:flex;align-items:center;gap:11px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 12px;min-height:72px}
+.li.in{border-color:rgba(227,38,47,.7)}
+.li .th{width:60px;height:60px;border-radius:10px;overflow:hidden;flex:none;background:var(--s2)}
+.li .th img{width:100%;height:100%;object-fit:cover}
+.li .tx{flex:1;min-width:0;text-align:left;display:block}
+.li .tx b{font-size:15px;font-weight:600;line-height:1.25}
+.li .tx small{color:var(--muted);font-size:12.5px;line-height:1.3;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.li .tx .price{display:block;font-size:15px;margin-top:4px}
+.li .tx .price s{display:inline;margin-left:7px}
+.li .lt{font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:99px;background:var(--red);color:#fff;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.li .lt.y{background:var(--yel);color:#1a1a1a}
+.li .by{flex:none}
+.li .add{width:40px;height:40px;border-radius:12px;font-size:23px;font-weight:500;padding:0;line-height:1}
+.li .step{width:108px;grid-template-columns:36px 1fr 36px}
+.d-desc{margin-top:12px;font-size:14px;color:#ddd8d0}
+
+.giftline{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line);color:var(--yel);font-size:14.5px}
+.giftline span{margin-left:auto;font-weight:700}
+.codebox{display:grid;grid-template-columns:1fr auto;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+.codebox input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:16px;padding:11px 13px;text-transform:uppercase}
+.codebox input:focus{outline:0;border-color:var(--red)}
+.codebox button{height:46px;padding:0 14px;border-radius:12px;background:var(--s2);font-weight:600;font-size:14px}
+.codemsg{font-size:12.5px;margin-top:6px;color:var(--ok)}
+.codemsg.no{color:#ff8a8d}
+.sums{border-top:1px solid var(--line);margin-top:10px;padding-top:8px}
+.sums > div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:3px 0;font-size:14px;color:#ddd8d0}
+.sums .tt{font-weight:800;font-size:19px;color:var(--text);padding-top:8px}
+.sums small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.sums .fb{display:block;font-size:12.5px;color:var(--yel)}
+
 .foot{margin-top:40px;padding-top:22px;padding-bottom:12px;border-top:1px solid var(--line);display:grid;gap:14px;color:var(--muted);font-size:13.5px}
 .foot-top{display:flex;gap:12px;align-items:center}
 .foot-top img{width:48px;height:48px;border-radius:50%}
@@ -179,7 +221,7 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
 
-<header class="bar">
+<header class="bar" id="bar">
   <div class="wrap bar-in">
     <a class="brand" href="#" aria-label="Sensei Sushi — наверх">
       <img src="img/logo.png" alt="" width="40" height="40">
@@ -198,23 +240,25 @@ a{color:inherit;text-decoration:none}
   <section class="wrap intro">
     <svg class="enso" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="none" stroke="#e3262f" stroke-width="16" stroke-linecap="round" stroke-dasharray="440 70" transform="rotate(-70 100 100)"/></svg>
     <p class="eyebrow">Сделано мастером</p>
-    <h1>Сеты с доставкой по <span id="hCity">Петропавловску</span></h1>
+    <h1><span id="hWhat">Сеты</span> с доставкой по <span id="hCity">Петропавловску</span></h1>
     <ul class="facts">
       <li>🍣 Суши · 🍕 Пицца · 🍗 Крылышки</li>
       <li id="fHours">🕐 11:00–23:40</li>
-      <li class="gift" id="fGift">🎁 Подарок при первом заказе</li>
     </ul>
+    <div class="promo" id="promo" hidden><i>🎁</i><div><b id="promoT"></b><span id="promoS"></span></div></div>
     <ol class="how" aria-label="Как заказать">
-      <li><b>1</b>Выберите сет</li>
+      <li><b>1</b><span id="how1">Выберите сет</span></li>
       <li><b>2</b>Нажмите «В заказ»</li>
       <li><b>3</b>Отправьте заказ в WhatsApp</li>
     </ol>
   </section>
 
-  <section class="wrap" aria-labelledby="sets-title">
+  <nav class="cats" id="cats" aria-label="Разделы меню" hidden><div class="cats-in" id="catsIn" role="tablist"></div></nav>
+
+  <section class="wrap" aria-labelledby="sets-title" id="menu">
     <div class="head"><h2 id="sets-title">Сеты</h2><span id="range"></span></div>
-    <p class="legend">🍣 — роллов в сете, 🍕 — пицц, 🍗 — крылышек. Нажмите на сет, чтобы увидеть весь состав.</p>
-    <div class="filters" id="filters" role="group" aria-label="Фильтры"></div>
+    <p class="legend" id="legend" hidden>🍣 — роллов в сете, 🍕 — пицц, 🍗 — крылышек. Нажмите на сет, чтобы увидеть весь состав.</p>
+    <div class="filters" id="filters" role="group" aria-label="Фильтры" hidden></div>
     <div class="grid" id="grid"><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
   </section>
 </main>
@@ -244,14 +288,14 @@ a{color:inherit;text-decoration:none}
 (function(){
 'use strict';
 
-var SETS=[], byId={}, ST={}, filter='all';
+var ITEMS=[], CATS=[], byId={}, catById={}, ST={}, PROMO={}, GIFT={}, cat='', filter='all';
 var $=function(s){return document.querySelector(s);};
 var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
-var fmt=function(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
+var fmt=function(n){return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₸';};
 var mins=function(t){var p=String(t||'0:0').split(':');return (+p[0])*60+(+p[1]);};
 
 function ls(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
-var cart=ls('sensei_cart')||{}, draft=ls('sensei_client')||{};
+var cart=ls('sensei_cart')||{}, draft=ls('sensei_client')||{}, code=ls('sensei_code')||'', firstOrder=false;
 
 /* ---------- старт ---------- */
 Store.loadMenu().then(start).catch(function(){
@@ -259,37 +303,53 @@ Store.loadMenu().then(start).catch(function(){
 });
 
 function start(data){
-  ST=data.settings||{};
-  SETS=(data.sets||[]).filter(function(s){return s.on!==false;}).sort(function(a,b){return a.price-b.price;});
-  SETS.forEach(function(s){byId[s.id]=s;});
+  ST=data.settings||{}; PROMO=data.promo||{}; GIFT=(PROMO.gift&&PROMO.gift.on&&PROMO.gift.title)?PROMO.gift:null;
+  ITEMS=(data.items||[]).filter(function(s){return s.on!==false;});
+  ITEMS.forEach(function(s){byId[s.id]=s;});
+  CATS=(data.cats||[]).filter(function(c){return c.on!==false&&ITEMS.some(function(i){return i.cat===c.id;});});
+  CATS.forEach(function(c){catById[c.id]=c;});
+  cat=CATS.length?CATS[0].id:'';
   Object.keys(cart).forEach(function(id){if(!byId[id]||!(cart[id]>0))delete cart[id];});
   ls('sensei_cart',cart);
-  paintChrome(); paintFilters(); paintGrid(); paintStatus(); paintBar();
+  paintChrome(); paintCats(); paintSection(); paintStatus(); paintBar();
   setInterval(paintStatus,60000);
+  fitHeader(); window.addEventListener('resize',fitHeader);
 }
+function fitHeader(){document.documentElement.style.setProperty('--hh',$('#bar').offsetHeight+'px');}
+function ttl(s){return s.cat==='sets'?'Сет «'+s.name+'»':s.name;}
 
 function paintChrome(){
-  var wa='https://wa.me/'+(ST.wa||'');
+  var wa='https://wa.me/'+(ST.wa||''), many=CATS.length>1;
   $('#bName').textContent=ST.name||'SENSEI SUSHI';
   $('#fName').textContent=ST.name||'SENSEI SUSHI';
   $('#bCity').textContent=ST.city||'';
   $('#hCity').textContent=ST.city?(ST.city.replace(/вск$/,'вску')):'городу';
-  document.title=(ST.name||'Sensei Sushi')+' — сеты с доставкой';
+  $('#hWhat').textContent=many?'Суши, пицца и сеты':'Сеты';
+  $('#how1').textContent=many?'Выберите блюда':'Выберите сет';
+  document.title=(ST.name||'Sensei Sushi')+' — доставка суши и пиццы'+(ST.city?', '+ST.city:'');
   $('#waTop').href=wa;
   $('#fHours').textContent='🕐 '+(ST.open||'11:00')+'–'+(ST.close||'23:40');
-  if(ST.gift){$('#fGift').textContent='🎁 '+ST.gift;}else{$('#fGift').hidden=true;}
+  if(GIFT){$('#promoT').textContent=GIFT.title;$('#promoS').textContent=GIFT.text||'';$('#promo').hidden=false;}
   $('#fAbout').textContent='Суши, пицца и крылышки с доставкой'+(ST.city?' по '+$('#hCity').textContent:'')+'. Работаем '+(ST.open||'11:00')+'–'+(ST.close||'23:40')+'.';
   var links='<a href="'+wa+'" target="_blank" rel="noopener">💬 '+esc(ST.phone||ST.wa||'')+'</a>';
   if(ST.instagram) links+='<a href="'+esc(ST.instagram)+'" target="_blank" rel="noopener">📷 Instagram</a>';
   $('#footLinks').innerHTML=links;
   if(ST.announce){var a=$('#announce');a.textContent=ST.announce;a.hidden=false;}
-  if(SETS.length){
-    var p=SETS.map(function(s){return s.price;});
-    $('#range').textContent='от '+fmt(Math.min.apply(null,p))+' до '+fmt(Math.max.apply(null,p));
-  }
 }
 
-/* ---------- фильтры ---------- */
+/* ---------- разделы ---------- */
+function paintCats(){
+  var nav=$('#cats'); nav.hidden=CATS.length<2;
+  $('#catsIn').innerHTML=CATS.map(function(c){
+    return '<button type="button" role="tab" data-cat="'+esc(c.id)+'" aria-selected="'+(c.id===cat)+'">'+(c.icon?esc(c.icon)+' ':'')+esc(c.name)+'</button>';
+  }).join('');
+}
+function catItems(){
+  var c=catById[cat]; if(!c) return [];
+  var l=ITEMS.filter(function(i){return i.cat===cat;});
+  if(c.sort==='price') l=l.slice().sort(function(a,b){return a.price-b.price;});
+  return l;
+}
 var FILTERS=[
   {k:'all',t:'Все',f:function(){return true;}},
   {k:'hit',t:'🔥 Хиты',f:function(s){return !!s.tag;}},
@@ -298,60 +358,95 @@ var FILTERS=[
   {k:'pizza',t:'🍕 От 2 пицц',f:function(s){return /🍕\s*[2-9]/.test(s.chips.join(' '));}},
   {k:'big',t:'👑 Для компании',f:function(s){return s.price>=9000;}}
 ];
-function paintFilters(){
-  $('#filters').innerHTML=FILTERS.map(function(f){
-    var n=SETS.filter(f.f).length;
-    return n?'<button type="button" data-f="'+f.k+'" aria-pressed="'+(filter===f.k)+'">'+f.t+' <span style="opacity:.6">'+n+'</span></button>':'';
-  }).join('');
+function paintSection(){
+  var c=catById[cat], all=catItems(), isSets=cat==='sets', cards=c&&c.view==='cards';
+  if(!c){$('#grid').innerHTML='<p class="nores">Меню скоро появится. Напишите нам в WhatsApp.</p>';$('#grid').className='';return;}
+  $('#sets-title').textContent=c.name;
+  var p=all.map(function(s){return s.price;});
+  $('#range').textContent=(cards&&all.length>1)?('от '+fmt(Math.min.apply(null,p))+' до '+fmt(Math.max.apply(null,p))):'';
+  $('#legend').hidden=!isSets;
+  var fl=$('#filters'); fl.hidden=!(isSets&&all.length>6);
+  if(!fl.hidden){
+    fl.innerHTML=FILTERS.map(function(f){
+      var n=all.filter(f.f).length;
+      return n?'<button type="button" data-f="'+f.k+'" aria-pressed="'+(filter===f.k)+'">'+f.t+' <span style="opacity:.6">'+n+'</span></button>':'';
+    }).join('');
+  }
+  var list=all;
+  if(!fl.hidden){var f=FILTERS.filter(function(x){return x.k===filter;})[0]||FILTERS[0];list=all.filter(f.f);}
+  var g=$('#grid'); g.className=cards?'grid':'list';
+  g.innerHTML=list.length?list.map(cards?cardHTML:rowHTML).join(''):'<p class="nores">Здесь пока пусто — попробуйте другой фильтр.</p>';
 }
 
-/* ---------- карточки ---------- */
-function buyHTML(id){
+/* ---------- карточки и строки ---------- */
+function buyHTML(id,compact){
   var q=cart[id]||0;
   return q?'<div class="step"><button type="button" data-dec="'+id+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+id+'" aria-label="Добавить ещё">+</button></div>'
-          :'<button type="button" class="add" data-inc="'+id+'">+ В заказ</button>';
+          :'<button type="button" class="add" data-inc="'+id+'"'+(compact?' aria-label="Добавить в заказ">+':'>+ В заказ')+'</button>';
 }
-function chipsHTML(s){return '<p class="chips">'+s.chips.map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</p>';}
+function chipsHTML(s){return s.chips.length?'<p class="chips">'+s.chips.map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</p>':'';}
 function priceHTML(s){return '<b class="price">'+fmt(s.price)+(s.old&&s.old>s.price?'<s>'+fmt(s.old)+'</s>':'')+'</b>';}
+function imgHTML(s){
+  return s.img?'<img src="'+esc(s.img)+'" alt="'+esc(ttl(s))+'" width="480" height="600" loading="lazy">'
+              :'<div class="noimg" aria-hidden="true">'+esc((catById[s.cat]||{}).icon||'🍣')+'</div>';
+}
 function cardHTML(s){
   return '<article class="card'+(cart[s.id]?' in':'')+'" id="c-'+s.id+'">'+
-    '<button type="button" class="open" data-open="'+s.id+'" aria-label="Сет '+esc(s.name)+', '+fmt(s.price)+' — открыть состав">'+
-      '<div class="ph"><img src="'+esc(s.img)+'" alt="Сет «'+esc(s.name)+'»" width="480" height="600" loading="lazy">'+
+    '<button type="button" class="open" data-open="'+s.id+'" aria-label="'+esc(ttl(s))+', '+fmt(s.price)+' — открыть состав">'+
+      '<div class="ph">'+imgHTML(s)+
         (s.tag?'<span class="tag '+(s.tagColor==='y'?'y':'')+'">'+esc(s.tag)+'</span>':'')+
         '<span class="qtag"'+(cart[s.id]?'':' hidden')+'>×'+(cart[s.id]||'')+'</span></div>'+
       '<div class="ct"><h3>'+esc(s.name)+'</h3>'+chipsHTML(s)+
-        '<p class="pr">'+priceHTML(s)+'<span class="more">Состав ›</span></p></div>'+
+        '<p class="pr">'+priceHTML(s)+'<span class="more">'+(s.groups.length?'Состав':'Подробнее')+' ›</span></p></div>'+
     '</button>'+
     '<div class="buy" id="b-'+s.id+'">'+buyHTML(s.id)+'</div></article>';
 }
-function paintGrid(){
-  var f=FILTERS.filter(function(x){return x.k===filter;})[0]||FILTERS[0];
-  var list=SETS.filter(f.f);
-  $('#grid').innerHTML=list.length?list.map(cardHTML).join(''):'<p class="nores">Здесь пока пусто — попробуйте другой фильтр.</p>';
+function hasDetail(s){return !!(s.img||s.groups.length||s.note||s.desc.length>70);}
+function rowHTML(s){
+  var det=hasDetail(s), tag=det?'button type="button" data-open="'+s.id+'"':'div';
+  return '<article class="li'+(cart[s.id]?' in':'')+'" id="c-'+s.id+'">'+
+    (s.img?'<button type="button" class="th" data-open="'+s.id+'" aria-label="'+esc(s.name)+' — подробнее"><img src="'+esc(s.img)+'" alt="" loading="lazy"></button>':'')+
+    '<'+tag+' class="tx"><b>'+esc(s.name)+'</b>'+(s.tag?'<span class="lt '+(s.tagColor==='y'?'y':'')+'">'+esc(s.tag)+'</span>':'')+
+      (s.desc?'<small>'+esc(s.desc)+'</small>':'')+priceHTML(s)+'</'+(det?'button':'div')+'>'+
+    '<div class="by" id="b-'+s.id+'">'+buyHTML(s.id,true)+'</div></article>';
 }
-function paintCard(id){
+function paintItem(id){
   var c=document.getElementById('c-'+id); if(!c) return;
   var q=cart[id]||0;
-  document.getElementById('b-'+id).innerHTML=buyHTML(id);
+  document.getElementById('b-'+id).innerHTML=buyHTML(id,c.classList.contains('li'));
   c.classList.toggle('in',q>0);
-  var t=c.querySelector('.qtag'); t.hidden=!q; t.textContent='×'+q;
+  var t=c.querySelector('.qtag'); if(t){t.hidden=!q; t.textContent='×'+q;}
 }
 
-/* ---------- корзина ---------- */
+/* ---------- корзина и расчёт ---------- */
 function count(){return Object.keys(cart).reduce(function(a,id){return a+cart[id];},0);}
-function total(){return Object.keys(cart).reduce(function(a,id){return a+cart[id]*byId[id].price;},0);}
+function subtotal(){return Object.keys(cart).reduce(function(a,id){return a+cart[id]*byId[id].price;},0);}
+function findCode(){
+  if(!code) return null;
+  return (PROMO.codes||[]).filter(function(x){return x.on!==false&&String(x.code||'').trim().toLowerCase()===code.toLowerCase();})[0]||null;
+}
+function calc(){
+  var sub=subtotal(), c=findCode(), disc=0, msg='';
+  if(c){
+    if(sub>=(+c.min||0)) disc=c.type==='sum'?Math.min(+c.value||0,sub):Math.round(sub*(+c.value||0)/100);
+    else msg='Промокод действует при заказе от '+fmt(c.min);
+  }else if(code){msg='Такого промокода нет';}
+  var dl=ST.delivery||{}, del=null;
+  if(dl.price>0) del=(dl.freeFrom>0&&sub-disc>=dl.freeFrom)?0:dl.price;
+  return {sub:sub,disc:disc,del:del,total:sub-disc+(del||0),code:c,msg:msg};
+}
 function paintBar(bump){
   var n=count(),bar=$('#cartbar');
   bar.classList.toggle('show',n>0&&!sheetOpen);
-  $('#cnt').textContent=n; $('#sum').textContent=fmt(total());
+  $('#cnt').textContent=n; $('#sum').textContent=fmt(subtotal());
   if(bump){bar.classList.remove('bump');void bar.offsetWidth;bar.classList.add('bump');}
 }
 function setQty(id,q){
-  q=Math.max(0,Math.min(20,q));
+  q=Math.max(0,Math.min(30,q));
   var up=q>(cart[id]||0);
   if(q)cart[id]=q; else delete cart[id];
   ls('sensei_cart',cart);
-  paintCard(id); paintBar(up);
+  paintItem(id); paintBar(up);
   if(view==='detail'&&cur===id) paintDetailCta();
   if(view==='cart') paintItems();
 }
@@ -391,8 +486,9 @@ function paintStatus(){
 function showDetail(id){
   var s=byId[id]; view='detail'; cur=id;
   body.innerHTML='<div class="grab"></div>'+
-    '<div class="d-top"><img src="'+esc(s.img)+'" alt="Сет «'+esc(s.name)+'»"><div><h3 id="sheetTitle">Сет «'+esc(s.name)+'»</h3>'+
+    '<div class="d-top">'+(s.img?'<img src="'+esc(s.img)+'" alt="'+esc(ttl(s))+'">':'')+'<div><h3 id="sheetTitle">'+esc(ttl(s))+'</h3>'+
     priceHTML(s)+chipsHTML(s)+'</div></div>'+
+    (s.desc?'<p class="d-desc">'+esc(s.desc)+'</p>':'')+
     (s.groups||[]).map(function(g){
       return '<section class="grp"><h4>'+esc(g.icon||'')+' '+esc(g.title||'')+'</h4><ul>'+
         (g.items||[]).map(function(i){return '<li>'+esc(i[0])+'<span>'+esc(i[1])+'</span></li>';}).join('')+'</ul></section>';
@@ -405,17 +501,18 @@ function paintDetailCta(){
   var s=byId[cur],q=cart[cur]||0,el=$('#dcta'); if(!el)return;
   el.innerHTML=q
     ?'<div class="row2"><div class="step"><button type="button" data-dec="'+cur+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+cur+'" aria-label="Добавить ещё">+</button></div>'+
-     '<button type="button" class="big" data-cart>Оформить · '+fmt(total())+'</button></div>'
+     '<button type="button" class="big" data-cart>Оформить · '+fmt(subtotal())+'</button></div>'
     :'<button type="button" class="big" data-inc="'+cur+'">Добавить в заказ · '+fmt(s.price)+'</button>';
 }
 
 function showCart(){
   view='cart';
   if(!count()) return showEmpty();
-  var o=isOpenNow();
+  var o=isOpenNow(), hasCodes=(PROMO.codes||[]).some(function(x){return x.on!==false&&x.code;});
   body.innerHTML='<div class="grab"></div><h3 class="h3" id="sheetTitle">Ваш заказ</h3>'+
-    '<div id="items"></div>'+
-    '<div class="total"><div>Итого<small>'+esc(ST.deliveryNote||'доставку подтвердит оператор')+'</small></div><span id="tot"></span></div>'+
+    '<div id="items"></div><div id="giftline"></div>'+
+    (hasCodes?'<div class="codebox"><input id="codeIn" placeholder="Промокод" maxlength="24" autocapitalize="characters" autocomplete="off" aria-label="Промокод" value="'+esc(code)+'"><button type="button" id="codeBtn">Применить</button></div><p class="codemsg" id="codeMsg" hidden></p>':'')+
+    '<div class="sums" id="sums"></div>'+
     (ST.paused?'<p class="closed">Приём заказов временно на паузе. Напишите нам в WhatsApp — подскажем, когда возобновим.</p>'
       :(o?'':'<p class="closed">Сейчас мы закрыты. Оформите предзаказ — привезём после '+esc(ST.open||'')+' или ко времени.</p>'))+
     '<form class="f" id="form" novalidate>'+
@@ -430,10 +527,10 @@ function showCart(){
         (ST.pay||['Kaspi','Наличными']).map(function(p,i){
           return '<label><input type="radio" name="pay" value="'+esc(p)+'"'+(i?'':' checked')+'><span>'+esc(p)+'</span></label>';}).join('')+
       '</div></div>'+
-      (ST.gift?'<label class="chk"><input type="checkbox" name="first"> 🎁 Это мой первый заказ — хочу подарок</label>':'')+
+      (GIFT?'<label class="chk"><input type="checkbox" name="first"'+(firstOrder?' checked':'')+'> 🎁 Это мой первый заказ — '+esc(GIFT.title.charAt(0).toLowerCase()+GIFT.title.slice(1))+'</label>':'')+
       '<label>Комментарий<textarea name="comment" rows="2" maxlength="300" placeholder="Например: позвонить за 10 минут"></textarea></label>'+
-      '<button class="big wa-big" type="submit">Отправить заказ в WhatsApp</button>'+
-      '<p class="hint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить».</p>'+
+      '<button class="big wa-big" type="submit" id="sendBtn">Отправить заказ в WhatsApp</button>'+
+      '<p class="hint" id="sendHint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить».</p>'+
     '</form>';
   var f=$('#form');
   ['name','phone','address'].forEach(function(k){if(draft[k])f[k].value=draft[k];});
@@ -443,15 +540,32 @@ function paintItems(){
   if(!count()) return showEmpty();
   $('#items').innerHTML=Object.keys(cart).map(function(id){
     var s=byId[id],q=cart[id];
-    return '<div class="ci"><img src="'+esc(s.img)+'" alt=""><div class="n"><b>Сет «'+esc(s.name)+'»</b><small>'+fmt(s.price)+(q>1?' × '+q:'')+'</small></div>'+
+    return '<div class="ci">'+(s.img?'<img src="'+esc(s.img)+'" alt="">':'')+'<div class="n"><b>'+esc(ttl(s))+'</b><small>'+fmt(s.price)+(q>1?' × '+q:'')+'</small></div>'+
       '<div class="step"><button type="button" data-dec="'+id+'" aria-label="Убрать один">−</button><b>'+q+'</b><button type="button" data-inc="'+id+'" aria-label="Добавить ещё">+</button></div></div>';
   }).join('');
-  $('#tot').textContent=fmt(total());
+  paintSums();
+}
+function paintSums(){
+  var k=calc(), dl=ST.delivery||{}, h='';
+  $('#giftline').innerHTML=(GIFT&&firstOrder)?'<div class="giftline">🎁 '+esc(GIFT.title)+'<span>0 ₸</span></div>':'';
+  if(k.disc||k.del!==null) h+='<div>Сумма<span>'+fmt(k.sub)+'</span></div>';
+  if(k.disc) h+='<div>Промокод '+esc(code.toUpperCase())+'<span>−'+fmt(k.disc)+'</span></div>';
+  if(k.del!==null) h+='<div>Доставка<span>'+(k.del?fmt(k.del):'бесплатно')+'</span></div>';
+  h+='<div class="tt"><div>Итого'+(k.del===null?'<small>'+esc(dl.note||'доставку подтвердит оператор')+'</small>':'')+'</div><span>'+fmt(k.total)+'</span></div>';
+  if(k.del>0&&dl.freeFrom>0) h+='<span class="fb">До бесплатной доставки осталось '+fmt(dl.freeFrom-(k.sub-k.disc))+'</span>';
+  $('#sums').innerHTML=h;
+  var m=$('#codeMsg');
+  if(m){
+    if(code){m.hidden=false;m.className='codemsg'+(k.disc?'':' no');m.textContent=k.disc?('Промокод применён: −'+fmt(k.disc)):k.msg;}
+    else m.hidden=true;
+  }
+  var low=ST.minOrder>0&&k.sub<ST.minOrder, btn=$('#sendBtn');
+  if(btn){btn.disabled=low; $('#sendHint').textContent=low?('Минимальный заказ — '+fmt(ST.minOrder)+'. Добавьте ещё на '+fmt(ST.minOrder-k.sub)+'.'):'Откроется WhatsApp с готовым текстом — останется нажать «Отправить».';}
 }
 function showEmpty(){
   view='empty';
-  body.innerHTML='<div class="grab"></div><div class="empty"><div>🍣</div><h3 class="h3" id="sheetTitle" style="padding:0">Заказ пока пустой</h3><p>Выберите сет и нажмите «В заказ».</p>'+
-    '<button type="button" class="big" data-close>Выбрать сет</button></div>';
+  body.innerHTML='<div class="grab"></div><div class="empty"><div>🍣</div><h3 class="h3" id="sheetTitle" style="padding:0">Заказ пока пустой</h3><p>Выберите блюда и нажмите «В заказ».</p>'+
+    '<button type="button" class="big" data-close>Перейти к меню</button></div>';
   openSheet();
 }
 function showDone(url){
@@ -473,7 +587,8 @@ function phonePretty(v){
 
 /* ---------- отправка ---------- */
 function submit(f){
-  var ok=true;
+  var ok=true, k=calc();
+  if(ST.minOrder>0&&k.sub<ST.minOrder) return;
   function check(id,good){document.getElementById(id).classList.toggle('bad',!good);if(!good&&ok){ok=false;var i=document.querySelector('#'+id+' input');if(i)i.focus();}}
   var name=f.name.value.trim(),phone=phoneDigits(f.phone.value),address=f.address.value.trim();
   var when=f.when.value,time=f.time.value;
@@ -484,15 +599,19 @@ function submit(f){
   if(!ok)return;
 
   draft={name:name,phone:f.phone.value,address:address}; ls('sensei_client',draft);
-  var items=Object.keys(cart).map(function(id){return {id:id,name:byId[id].name,price:byId[id].price,qty:cart[id]};});
+  var items=Object.keys(cart).map(function(id){return {id:id,name:ttl(byId[id]),price:byId[id].price,qty:cart[id]};});
   var whenTxt=when==='time'?('Ко времени: '+time):(isOpenNow()?'Как можно скорее':'Предзаказ, после открытия');
-  var first=!!(f.first&&f.first.checked), comment=f.comment.value.trim();
+  var gift=(GIFT&&firstOrder)?GIFT.title:'', comment=f.comment.value.trim();
 
   var L=['Здравствуйте! Заказ с сайта 🍣',''];
-  items.forEach(function(i){L.push('• Сет «'+i.name+'» × '+i.qty+' = '+fmt(i.price*i.qty));});
-  L.push('','Итого: '+fmt(total())+' (без доставки)','',
+  items.forEach(function(i){L.push('• '+i.name+' × '+i.qty+' = '+fmt(i.price*i.qty));});
+  if(gift) L.push('🎁 '+gift+' — первый заказ');
+  L.push('');
+  if(k.disc||k.del!==null) L.push('Сумма: '+fmt(k.sub));
+  if(k.disc) L.push('Промокод '+code.toUpperCase()+': −'+fmt(k.disc));
+  if(k.del!==null) L.push('Доставка: '+(k.del?fmt(k.del):'бесплатно'));
+  L.push('Итого: '+fmt(k.total)+(k.del===null?' (без доставки)':''),'',
     '👤 '+name,'📞 '+phonePretty(phone),'📍 '+address,'🕐 '+whenTxt,'💳 Оплата: '+f.pay.value);
-  if(first) L.push('🎁 Первый заказ — подарок');
   if(comment) L.push('💬 '+comment);
 
   var url='https://wa.me/'+(ST.wa||'')+'?text='+encodeURIComponent(L.join('\n'));
@@ -500,20 +619,29 @@ function submit(f){
   if(!w) location.href=url;
 
   Store.createOrder({name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
-    first:first,comment:comment,items:items,total:total()});
+    first:!!gift,comment:comment,items:items,total:k.total,
+    discount:k.disc,delivery:k.del,promo:k.disc?code.toUpperCase():'',gift:gift});
 
-  Object.keys(cart).forEach(function(id){delete cart[id];paintCard(id);});
-  ls('sensei_cart',cart);
+  Object.keys(cart).forEach(function(id){delete cart[id];paintItem(id);});
+  ls('sensei_cart',cart); firstOrder=false;
   showDone(url); paintBar();
 }
 
 /* ---------- события ---------- */
 document.addEventListener('click',function(e){
-  var t=e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],[data-f],#cartBtn');
+  var t=e.target.closest('[data-inc],[data-dec],[data-open],[data-close],[data-cart],[data-f],[data-cat],#cartBtn,#codeBtn');
   if(!t)return;
-  if(t.dataset.f!==undefined){
-    filter=t.dataset.f; paintFilters(); paintGrid();
-    document.getElementById('sets-title').scrollIntoView({block:'start'});
+  if(t.id==='codeBtn'){code=$('#codeIn').value.trim();ls('sensei_code',code);paintSums();}
+  else if(t.dataset.cat!==undefined){
+    cat=t.dataset.cat; filter='all'; paintCats(); paintSection();
+    var y=$('#cats').getBoundingClientRect().top+window.pageYOffset-$('#bar').offsetHeight;
+    if(window.pageYOffset>y) window.scrollTo(0,y);
+    var b=$('#catsIn [aria-selected=true]'); if(b&&b.scrollIntoView) b.scrollIntoView({block:'nearest',inline:'center'});
+  }
+  else if(t.dataset.f!==undefined){
+    filter=t.dataset.f; paintSection();
+    var top=$('#menu').getBoundingClientRect().top+window.pageYOffset-$('#bar').offsetHeight-($('#cats').hidden?0:$('#cats').offsetHeight);
+    if(window.pageYOffset>top) window.scrollTo(0,top);
   }
   else if(t.dataset.inc){setQty(t.dataset.inc,(cart[t.dataset.inc]||0)+1);}
   else if(t.dataset.dec){setQty(t.dataset.dec,(cart[t.dataset.dec]||0)-1);}
@@ -529,8 +657,12 @@ document.addEventListener('input',function(e){
 });
 document.addEventListener('change',function(e){
   if(e.target.name==='when'){var tw=$('#f-time');tw.hidden=e.target.value!=='time';if(!tw.hidden)e.target.form.time.focus();}
+  if(e.target.name==='first'){firstOrder=e.target.checked;paintSums();}
 });
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheetOpen)closeSheet();});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&sheetOpen)closeSheet();
+  if(e.key==='Enter'&&e.target.id==='codeIn'){e.preventDefault();$('#codeBtn').click();}
+});
 })();
 </script>
 </body>

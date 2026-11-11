@@ -1,5 +1,6 @@
 {
- "v": 1,
+ "v": 2,
+ "rev": 2,
  "settings": {
   "name": "SENSEI SUSHI",
   "city": "Петропавловск",
@@ -11,14 +12,76 @@
   "tz": 5,
   "announce": "",
   "paused": false,
-  "gift": "Подарок при первом заказе",
-  "deliveryNote": "доставку подтвердит оператор",
   "pay": [
    "Kaspi",
    "Наличными"
-  ]
+  ],
+  "delivery": {
+   "price": 0,
+   "freeFrom": 0,
+   "note": "доставку подтвердит оператор"
+  },
+  "minOrder": 0
  },
- "sets": [
+ "promo": {
+  "gift": {
+   "on": true,
+   "title": "Суши-бургер в подарок",
+   "text": "на первый заказ"
+  },
+  "codes": []
+ },
+ "cats": [
+  {
+   "id": "sets",
+   "name": "Сеты",
+   "icon": "🍱",
+   "view": "cards",
+   "sort": "price",
+   "on": true
+  },
+  {
+   "id": "rolls",
+   "name": "Роллы",
+   "icon": "🍣",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  },
+  {
+   "id": "pizza",
+   "name": "Пиццы",
+   "icon": "🍕",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  },
+  {
+   "id": "burgers",
+   "name": "Суши-бургеры",
+   "icon": "🍔",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  },
+  {
+   "id": "chicken",
+   "name": "Крылышки и закуски",
+   "icon": "🍗",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  },
+  {
+   "id": "new",
+   "name": "Новинки",
+   "icon": "✨",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  }
+ ],
+ "items": [
   {
    "id": "shok",
    "name": "Шок",
@@ -65,7 +128,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "dzhekpot",
@@ -125,7 +190,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "mot",
@@ -181,7 +248,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "emirat",
@@ -229,7 +298,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "semya",
@@ -275,7 +346,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "koroleva",
@@ -318,7 +391,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "yammi",
@@ -366,7 +441,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "bari-bar",
@@ -438,7 +515,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "brat",
@@ -491,7 +570,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "super",
@@ -544,7 +625,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "sestra",
@@ -597,7 +680,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "barbara",
@@ -657,7 +742,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "zhar",
@@ -707,7 +794,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "otdushi",
@@ -744,7 +833,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "mnogo",
@@ -800,7 +891,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "balans",
@@ -860,7 +953,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "chicago",
@@ -908,7 +1003,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "sultan",
@@ -957,7 +1054,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "papa",
@@ -1037,7 +1136,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "aleks",
@@ -1097,7 +1198,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "vyshka",
@@ -1145,7 +1248,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "aidahar",
@@ -1221,7 +1326,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "exclusive",
@@ -1280,7 +1387,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "basket",
@@ -1344,7 +1453,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "yuzhnyi",
@@ -1401,7 +1512,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "seoul",
@@ -1483,7 +1596,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "delikates",
@@ -1563,7 +1678,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "galaktika",
@@ -1643,7 +1760,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "pozitiv",
@@ -1711,7 +1830,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "popular",
@@ -1748,7 +1869,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   },
   {
    "id": "imperator",
@@ -1813,7 +1936,9 @@
       ]
      ]
     }
-   ]
+   ],
+   "cat": "sets",
+   "desc": ""
   }
  ]
 }
