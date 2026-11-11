@@ -622,6 +622,7 @@ function showSettings(){
     '<button type="button" class="mi" data-act="order"><span class="ic">🛒</span><span><b>Заказать</b><small>'+(count()?'Ваш заказ: '+count()+' шт · '+fmt(subtotal()):'Меню, корзина и заказ в WhatsApp')+'</small></span></button>'+
     (hasAbout?'<button type="button" class="mi" data-act="about"><span class="ic">ℹ️</span><span><b>О нас</b><small>Кто мы, часы работы, оплата</small></span></button>':'')+
     '<a class="mi" href="'+esc('https://wa.me/'+(ST.wa||''))+'" target="_blank" rel="noopener"><span class="ic">💬</span><span><b>Связаться</b><small>WhatsApp '+esc(ST.phone||'')+'</small></span></a>'+
+    '<a class="mi" href="https://wa.me/77476128411?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%92%D0%B8%D0%B4%D0%B5%D0%BB%20%D1%81%D0%B0%D0%B9%D1%82%20%C2%ABSensei%20Sushi%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D1%85%D0%BE%D0%B6%D0%B8%D0%B9%20%D1%81%D0%B0%D0%B9%D1%82%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B2%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%D0%B0." target="_blank" rel="noopener" style="background:#14161a;border-color:#14161a;color:#fff"><span class="ic" style="background:rgba(255,255,255,.12);color:#fff;border-color:transparent">🛒</span><span><b>Хотите похожий сайт для бизнеса?</b><small style="color:#b9bfcc">Сделаем такой же для вас. Пишите: 8 747 612 84 11</small></span></a>'+
     '<a class="mi" href="admin.html"><span class="ic">🔐</span><span><b>Админка</b><small>Вход для владельца: меню, цены, заказы</small></span></a>';
   openSheet();
 }
