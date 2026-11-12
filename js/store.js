@@ -82,7 +82,7 @@ window.Store = (function () {
     { id: 'd-nugget', cat: 'dops', grp: 'Закуски', name: 'Наггетсы', price: 1250, img: I + 'd-nugget.webp', desc: '8 шт + соус' },
     { id: 'd-wings', cat: 'dops', grp: 'Закуски', name: 'Крылышки', price: 1750, img: I + 'wings.webp', desc: 'Небольшая порция к заказу',
       opts: [{ n: '5 шт', p: 1750 }, { n: '10 шт', p: 2950 }] },
-    { id: 'd-cola', cat: 'dops', grp: 'Напитки', name: 'Coca-Cola', price: 800, img: '', icon: '🥤', desc: '1 л' }
+    { id: 'd-cola', cat: 'dops', grp: 'Напитки', name: 'Coca-Cola', price: 800, img: I + 'd-cola.webp', desc: '1 л' }
   ];
 
   function fromFile() {
@@ -119,6 +119,11 @@ window.Store = (function () {
       var have = {}; d.items.forEach(function (x) { have[x.id] = 1; });
       NEW_ITEMS.forEach(function (x) { if (!have[x.id]) d.items.push(JSON.parse(JSON.stringify(x))); });
       d.menuV = 3;
+    }
+    // v4: фото колы (если в сохранённом меню его ещё нет)
+    if ((+d.menuV || 1) < 4) {
+      d.items.forEach(function (x) { if (x.id === 'd-cola' && !x.img) { x.img = I + 'd-cola.webp'; delete x.icon; } });
+      d.menuV = 4;
     }
     d.items = d.items.map(function (x) {
       x.cat = x.cat || 'sets';

@@ -2577,8 +2577,7 @@
    "grp": "Напитки",
    "name": "Coca-Cola",
    "price": 800,
-   "img": "",
-   "icon": "🥤",
+   "img": "img/m/d-cola.webp",
    "desc": "1 л",
    "on": true,
    "old": 0,
@@ -2588,7 +2587,7 @@
   }
  ],
  "catsV": 3,
- "menuV": 3,
+ "menuV": 4,
  "about": {
   "on": true,
   "title": "О нас",
