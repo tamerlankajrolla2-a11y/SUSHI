@@ -292,11 +292,12 @@ var OP=[['today','Сегодня'],['7','7 дней'],['30','30 дней'],['all
 function viewOrders(){
   $('#view').innerHTML='<h2 class="t">Заказы</h2>'+
     (Store.isCloud()?'':'<div class="warn">Сайт работает без базы, поэтому сюда попадают только заказы, сделанные <b>в этом браузере</b>. Чтобы видеть все заказы с любого устройства, подключите базу.<div class="row"><button class="btn o s" data-go="cloud">Как подключить</button></div></div>')+
-    '<div class="chipsrow" id="oPer"></div><div class="stat" id="stat"></div><div class="card top" id="top" hidden></div>'+
+    '<div id="tgNote"></div><div class="chipsrow" id="oPer"></div><div class="stat" id="stat"></div><div class="card top" id="top" hidden></div>'+
     '<div class="row" style="margin-bottom:10px"><input id="oQ" type="search" placeholder="Поиск: имя, телефон, адрес" value="'+esc(oQ)+'" style="flex:1"><button class="btn o" id="csv">Скачать CSV</button></div>'+
     '<div class="chipsrow" id="oSt"></div><div id="olist" class="muted">Загружаю…</div>';
   loadOrders();
   if(Store.isCloud()) timer=setInterval(function(){loadOrders(true);},15000);
+  Store.tgInfo().then(function(r){var el=$('#tgNote');if(el&&r&&r.bot&&!r.chats)el.innerHTML='<div class="warn">🔔 Заказы ещё не приходят в Telegram. <div class="row" style="margin-top:8px"><button class="btn g s" type="button" data-go-tg="1">Подключить</button></div></div>';}).catch(function(){});
 }
 function loadOrders(quiet){
   Store.listOrders(500).then(function(list){
@@ -590,7 +591,22 @@ function viewSettings(){
       F('Если цена не указана — что писать в корзине','settings.delivery.note',{ph:'доставку подтвердит оператор'})+
       F('Минимальная сумма заказа, ₸','settings.minOrder',{t:'num',im:'numeric',ph:'нет'})+
       '<p class="muted">Если указать цену доставки, корзина сама прибавит её к заказу и покажет, сколько осталось до бесплатной.</p></div>'+
-'';
+    '<div class="card" id="tgCard"><h3 class="c">🔔 Заказы в Telegram</h3><p class="muted" id="tgSt">Проверяю…</p></div>';
+  paintTg();
+}
+function paintTg(){
+  Store.tgInfo().then(function(r){
+    var el=$('#tgCard'); if(!el)return;
+    if(!r||!r.bot){$('#tgSt').textContent='Бот уведомлений ещё не настроен. Напишите разработчику сайта.';return;}
+    var n=+r.chats||0;
+    el.innerHTML='<h3 class="c">🔔 Заказы в Telegram</h3>'+
+      '<p class="muted">Каждый заказ с сайта сразу приходит в Telegram: блюда, сумма, имя, телефон и адрес. Прямо в сообщении можно нажать «Принят» или «Отмена» — статус поменяется и здесь, во вкладке «Заказы».</p>'+
+      '<p style="margin:10px 0"><b>'+(n?'✅ Подключено: '+n+' '+(n===1?'чат':n<5?'чата':'чатов'):'Пока не подключено')+'</b></p>'+
+      '<div class="row"><button class="btn g" type="button" id="tgOn">'+(n?'Подключить ещё телефон':'Подключить Telegram')+'</button>'+(n?'<button class="btn o" type="button" id="tgOff">Отключить все</button>':'')+'</div>'+
+      '<p class="muted" style="margin-top:8px">Нажмите кнопку на телефоне, где установлен Telegram, — откроется бот @'+esc(r.bot)+'. Нажмите «Старт» (Start), и всё. Ссылка действует 15 минут. Так можно подключить несколько телефонов.</p>';
+    $('#tgOn').onclick=function(){var w=window.open('about:blank','_blank');Store.tgLink().then(function(x){if(w)w.location.href=x.url;else location.href=x.url;toast('После «Старт» в боте вернитесь сюда');setTimeout(paintTg,15000);}).catch(function(e){if(w)w.close();toast('Ошибка: '+e.message);});};
+    if($('#tgOff'))$('#tgOff').onclick=function(){if(!confirm('Отключить уведомления во всех чатах?'))return;Store.tgOff().then(paintTg);};
+  }).catch(function(e){var x=$('#tgSt');if(x)x.textContent='Не загрузилось: '+e.message;});
 }
 
 /* ===== О НАС ===== */
@@ -680,6 +696,7 @@ function closeDlg(){ var was=!$('#dlg').hidden; $('#dlg').hidden=true; document.
 document.addEventListener('click',function(e){
   var t=e.target.closest('button,[data-close],[data-go]'); if(!t)return;
   if(t.hasAttribute('data-close')) return closeDlg();
+  if(t.dataset.goTg){go('settings');setTimeout(function(){var c=$('#tgCard');if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.outline='2px solid var(--ok)';setTimeout(function(){c.style.outline='';},2500);}},250);return;}
   if(t.dataset.go) return go(t.dataset.go);
 
   if(t.dataset.st){

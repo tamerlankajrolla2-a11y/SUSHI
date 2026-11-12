@@ -24,7 +24,7 @@ window.Store = (function () {
     var h = { 'Content-Type': 'application/json' };
     if (opt.auth && authed()) h.Authorization = 'Bearer ' + token.token;
     return fetch(API + path + (path.indexOf('?') < 0 ? '?' : '&') + 'site=' + SITE, {
-      method: opt.method || 'GET', headers: h, cache: 'no-store',
+      method: opt.method || 'GET', headers: h, cache: 'no-store', keepalive: !!opt.keepalive,
       body: opt.body !== undefined ? (typeof opt.body === 'string' ? opt.body : JSON.stringify(opt.body)) : undefined
     }).then(function (r) {
       return r.text().then(function (t) {
@@ -195,8 +195,12 @@ window.Store = (function () {
 
   /* ---------- заказы ---------- */
   function createOrder(o) {
-    return req('/order', { method: 'POST', body: o }).then(function () { return true; }).catch(function () { return false; });
+    return req('/order', { method: 'POST', body: o, keepalive: true }).then(function () { return true; }).catch(function () { return false; });
   }
+  // Telegram-уведомления о заказах (бот на сервере)
+  function tgInfo() { return req('/tg', { auth: true }); }
+  function tgLink() { return req('/tg/link', { method: 'POST', auth: true, body: {} }); }
+  function tgOff() { return req('/tg', { method: 'DELETE', auth: true }); }
   // промокод: можно ли применить (сервер помнит номера телефонов). Старый сервер или нет сети — не мешаем заказу.
   function promoCheck(code, phone) {
     var t = new Promise(function (res) { setTimeout(function () { res({ allowed: true, offline: true }); }, 6000); });
@@ -221,7 +225,7 @@ window.Store = (function () {
 
   return {
     loadMenu: loadMenu, saveMenu: saveMenu, resetMenu: resetMenu, fromFile: fromFile, fileRev: fileRev, normalize: normalize,
-    createOrder: createOrder, promoCheck: promoCheck, promoStats: promoStats, promoReset: promoReset, listOrders: listOrders, setStatus: setStatus,
+    createOrder: createOrder, promoCheck: promoCheck, promoStats: promoStats, promoReset: promoReset, listOrders: listOrders, setStatus: setStatus, tgInfo: tgInfo, tgLink: tgLink, tgOff: tgOff,
     login: login, logout: logout, authed: authed, changePassword: changePassword,
     isCloud: function () { return true; }, api: API
   };

@@ -841,13 +841,13 @@ function submit(f){
   }
   finish(null);
   function finish(w0){
+  // сначала — заказ на сервер: он появится в админке и придёт в Telegram
+  Store.createOrder({kind:'order',type:'delivery',via:'site',time:'📍 '+address+' · 💳 '+f.pay.value,name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
+    first:!!gift,comment:comment,items:items,total:k.total,
+    discount:k.disc,delivery:k.del,promo:k.disc?code.toUpperCase():'',gift:gift});
   if(w0){try{w0.location.href=url;}catch(e){w0=null;}}
   if(!w0){var w=window.open(url,'_blank'); if(!w) location.href=url;}
   if(pc){usedCodes[CU]=Date.now();ls('sensei_used_codes',usedCodes);}
-
-  Store.createOrder({name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
-    first:!!gift,comment:comment,items:items,total:k.total,
-    discount:k.disc,delivery:k.del,promo:k.disc?code.toUpperCase():'',gift:gift});
 
   Object.keys(cart).forEach(function(k){delete cart[k];paintItem(baseOf(k));});
   ls('sensei_cart',cart); firstOrder=false; upsold=false;
