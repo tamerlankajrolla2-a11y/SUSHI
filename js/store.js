@@ -150,6 +150,16 @@ window.Store = (function () {
   function createOrder(o) {
     return req('/order', { method: 'POST', body: o }).then(function () { return true; }).catch(function () { return false; });
   }
+  // промокод: можно ли применить (сервер помнит номера телефонов). Старый сервер или нет сети — не мешаем заказу.
+  function promoCheck(code, phone) {
+    var t = new Promise(function (res) { setTimeout(function () { res({ allowed: true, offline: true }); }, 6000); });
+    var q = req('/promo?code=' + encodeURIComponent(code) + '&phone=' + encodeURIComponent(phone || '')).then(function (r) {
+      return r && typeof r.allowed === 'boolean' ? r : { allowed: true, offline: true };
+    }).catch(function () { return { allowed: true, offline: true }; });
+    return Promise.race([q, t]);
+  }
+  function promoStats() { return req('/promo/stats', { auth: true }); }
+  function promoReset(code) { return req('/promo/uses?code=' + encodeURIComponent(code), { method: 'DELETE', auth: true }); }
   function listOrders(limit) { return req('/orders?limit=' + (limit || 200), { auth: true }); }
   function setStatus(id, status) { return req('/order?id=' + encodeURIComponent(id), { method: 'PATCH', auth: true, body: { status: status } }); }
 
@@ -164,7 +174,7 @@ window.Store = (function () {
 
   return {
     loadMenu: loadMenu, saveMenu: saveMenu, resetMenu: resetMenu, fromFile: fromFile, fileRev: fileRev, normalize: normalize,
-    createOrder: createOrder, listOrders: listOrders, setStatus: setStatus,
+    createOrder: createOrder, promoCheck: promoCheck, promoStats: promoStats, promoReset: promoReset, listOrders: listOrders, setStatus: setStatus,
     login: login, logout: logout, authed: authed, changePassword: changePassword,
     isCloud: function () { return true; }, api: API
   };

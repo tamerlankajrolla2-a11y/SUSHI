@@ -324,6 +324,10 @@ var mins=function(t){var p=String(t||'0:0').split(':');return (+p[0])*60+(+p[1])
 
 function ls(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
 var cart=ls('sensei_cart')||{}, draft=ls('sensei_client')||{}, code=ls('sensei_code')||'', firstOrder=false;
+// промокоды: использованные на этом устройстве + отказы сервера (по номеру телефона)
+var usedCodes=ls('sensei_used_codes')||{}, codeBlock={}, codeBusy=false;
+var CODE_MSG={used:'Этот промокод уже использован с этого номера',taken:'Этот промокод уже использован',phone:'Укажите номер телефона — промокод проверяется по номеру'};
+function codeLimit(c){return (c&&c.limit)||'phone';}
 
 /* ---------- старт ---------- */
 Store.loadMenu().then(start).catch(function(){
@@ -478,7 +482,9 @@ function findCode(){
 }
 function calc(){
   var sub=subtotal(), c=findCode(), disc=0, msg='';
-  if(c){
+  var CU=c?String(c.code).trim().toUpperCase():'';
+  if(c&&codeLimit(c)!=='none'&&(usedCodes[CU]||codeBlock[CU])){msg=codeBlock[CU]||'Этот промокод уже использован';c=null;}
+  else if(c){
     if(sub>=(+c.min||0)) disc=c.type==='sum'?Math.min(+c.value||0,sub):Math.round(sub*(+c.value||0)/100);
     else msg='Промокод действует при заказе от '+fmt(c.min);
   }else if(code){msg='Такого промокода нет';}
@@ -649,6 +655,17 @@ function phonePretty(v){
   return o;
 }
 
+/* ---------- проверка промокода на сервере (один раз на номер телефона) ---------- */
+function curPhone(){var i=document.querySelector('#f-phone input');return phoneDigits(i?i.value:(draft.phone||''));}
+function checkCodeNow(){
+  var c=findCode(); if(!c||codeLimit(c)==='none'||!window.Store||!Store.promoCheck)return;
+  var ph=curPhone(); if(codeLimit(c)==='phone'&&ph.length!==11)return;
+  var CU=String(c.code).trim().toUpperCase();
+  Store.promoCheck(CU,ph).then(function(r){
+    if(r&&!r.allowed&&CODE_MSG[r.reason]&&r.reason!=='phone'){codeBlock[CU]=CODE_MSG[r.reason];paintSums();}
+  });
+}
+
 /* ---------- отправка ---------- */
 function submit(f){
   var ok=true, k=calc();
@@ -679,8 +696,28 @@ function submit(f){
   if(comment) L.push('💬 '+comment);
 
   var url='https://wa.me/'+(ST.wa||'')+'?text='+encodeURIComponent(L.join('\n'));
-  var w=window.open(url,'_blank');
-  if(!w) location.href=url;
+  var pc=k.disc?k.code:null, CU=pc?String(pc.code).trim().toUpperCase():'';
+  if(pc&&codeLimit(pc)!=='none'&&window.Store&&Store.promoCheck){
+    if(codeBusy)return; codeBusy=true;
+    var btn=document.querySelector('#sheetBody button[type=submit]'), bt=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='Проверяю промокод…';}
+    var w0=window.open('','_blank');
+    Store.promoCheck(CU,phone).then(function(r){
+      codeBusy=false; if(btn){btn.disabled=false;btn.textContent=bt;}
+      if(r&&!r.allowed){
+        if(w0)try{w0.close();}catch(e){}
+        codeBlock[CU]=CODE_MSG[r.reason]||'Промокод не действует'; paintSums();
+        var m=$('#codeMsg'); if(m&&m.scrollIntoView)m.scrollIntoView({block:'center'});
+        return;
+      }
+      finish(w0);
+    });
+    return;
+  }
+  finish(null);
+  function finish(w0){
+  if(w0){try{w0.location.href=url;}catch(e){w0=null;}}
+  if(!w0){var w=window.open(url,'_blank'); if(!w) location.href=url;}
+  if(pc){usedCodes[CU]=Date.now();ls('sensei_used_codes',usedCodes);}
 
   Store.createOrder({name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
     first:!!gift,comment:comment,items:items,total:k.total,
@@ -689,6 +726,7 @@ function submit(f){
   Object.keys(cart).forEach(function(id){delete cart[id];paintItem(id);});
   ls('sensei_cart',cart); firstOrder=false;
   showDone(url); paintBar();
+  }
 }
 
 /* ---------- события ---------- */
@@ -698,7 +736,7 @@ document.addEventListener('click',function(e){
   if(t.hasAttribute('data-settings')){showSettings();}
   else if(t.dataset.act==='order'){ if(count()) showCart(); else { closeSheet(); setTimeout(function(){$('#cats').hidden?$('#menu').scrollIntoView():$('#cats').scrollIntoView();},60);} }
   else if(t.dataset.act==='about'){ closeSheet(); setTimeout(function(){$('#about').scrollIntoView();},60); }
-  else if(t.id==='codeBtn'){code=$('#codeIn').value.trim();ls('sensei_code',code);paintSums();}
+  else if(t.id==='codeBtn'){code=$('#codeIn').value.trim();ls('sensei_code',code);paintSums();checkCodeNow();}
   else if(t.dataset.cat!==undefined){
     cat=t.dataset.cat; filter='all'; paintCats(); paintSection();
     var y=$('#cats').getBoundingClientRect().top+window.pageYOffset-$('#bar').offsetHeight;
@@ -719,7 +757,7 @@ document.addEventListener('click',function(e){
 document.addEventListener('submit',function(e){if(e.target.id==='form'){e.preventDefault();submit(e.target);}});
 document.addEventListener('input',function(e){
   var f=e.target.form; if(!f||f.id!=='form')return;
-  if(e.target.name==='phone'){var v=phonePretty(e.target.value);if(v!==e.target.value)e.target.value=v;}
+  if(e.target.name==='phone'){var v=phonePretty(e.target.value);if(v!==e.target.value)e.target.value=v;if(Object.keys(codeBlock).length){codeBlock={};paintSums();}}
   var l=e.target.closest('.bad'); if(l)l.classList.remove('bad');
 });
 document.addEventListener('change',function(e){

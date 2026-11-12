@@ -518,7 +518,14 @@ function manageCats(){
 }
 
 /* ===== АКЦИИ ===== */
+var PSTATS=null;
+function loadPStats(){
+  if(!Store.promoStats)return;
+  Store.promoStats().then(function(l){PSTATS={};(l||[]).forEach(function(r){PSTATS[String(r.code).toUpperCase()]=+r.n||0;});if(document.getElementById('p-add'))viewPromo();})
+    .catch(function(){PSTATS={};});
+}
 function viewPromo(){
+  if(PSTATS===null){PSTATS=false;loadPStats();}
   var codes=DATA.promo.codes;
   $('#view').innerHTML='<h2 class="t">Акции</h2>'+
     '<div class="card"><h3 class="c">⚡ Мега выгода</h3>'+
@@ -538,8 +545,16 @@ function viewPromo(){
           '<button class="del" type="button" data-pdel="'+i+'" aria-label="Удалить промокод">🗑</button></div>'+
           '<div class="l2"><input data-b="promo.codes.'+i+'.value" data-t="num" inputmode="numeric" value="'+(c.value||'')+'" placeholder="Скидка" aria-label="Размер скидки">'+
           '<select data-b="promo.codes.'+i+'.type" aria-label="Тип скидки" style="max-width:86px"><option value="percent"'+(c.type!=='sum'?' selected':'')+'>%</option><option value="sum"'+(c.type==='sum'?' selected':'')+'>₸</option></select>'+
-          '<input data-b="promo.codes.'+i+'.min" data-t="num" inputmode="numeric" value="'+(c.min||'')+'" placeholder="от суммы, ₸" aria-label="Минимальная сумма заказа"></div></div>';
+          '<input data-b="promo.codes.'+i+'.min" data-t="num" inputmode="numeric" value="'+(c.min||'')+'" placeholder="от суммы, ₸" aria-label="Минимальная сумма заказа"></div>'+
+          '<div class="l2"><select data-b="promo.codes.'+i+'.limit" aria-label="Сколько раз можно использовать">'+
+            '<option value="phone"'+((c.limit||'phone')==='phone'?' selected':'')+'>1 раз на один номер телефона</option>'+
+            '<option value="total"'+(c.limit==='total'?' selected':'')+'>1 раз всего (первому клиенту)</option>'+
+            '<option value="none"'+(c.limit==='none'?' selected':'')+'>Без ограничений</option></select></div>'+
+          (function(){var CU=String(c.code||'').trim().toUpperCase(), n=PSTATS&&PSTATS[CU]||0;
+            return (c.limit||'phone')==='none'||!CU?'':'<p class="muted" style="display:flex;align-items:center;gap:10px;margin-top:6px">'+(PSTATS?'Использован: '+n+' раз':'Загружаю, сколько раз использован…')+(n?' <button class="btn o" type="button" data-preset="'+esc(CU)+'" style="padding:4px 10px;min-height:0;font-size:12.5px">Сбросить</button>':'')+'</p>';})()+
+          '</div>';
       }).join(''):'<p class="muted" style="margin-bottom:10px">Промокодов пока нет. Когда появится хотя бы один, в корзине появится поле «Промокод».</p>')+
+      '<p class="muted" style="margin:8px 0 10px">«1 раз на один номер» — клиент не сможет применить код повторно ни с другого телефона, ни с компьютера: сайт проверяет номер, на который оформлен заказ.</p>'+
       '<button class="btn o" id="p-add">+ Промокод</button></div>'+
     '<div class="card"><h3 class="c">📣 Объявление</h3>'+
       F('Жёлтая полоса наверху сайта','settings.announce',{ph:'Сегодня доставка бесплатно!',hint:'Пустое поле — полоса не показывается.'})+'</div>'+
@@ -683,6 +698,7 @@ document.addEventListener('click',function(e){
     if(!confirm('Удалить раздел «'+cc.name+'»?'))return;
     DATA.cats.splice(+t.dataset.cdel,1); touch(); return manageCats();
   }
+  if(t.dataset.preset!==undefined){ var pc=t.dataset.preset; t.disabled=true; Store.promoReset(pc).then(function(){ if(PSTATS)PSTATS[pc]=0; toast('Промокод '+pc+' снова доступен всем'); viewPromo(); }).catch(function(e){ t.disabled=false; toast('Не получилось: '+e.message); }); return; }
   if(t.dataset.pdel!==undefined){ DATA.promo.codes.splice(+t.dataset.pdel,1); touch(); return viewPromo(); }
 
   switch(t.id){
