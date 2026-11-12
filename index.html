@@ -141,6 +141,7 @@ a{color:inherit;text-decoration:none}
 .big{display:flex;align-items:center;justify-content:center;width:100%;height:54px;border-radius:14px;background:var(--red);color:#fff;font-weight:700;font-size:16px;text-align:center}
 .big[disabled]{opacity:.5}
 .big.wa-big{background:var(--wa)}
+.done .dno{font-weight:700;color:var(--text);margin:-4px 0 8px}
 .ghost{display:block;width:100%;height:48px;margin-top:8px;border-radius:14px;border:1px solid var(--line);color:var(--muted);font-weight:500}
 
 .h3{font-size:21px;font-weight:800;margin-bottom:6px;padding-right:40px}
@@ -712,8 +713,8 @@ function showCart(){
       '</div></div>'+
       (GIFT?'<label class="chk"><input type="checkbox" name="first"'+(firstOrder?' checked':'')+'> 🎁 Это мой первый заказ — '+esc(GIFT.title.charAt(0).toLowerCase()+GIFT.title.slice(1))+'</label>':'')+
       '<label>Комментарий<textarea name="comment" rows="2" maxlength="300" placeholder="Например: позвонить за 10 минут"></textarea></label>'+
-      '<button class="big wa-big" type="submit" id="sendBtn">Отправить заказ в WhatsApp</button>'+
-      '<p class="hint" id="sendHint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить».</p>'+
+      '<button class="big" type="submit" id="sendBtn">Оформить заказ</button>'+
+      '<p class="hint" id="sendHint">Заказ сразу придёт в Sensei Sushi. Ещё откроется WhatsApp с текстом заказа — нажмите там «Отправить».</p>'+
     '</form>';
   var f=$('#form');
   ['name','phone','address'].forEach(function(k){if(draft[k])f[k].value=draft[k];});
@@ -745,7 +746,7 @@ function paintSums(){
     else m.hidden=true;
   }
   var low=ST.minOrder>0&&k.sub<ST.minOrder, btn=$('#sendBtn');
-  if(btn){btn.disabled=low; $('#sendHint').textContent=low?('Минимальный заказ — '+fmt(ST.minOrder)+'. Добавьте ещё на '+fmt(ST.minOrder-k.sub)+'.'):'Откроется WhatsApp с готовым текстом — останется нажать «Отправить».';}
+  if(btn){btn.disabled=low; $('#sendHint').textContent=low?('Минимальный заказ — '+fmt(ST.minOrder)+'. Добавьте ещё на '+fmt(ST.minOrder-k.sub)+'.'):'Заказ сразу придёт в Sensei Sushi. Ещё откроется WhatsApp с текстом заказа — нажмите там «Отправить».';}
 }
 function showSettings(){
   view='settings';
@@ -764,10 +765,10 @@ function showEmpty(){
     '<button type="button" class="big" data-close>Перейти к меню</button></div>';
   openSheet();
 }
-function showDone(url){
+function showDone(url,sent){
   view='done';
-  body.innerHTML='<div class="done"><div class="ok">✓</div><h3 id="sheetTitle">Заказ готов</h3>'+
-    '<p>Мы открыли WhatsApp с текстом заказа — нажмите там «Отправить». Оператор подтвердит заказ, время и стоимость доставки.</p>'+
+  body.innerHTML='<div class="done"><div class="ok">✓</div><h3 id="sheetTitle">Заказ принят</h3><p class="dno" id="doneNo"></p>'+
+    '<p id="doneTx">Заказ уже у нас. Оператор подтвердит заказ, время и стоимость доставки. Копию заказа мы открыли в WhatsApp — нажмите там «Отправить», так ответим быстрее.</p>'+
     '<a class="big wa-big" href="'+esc(url)+'" target="_blank" rel="noopener">Открыть WhatsApp ещё раз</a>'+
     '<button type="button" class="ghost" data-close>Вернуться к меню</button></div>';
   openSheet();
@@ -842,9 +843,14 @@ function submit(f){
   finish(null);
   function finish(w0){
   // сначала — заказ на сервер: он появится в админке и придёт в Telegram
-  Store.createOrder({kind:'order',type:'delivery',via:'site',time:'📍 '+address+' · 💳 '+f.pay.value,name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
+  var sent=Store.createOrder({kind:'order',type:'delivery',via:'site',time:'📍 '+address+' · 💳 '+f.pay.value,name:name,phone:phonePretty(phone),address:address,when:whenTxt,pay:f.pay.value,
     first:!!gift,comment:comment,items:items,total:k.total,
     discount:k.disc,delivery:k.del,promo:k.disc?code.toUpperCase():'',gift:gift});
+  sent.then(function(id){
+    if(view!=='done')return;
+    if(id===false){var t=$('#doneTx');if(t)t.innerHTML='<b>Связь с сайтом не прошла.</b> Обязательно нажмите «Отправить» в WhatsApp — так заказ точно дойдёт.';}
+    else if(id!==true){var n=$('#doneNo');if(n)n.textContent='Номер заказа: '+id;}
+  });
   if(w0){try{w0.location.href=url;}catch(e){w0=null;}}
   if(!w0){var w=window.open(url,'_blank'); if(!w) location.href=url;}
   if(pc){usedCodes[CU]=Date.now();ls('sensei_used_codes',usedCodes);}

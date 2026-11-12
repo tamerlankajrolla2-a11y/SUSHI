@@ -195,7 +195,7 @@ window.Store = (function () {
 
   /* ---------- заказы ---------- */
   function createOrder(o) {
-    return req('/order', { method: 'POST', body: o, keepalive: true }).then(function () { return true; }).catch(function () { return false; });
+    return req('/order', { method: 'POST', body: o, keepalive: true }).then(function (r) { return (r && r.id) || true; }).catch(function () { return false; });
   }
   // Telegram-уведомления о заказах (бот на сервере)
   function tgInfo() { return req('/tg', { auth: true }); }
