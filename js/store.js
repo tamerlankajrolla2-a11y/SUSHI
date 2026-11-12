@@ -46,12 +46,43 @@ window.Store = (function () {
   var DEFAULT_CATS = [
     { id: 'sets', name: 'Сеты', icon: '🍱', view: 'cards', sort: 'price', on: true },
     { id: 'new', name: 'Новинки', icon: '✨', view: 'list', sort: 'manual', on: true },
-    { id: 'portion', name: 'Порционные роллы', icon: '🍙', view: 'list', sort: 'manual', on: true },
-    { id: 'rolls', name: 'Роллы', icon: '🍣', view: 'list', sort: 'manual', on: true },
+    { id: 'rolls', name: 'Роллы', icon: '🍣', view: 'list', sort: 'manual', on: true, sub: 'Порционные роллы, по 8 шт' },
     { id: 'pizza', name: 'Пиццы', icon: '🍕', view: 'list', sort: 'manual', on: true },
-    { id: 'chicken', name: 'Чикен', icon: '🍗', view: 'list', sort: 'manual', on: true },
-    { id: 'dops', name: 'Допы', icon: '🥢', view: 'list', sort: 'manual', on: true },
+    { id: 'chicken', name: 'Чикен', icon: '🍗', view: 'list', sort: 'manual', on: true, sub: 'Комбо и крылышки' },
+    { id: 'dops', name: 'Допы', icon: '🥢', view: 'list', sort: 'manual', on: true, sub: 'Соусы, закуски и напитки', noMega: true, upsell: true },
     { id: 'burgers', name: 'Суши-бургеры', icon: '🍔', view: 'list', sort: 'manual', on: true }
+  ];
+  // меню от заказчика (ноябрь 2026): порционные роллы, чикен, допы — добавляются в меню один раз
+  var I = 'img/m/';
+  function R8(id, name, price, img, grp) { return { id: id, cat: 'rolls', name: name, price: price, img: I + img + '.webp', desc: '8 шт', grp: grp }; }
+  var NEW_ITEMS = [
+    R8('r-lava', 'Лава ролл', 2490, 'lava', 'Запечённые'), R8('r-vulkan', 'Вулкан хот', 2390, 'vulkan', 'Запечённые'),
+    R8('r-gejsha', 'Поцелуй гейши', 2690, 'gejsha', 'Запечённые'), R8('r-z-fila', 'Запечённая филадельфия', 2690, 'z-fila', 'Запечённые'),
+    R8('r-cezar-z', 'Цезарь запечённый', 2390, 'cezar-z', 'Запечённые'), R8('r-syrnyj', 'Ролл сырный', 2490, 'syrnyj', 'Запечённые'),
+    R8('r-chiken-z', 'Запечённый чикен', 2390, 'chiken-z', 'Запечённые'), R8('r-z-kalif', 'Запечённая калифорния', 2490, 'z-kalif', 'Запечённые'),
+    R8('r-saki-t', 'Саки темпура', 2390, 'saki-t', 'Жареные'), R8('r-chiken-t', 'Чикен темпура', 2190, 'chiken-t', 'Жареные'),
+    R8('r-cezar-t', 'Цезарь темпура', 2290, 'cezar-t', 'Жареные'), R8('r-hokkajdo', 'Хоккайдо', 2590, 'hokkajdo', 'Жареные'),
+    R8('r-kamikadze', 'Камикадзе', 2490, 'kamikadze', 'Жареные'), R8('r-tomato', 'Томато чикен', 2490, 'tomato', 'Жареные'),
+    R8('r-sendvich', 'Японский сэндвич', 2590, 'sendvich', 'Жареные'),
+    R8('r-fila', 'Филадельфия', 2590, 'fila', 'Холодные'), R8('r-kappa', 'Каппа маки', 1190, 'kappa', 'Холодные'),
+    R8('r-kanada', 'Канада маки', 2690, 'kanada', 'Холодные'), R8('r-saki-m', 'Саки маки', 1590, 'saki-m', 'Холодные'),
+    R8('r-kalif', 'Калифорния', 2390, 'kalif', 'Холодные'), R8('r-asahi-m', 'Асахи маки', 2390, 'asahi-m', 'Холодные'),
+    R8('r-katana', 'Катана маки', 2690, 'katana', 'Холодные'),
+    { id: 'c-large', cat: 'chicken', grp: 'Комбо', name: 'Комбо Large', price: 14990, img: I + 'c-large.webp', desc: '50 крылышек + 2 фри + 2 л колы + 4 соуса', tag: '👑 Для компании', tagColor: 'y' },
+    { id: 'c-friends', cat: 'chicken', grp: 'Комбо', name: 'Комбо Friends', price: 12990, img: I + 'c-friends.webp', desc: '40 крылышек + 2 фри + 2 л колы + 4 соуса' },
+    { id: 'c-family', cat: 'chicken', grp: 'Комбо', name: 'Комбо Family', price: 8990, img: I + 'c-family.webp', desc: '30 крылышек + 1 фри + 1 л колы + 2 соуса', tag: '🔥 Хит' },
+    { id: 'c-middle', cat: 'chicken', grp: 'Комбо', name: 'Комбо Middle', price: 6990, img: I + 'wings.webp', desc: '20 крылышек + 1 фри + 1 л колы + 2 соуса' },
+    { id: 'c-wings', cat: 'chicken', grp: 'Крылышки', name: 'Крылышки', price: 5600, img: I + 'wings.webp', desc: 'Хрустящие, в панировке. Выберите количество',
+      opts: [{ n: '20 шт', p: 5600 }, { n: '30 шт', p: 7700 }, { n: '40 шт', p: 9900 }, { n: '50 шт', p: 12500 }, { n: '60 шт', p: 14500 }, { n: '70 шт', p: 16600 }, { n: '100 шт', p: 22900 }] },
+    { id: 'd-soy', cat: 'dops', grp: 'Соусы', name: 'Соевый соус', price: 400, img: I + 'd-soy.webp', desc: '250 г' },
+    { id: 'd-wasabi', cat: 'dops', grp: 'Соусы', name: 'Васаби', price: 100, img: I + 'd-wasabi.webp', desc: '40 г' },
+    { id: 'd-white', cat: 'dops', grp: 'Соусы', name: 'Белый соус', price: 200, img: I + 'd-white.webp', desc: '40 г' },
+    { id: 'd-jalap', cat: 'dops', grp: 'Соусы', name: 'Халапеньо', price: 200, img: I + 'd-jalap.webp', desc: '30 г' },
+    { id: 'd-fri', cat: 'dops', grp: 'Закуски', name: 'Картофель фри', price: 1150, img: I + 'd-fri.webp', desc: '150 г + соус' },
+    { id: 'd-nugget', cat: 'dops', grp: 'Закуски', name: 'Наггетсы', price: 1250, img: I + 'd-nugget.webp', desc: '8 шт + соус' },
+    { id: 'd-wings', cat: 'dops', grp: 'Закуски', name: 'Крылышки', price: 1750, img: I + 'wings.webp', desc: 'Небольшая порция к заказу',
+      opts: [{ n: '5 шт', p: 1750 }, { n: '10 шт', p: 2950 }] },
+    { id: 'd-cola', cat: 'dops', grp: 'Напитки', name: 'Coca-Cola', price: 800, img: '', icon: '🥤', desc: '1 л' }
   ];
 
   function fromFile() {
@@ -68,7 +99,28 @@ window.Store = (function () {
     var s = d.settings = d.settings || {};
     if (!d.items && d.sets) d.items = d.sets;
     delete d.sets;
-    d.items = (d.items || []).map(function (x) {
+    d.items = d.items || [];
+    if (!d.cats || !d.cats.length) d.cats = JSON.parse(JSON.stringify(DEFAULT_CATS));
+    // разделы и меню v3: Сеты, Новинки, Роллы, Пиццы, Чикен, Допы — один раз, правки из админки потом не трогаем
+    if ((+d.catsV || 1) < 3) {
+      var byId = {}; d.cats.forEach(function (c) { byId[c.id] = c; });
+      var ordered = DEFAULT_CATS.map(function (dc) {
+        var c = byId[dc.id]; delete byId[dc.id];
+        if (!c) return JSON.parse(JSON.stringify(dc));
+        if (dc.id === 'rolls' || dc.id === 'chicken' || dc.id === 'dops') { c.name = dc.name; c.icon = dc.icon; c.sub = dc.sub; c.view = 'list'; }
+        if (dc.id === 'dops') { c.noMega = true; c.upsell = true; }
+        return c;
+      });
+      var used = {}; d.items.forEach(function (x) { used[x.cat] = 1; });
+      d.cats = ordered.concat(d.cats.filter(function (c) { return byId[c.id] && (c.id !== 'portion' || used.portion); }));
+      d.catsV = 3;
+    }
+    if ((+d.menuV || 1) < 3) {
+      var have = {}; d.items.forEach(function (x) { have[x.id] = 1; });
+      NEW_ITEMS.forEach(function (x) { if (!have[x.id]) d.items.push(JSON.parse(JSON.stringify(x))); });
+      d.menuV = 3;
+    }
+    d.items = d.items.map(function (x) {
       x.cat = x.cat || 'sets';
       x.on = x.on !== false;
       x.price = +x.price || 0;
@@ -77,21 +129,11 @@ window.Store = (function () {
       x.groups = x.groups || [];
       x.desc = x.desc || '';
       x.img = x.img || '';
+      x.grp = x.grp || '';
+      x.opts = (Array.isArray(x.opts) ? x.opts : []).map(function (o) { return { n: String(o.n || '').trim(), p: +o.p || 0 }; }).filter(function (o) { return o.n && o.p > 0; });
+      if (x.opts.length) x.price = Math.min.apply(null, x.opts.map(function (o) { return o.p; }));
       return x;
     });
-    if (!d.cats || !d.cats.length) d.cats = JSON.parse(JSON.stringify(DEFAULT_CATS));
-    // разделы v2 (по просьбе заказчика): Сеты, Новинки, Порционные роллы, Роллы, Пиццы, Чикен, Допы — один раз
-    if ((+d.catsV || 1) < 2) {
-      var byId = {}; d.cats.forEach(function (c) { byId[c.id] = c; });
-      var ordered = DEFAULT_CATS.map(function (dc) {
-        var c = byId[dc.id]; delete byId[dc.id];
-        if (!c) return JSON.parse(JSON.stringify(dc));
-        if (dc.id === 'chicken' || dc.id === 'portion' || dc.id === 'dops') { c.name = dc.name; c.icon = dc.icon; }
-        return c;
-      });
-      d.cats = ordered.concat(d.cats.filter(function (c) { return byId[c.id]; }));
-      d.catsV = 2;
-    }
     var known = {};
     d.cats.forEach(function (c) { c.on = c.on !== false; c.view = c.view || 'list'; c.sort = c.sort || 'manual'; known[c.id] = 1; });
     d.items.forEach(function (x) {

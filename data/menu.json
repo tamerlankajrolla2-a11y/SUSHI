@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 6,
+ "rev": 7,
  "settings": {
   "name": "SENSEI SUSHI",
   "city": "Петропавловск",
@@ -46,12 +46,21 @@
    "on": true
   },
   {
+   "id": "new",
+   "name": "Новинки",
+   "icon": "✨",
+   "view": "list",
+   "sort": "manual",
+   "on": true
+  },
+  {
    "id": "rolls",
    "name": "Роллы",
    "icon": "🍣",
    "view": "list",
    "sort": "manual",
-   "on": true
+   "on": true,
+   "sub": "Порционные роллы, по 8 шт"
   },
   {
    "id": "pizza",
@@ -62,25 +71,29 @@
    "on": true
   },
   {
-   "id": "burgers",
-   "name": "Суши-бургеры",
-   "icon": "🍔",
-   "view": "list",
-   "sort": "manual",
-   "on": true
-  },
-  {
    "id": "chicken",
-   "name": "Крылышки и закуски",
+   "name": "Чикен",
    "icon": "🍗",
    "view": "list",
    "sort": "manual",
-   "on": true
+   "on": true,
+   "sub": "Комбо и крылышки"
   },
   {
-   "id": "new",
-   "name": "Новинки",
-   "icon": "✨",
+   "id": "dops",
+   "name": "Допы",
+   "icon": "🥢",
+   "view": "list",
+   "sort": "manual",
+   "on": true,
+   "sub": "Соусы, закуски и напитки",
+   "noMega": true,
+   "upsell": true
+  },
+  {
+   "id": "burgers",
+   "name": "Суши-бургеры",
+   "icon": "🍔",
    "view": "list",
    "sort": "manual",
    "on": true
@@ -135,7 +148,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "dzhekpot",
@@ -197,7 +212,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "mot",
@@ -255,7 +272,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "emirat",
@@ -305,7 +324,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "semya",
@@ -353,7 +374,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "koroleva",
@@ -398,7 +421,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "yammi",
@@ -448,7 +473,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "bari-bar",
@@ -522,7 +549,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "brat",
@@ -577,7 +606,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "super",
@@ -632,7 +663,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "sestra",
@@ -687,7 +720,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "barbara",
@@ -749,7 +784,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "zhar",
@@ -801,7 +838,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "otdushi",
@@ -840,7 +879,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "mnogo",
@@ -898,7 +939,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "balans",
@@ -960,7 +1003,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "chicago",
@@ -1010,7 +1055,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "sultan",
@@ -1061,7 +1108,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "papa",
@@ -1143,7 +1192,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "aleks",
@@ -1205,7 +1256,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "vyshka",
@@ -1255,7 +1308,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "aidahar",
@@ -1333,7 +1388,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "exclusive",
@@ -1394,7 +1451,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "basket",
@@ -1460,7 +1519,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "yuzhnyi",
@@ -1519,7 +1580,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "seoul",
@@ -1603,7 +1666,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "delikates",
@@ -1685,7 +1750,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "galaktika",
@@ -1767,7 +1834,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "pozitiv",
@@ -1837,7 +1906,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "popular",
@@ -1876,7 +1947,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "imperator",
@@ -1943,7 +2016,9 @@
     }
    ],
    "cat": "sets",
-   "desc": ""
+   "desc": "",
+   "grp": "",
+   "opts": []
   },
   {
    "id": "akatama-chicken",
@@ -1958,7 +2033,9 @@
    "on": true,
    "note": "",
    "chips": [],
-   "groups": []
+   "groups": [],
+   "grp": "",
+   "opts": []
   },
   {
    "id": "akatama-salmon",
@@ -1973,8 +2050,550 @@
    "on": true,
    "note": "",
    "chips": [],
+   "groups": [],
+   "grp": "",
+   "opts": []
+  },
+  {
+   "id": "r-lava",
+   "cat": "rolls",
+   "name": "Лава ролл",
+   "price": 2490,
+   "img": "img/m/lava.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-vulkan",
+   "cat": "rolls",
+   "name": "Вулкан хот",
+   "price": 2390,
+   "img": "img/m/vulkan.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-gejsha",
+   "cat": "rolls",
+   "name": "Поцелуй гейши",
+   "price": 2690,
+   "img": "img/m/gejsha.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-z-fila",
+   "cat": "rolls",
+   "name": "Запечённая филадельфия",
+   "price": 2690,
+   "img": "img/m/z-fila.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-cezar-z",
+   "cat": "rolls",
+   "name": "Цезарь запечённый",
+   "price": 2390,
+   "img": "img/m/cezar-z.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-syrnyj",
+   "cat": "rolls",
+   "name": "Ролл сырный",
+   "price": 2490,
+   "img": "img/m/syrnyj.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-chiken-z",
+   "cat": "rolls",
+   "name": "Запечённый чикен",
+   "price": 2390,
+   "img": "img/m/chiken-z.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-z-kalif",
+   "cat": "rolls",
+   "name": "Запечённая калифорния",
+   "price": 2490,
+   "img": "img/m/z-kalif.webp",
+   "desc": "8 шт",
+   "grp": "Запечённые",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-saki-t",
+   "cat": "rolls",
+   "name": "Саки темпура",
+   "price": 2390,
+   "img": "img/m/saki-t.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-chiken-t",
+   "cat": "rolls",
+   "name": "Чикен темпура",
+   "price": 2190,
+   "img": "img/m/chiken-t.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-cezar-t",
+   "cat": "rolls",
+   "name": "Цезарь темпура",
+   "price": 2290,
+   "img": "img/m/cezar-t.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-hokkajdo",
+   "cat": "rolls",
+   "name": "Хоккайдо",
+   "price": 2590,
+   "img": "img/m/hokkajdo.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-kamikadze",
+   "cat": "rolls",
+   "name": "Камикадзе",
+   "price": 2490,
+   "img": "img/m/kamikadze.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-tomato",
+   "cat": "rolls",
+   "name": "Томато чикен",
+   "price": 2490,
+   "img": "img/m/tomato.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-sendvich",
+   "cat": "rolls",
+   "name": "Японский сэндвич",
+   "price": 2590,
+   "img": "img/m/sendvich.webp",
+   "desc": "8 шт",
+   "grp": "Жареные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-fila",
+   "cat": "rolls",
+   "name": "Филадельфия",
+   "price": 2590,
+   "img": "img/m/fila.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-kappa",
+   "cat": "rolls",
+   "name": "Каппа маки",
+   "price": 1190,
+   "img": "img/m/kappa.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-kanada",
+   "cat": "rolls",
+   "name": "Канада маки",
+   "price": 2690,
+   "img": "img/m/kanada.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-saki-m",
+   "cat": "rolls",
+   "name": "Саки маки",
+   "price": 1590,
+   "img": "img/m/saki-m.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-kalif",
+   "cat": "rolls",
+   "name": "Калифорния",
+   "price": 2390,
+   "img": "img/m/kalif.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-asahi-m",
+   "cat": "rolls",
+   "name": "Асахи маки",
+   "price": 2390,
+   "img": "img/m/asahi-m.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "r-katana",
+   "cat": "rolls",
+   "name": "Катана маки",
+   "price": 2690,
+   "img": "img/m/katana.webp",
+   "desc": "8 шт",
+   "grp": "Холодные",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "c-large",
+   "cat": "chicken",
+   "grp": "Комбо",
+   "name": "Комбо Large",
+   "price": 14990,
+   "img": "img/m/c-large.webp",
+   "desc": "50 крылышек + 2 фри + 2 л колы + 4 соуса",
+   "tag": "👑 Для компании",
+   "tagColor": "y",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "c-friends",
+   "cat": "chicken",
+   "grp": "Комбо",
+   "name": "Комбо Friends",
+   "price": 12990,
+   "img": "img/m/c-friends.webp",
+   "desc": "40 крылышек + 2 фри + 2 л колы + 4 соуса",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "c-family",
+   "cat": "chicken",
+   "grp": "Комбо",
+   "name": "Комбо Family",
+   "price": 8990,
+   "img": "img/m/c-family.webp",
+   "desc": "30 крылышек + 1 фри + 1 л колы + 2 соуса",
+   "tag": "🔥 Хит",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "c-middle",
+   "cat": "chicken",
+   "grp": "Комбо",
+   "name": "Комбо Middle",
+   "price": 6990,
+   "img": "img/m/wings.webp",
+   "desc": "20 крылышек + 1 фри + 1 л колы + 2 соуса",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "c-wings",
+   "cat": "chicken",
+   "grp": "Крылышки",
+   "name": "Крылышки",
+   "price": 5600,
+   "img": "img/m/wings.webp",
+   "desc": "Хрустящие, в панировке. Выберите количество",
+   "opts": [
+    {
+     "n": "20 шт",
+     "p": 5600
+    },
+    {
+     "n": "30 шт",
+     "p": 7700
+    },
+    {
+     "n": "40 шт",
+     "p": 9900
+    },
+    {
+     "n": "50 шт",
+     "p": 12500
+    },
+    {
+     "n": "60 шт",
+     "p": 14500
+    },
+    {
+     "n": "70 шт",
+     "p": 16600
+    },
+    {
+     "n": "100 шт",
+     "p": 22900
+    }
+   ],
+   "on": true,
+   "old": 0,
+   "chips": [],
    "groups": []
+  },
+  {
+   "id": "d-soy",
+   "cat": "dops",
+   "grp": "Соусы",
+   "name": "Соевый соус",
+   "price": 400,
+   "img": "img/m/d-soy.webp",
+   "desc": "250 г",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-wasabi",
+   "cat": "dops",
+   "grp": "Соусы",
+   "name": "Васаби",
+   "price": 100,
+   "img": "img/m/d-wasabi.webp",
+   "desc": "40 г",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-white",
+   "cat": "dops",
+   "grp": "Соусы",
+   "name": "Белый соус",
+   "price": 200,
+   "img": "img/m/d-white.webp",
+   "desc": "40 г",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-jalap",
+   "cat": "dops",
+   "grp": "Соусы",
+   "name": "Халапеньо",
+   "price": 200,
+   "img": "img/m/d-jalap.webp",
+   "desc": "30 г",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-fri",
+   "cat": "dops",
+   "grp": "Закуски",
+   "name": "Картофель фри",
+   "price": 1150,
+   "img": "img/m/d-fri.webp",
+   "desc": "150 г + соус",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-nugget",
+   "cat": "dops",
+   "grp": "Закуски",
+   "name": "Наггетсы",
+   "price": 1250,
+   "img": "img/m/d-nugget.webp",
+   "desc": "8 шт + соус",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
+  },
+  {
+   "id": "d-wings",
+   "cat": "dops",
+   "grp": "Закуски",
+   "name": "Крылышки",
+   "price": 1750,
+   "img": "img/m/wings.webp",
+   "desc": "Небольшая порция к заказу",
+   "opts": [
+    {
+     "n": "5 шт",
+     "p": 1750
+    },
+    {
+     "n": "10 шт",
+     "p": 2950
+    }
+   ],
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": []
+  },
+  {
+   "id": "d-cola",
+   "cat": "dops",
+   "grp": "Напитки",
+   "name": "Coca-Cola",
+   "price": 800,
+   "img": "",
+   "icon": "🥤",
+   "desc": "1 л",
+   "on": true,
+   "old": 0,
+   "chips": [],
+   "groups": [],
+   "opts": []
   }
  ],
- "catsV": 1
+ "catsV": 3,
+ "menuV": 3,
+ "about": {
+  "on": true,
+  "title": "О нас",
+  "text": "Sensei Sushi — суши, пицца и крылышки с доставкой по Петропавловску. Готовим каждый заказ и привозим горячим.",
+  "address": "",
+  "points": []
+ }
 }
