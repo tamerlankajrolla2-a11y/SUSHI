@@ -45,11 +45,13 @@ window.Store = (function () {
   var cache = null;
   var DEFAULT_CATS = [
     { id: 'sets', name: 'Сеты', icon: '🍱', view: 'cards', sort: 'price', on: true },
+    { id: 'new', name: 'Новинки', icon: '✨', view: 'list', sort: 'manual', on: true },
+    { id: 'portion', name: 'Порционные роллы', icon: '🍙', view: 'list', sort: 'manual', on: true },
     { id: 'rolls', name: 'Роллы', icon: '🍣', view: 'list', sort: 'manual', on: true },
     { id: 'pizza', name: 'Пиццы', icon: '🍕', view: 'list', sort: 'manual', on: true },
-    { id: 'burgers', name: 'Суши-бургеры', icon: '🍔', view: 'list', sort: 'manual', on: true },
-    { id: 'chicken', name: 'Крылышки и закуски', icon: '🍗', view: 'list', sort: 'manual', on: true },
-    { id: 'new', name: 'Новинки', icon: '✨', view: 'list', sort: 'manual', on: true }
+    { id: 'chicken', name: 'Чикен', icon: '🍗', view: 'list', sort: 'manual', on: true },
+    { id: 'dops', name: 'Допы', icon: '🥢', view: 'list', sort: 'manual', on: true },
+    { id: 'burgers', name: 'Суши-бургеры', icon: '🍔', view: 'list', sort: 'manual', on: true }
   ];
 
   function fromFile() {
@@ -78,6 +80,18 @@ window.Store = (function () {
       return x;
     });
     if (!d.cats || !d.cats.length) d.cats = JSON.parse(JSON.stringify(DEFAULT_CATS));
+    // разделы v2 (по просьбе заказчика): Сеты, Новинки, Порционные роллы, Роллы, Пиццы, Чикен, Допы — один раз
+    if ((+d.catsV || 1) < 2) {
+      var byId = {}; d.cats.forEach(function (c) { byId[c.id] = c; });
+      var ordered = DEFAULT_CATS.map(function (dc) {
+        var c = byId[dc.id]; delete byId[dc.id];
+        if (!c) return JSON.parse(JSON.stringify(dc));
+        if (dc.id === 'chicken' || dc.id === 'portion' || dc.id === 'dops') { c.name = dc.name; c.icon = dc.icon; }
+        return c;
+      });
+      d.cats = ordered.concat(d.cats.filter(function (c) { return byId[c.id]; }));
+      d.catsV = 2;
+    }
     var known = {};
     d.cats.forEach(function (c) { c.on = c.on !== false; c.view = c.view || 'list'; c.sort = c.sort || 'manual'; known[c.id] = 1; });
     d.items.forEach(function (x) {
