@@ -312,7 +312,7 @@ a{color:inherit;text-decoration:none}
     <ol class="how" aria-label="Как заказать">
       <li><b>1</b><span id="how1">Выберите сет</span></li>
       <li><b>2</b>Нажмите «В заказ»</li>
-      <li><b>3</b>Отправьте заказ в WhatsApp</li>
+      <li><b>3</b>Оформите заказ</li>
     </ol>
   </section>
 
@@ -380,7 +380,7 @@ function start(data){
   ST=data.settings||{}; PROMO=data.promo||{}; GIFT=(PROMO.gift&&PROMO.gift.on&&PROMO.gift.title)?PROMO.gift:null;
   ABOUT=data.about||null;
   MEGA=(PROMO.mega&&PROMO.mega.on&&PROMO.mega.add>0)?PROMO.mega:null;
-  ITEMS=(data.items||[]).filter(function(s){return s.on!==false;});
+  ITEMS=(data.items||[]).filter(function(s){return s.on!==false&&+s.price>0;});
   ITEMS.forEach(function(s){byId[s.id]=s;});
   CATS=(data.cats||[]).filter(function(c){return c.on!==false&&ITEMS.some(function(i){return i.cat===c.id;});});
   CATS.forEach(function(c){catById[c.id]=c;});
@@ -422,7 +422,7 @@ function paintChrome(){
   if(MEGA){
     var ex=CATS.filter(function(c){return c.noMega&&c.on;}).map(function(c){return '«'+c.name+'»';});
     $('#megaT').textContent=(MEGA.title||'Мега выгода')+' на всё меню';
-    $('#megaS').textContent='Экономия от '+fmt(MEGA.add)+' на каждом блюде'+(ex.length?' · '+ex.join(', ')+' — по обычной цене':'');
+    $('#megaS').textContent='Экономия от '+fmt(MEGA.add)+' на каждом блюде'+(ex.length?' · кроме '+(ex.length>1?'разделов ':'раздела ')+ex.join(', '):'');
     $('#mega').hidden=false;
   }
   if(GIFT){$('#promoT').textContent=GIFT.title;$('#promoS').textContent=GIFT.text||'';$('#promo').hidden=false;}

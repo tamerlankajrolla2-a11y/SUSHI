@@ -45,9 +45,10 @@ window.Store = (function () {
   var cache = null;
   var DEFAULT_CATS = [
     { id: 'sets', name: 'Сеты', icon: '🍱', view: 'cards', sort: 'price', on: true },
+    { id: 'daily', name: 'Акция дня', icon: '🔥', view: 'list', sort: 'manual', on: true, sub: 'Роллы по спеццене каждый день', noMega: true },
     { id: 'new', name: 'Новинки', icon: '✨', view: 'list', sort: 'manual', on: true },
     { id: 'rolls', name: 'Роллы', icon: '🍣', view: 'list', sort: 'manual', on: true, sub: 'Порционные роллы, по 8 шт' },
-    { id: 'pizza', name: 'Пиццы', icon: '🍕', view: 'list', sort: 'manual', on: true },
+    { id: 'pizza', name: 'Пиццы', icon: '🍕', view: 'list', sort: 'manual', on: true, sub: 'Все пиццы 30 см' },
     { id: 'chicken', name: 'Чикен', icon: '🍗', view: 'list', sort: 'manual', on: true, sub: 'Комбо и крылышки' },
     { id: 'dops', name: 'Допы', icon: '🥢', view: 'list', sort: 'manual', on: true, sub: 'Соусы, закуски и напитки', noMega: true, upsell: true },
     { id: 'burgers', name: 'Суши-бургеры', icon: '🍔', view: 'list', sort: 'manual', on: true }
@@ -55,6 +56,28 @@ window.Store = (function () {
   // меню от заказчика (ноябрь 2026): порционные роллы, чикен, допы — добавляются в меню один раз
   var I = 'img/m/';
   function R8(id, name, price, img, grp) { return { id: id, cat: 'rolls', name: name, price: price, img: I + img + '.webp', desc: '8 шт', grp: grp }; }
+  // v5: акция дня, пиццы, новинки (по сообщениям заказчика 13.11)
+  function D(id, name, price, img) { var x = { id: id, cat: 'daily', name: name, price: price, img: img ? I + img + '.webp' : '', desc: '' }; if (!img) x.icon = '🍣'; return x; }
+  function P(id, name, price) { return { id: id, cat: 'pizza', name: name, price: price, img: I + id + '.webp', desc: '30 см' }; }
+  function N(id, name, price, desc, on) { return { id: id, cat: 'new', name: name, price: price, img: I + id + '.webp', desc: desc, on: on !== false }; }
+  var NEW5 = [
+    D('dl-cezar-t', 'Цезарь темпура', 990, 'cezar-t'), D('dl-cezar-z', 'Цезарь запечённый', 1200, 'cezar-z'),
+    D('dl-saki-t', 'Саки темпура', 1100, 'saki-t'), D('dl-america-t', 'Америка темпура', 1100),
+    D('dl-crab-t', 'Краб темпура', 990), D('dl-filo-g', 'Философия гриль', 1290),
+    D('dl-fila', 'Филадельфия', 1290, 'fila'), D('dl-kalif', 'Калифорния', 1100, 'kalif'),
+    D('dl-kalif-z', 'Калифорния запечённая', 1190, 'z-kalif'), D('dl-kappa', 'Каппа маки', 790, 'kappa'),
+    D('dl-saki', 'Саки маки', 890, 'saki-m'),
+    P('pz-pepperoni', 'Пепперони', 1590), P('pz-cheese', 'Сырная', 1590), P('pz-margarita', 'Маргарита', 1390),
+    P('pz-caesar', 'Цезарь', 1390), P('pz-chicken', 'Куриная', 1390), P('pz-4seasons', '4 сезона', 1590),
+    P('pz-mushroom', 'Курица с грибами', 1390),
+    N('sb-chicken', 'Суши-бургер с курицей', 2800, 'Горячий, в хрустящей панировке'),
+    N('sb-crab', 'Суши-бургер со снежным крабом', 2590, 'Горячий, в хрустящей панировке'),
+    N('sb-salmon', 'Суши-бургер с сёмгой', 3000, 'Горячий, в хрустящей панировке'),
+    N('sa-crab', 'Саше с миксом краба', 2290, 'Суши-сэндвич в хрустящей панировке'),
+    N('sa-salmon', 'Саше с сёмгой', 2990, 'Суши-сэндвич в хрустящей панировке'),
+    N('sa-chicken', 'Саше с курицей терияки', 2290, 'Суши-сэндвич в хрустящей панировке'),
+    N('sushi-pizza', 'Суши-пицца', 0, 'Хит продаж', false)
+  ];
   var NEW_ITEMS = [
     R8('r-lava', 'Лава ролл', 2490, 'lava', 'Запечённые'), R8('r-vulkan', 'Вулкан хот', 2390, 'vulkan', 'Запечённые'),
     R8('r-gejsha', 'Поцелуй гейши', 2690, 'gejsha', 'Запечённые'), R8('r-z-fila', 'Запечённая филадельфия', 2690, 'z-fila', 'Запечённые'),
@@ -124,6 +147,20 @@ window.Store = (function () {
     if ((+d.menuV || 1) < 4) {
       d.items.forEach(function (x) { if (x.id === 'd-cola' && !x.img) { x.img = I + 'd-cola.webp'; delete x.icon; } });
       d.menuV = 4;
+    }
+    // v5: раздел «Акция дня», пиццы 30 см, новые позиции
+    if ((+d.catsV || 1) < 5) {
+      if (!d.cats.some(function (c) { return c.id === 'daily'; })) {
+        var at = d.cats.findIndex(function (c) { return c.id === 'sets'; });
+        d.cats.splice(at + 1, 0, JSON.parse(JSON.stringify(DEFAULT_CATS.filter(function (c) { return c.id === 'daily'; })[0])));
+      }
+      d.cats.forEach(function (c) { if (c.id === 'pizza' && !c.sub) c.sub = 'Все пиццы 30 см'; });
+      d.catsV = 5;
+    }
+    if ((+d.menuV || 1) < 5) {
+      var have5 = {}; d.items.forEach(function (x) { have5[x.id] = 1; });
+      NEW5.forEach(function (x) { if (!have5[x.id]) d.items.push(JSON.parse(JSON.stringify(x))); });
+      d.menuV = 5;
     }
     d.items = d.items.map(function (x) {
       x.cat = x.cat || 'sets';
