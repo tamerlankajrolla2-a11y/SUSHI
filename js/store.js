@@ -57,26 +57,26 @@ window.Store = (function () {
   var I = 'img/m/';
   function R8(id, name, price, img, grp) { return { id: id, cat: 'rolls', name: name, price: price, img: I + img + '.webp', desc: '8 шт', grp: grp }; }
   // v5: акция дня, пиццы, новинки (по сообщениям заказчика 13.11)
-  function D(id, name, price, img) { var x = { id: id, cat: 'daily', name: name, price: price, img: img ? I + img + '.webp' : '', desc: '' }; if (!img) x.icon = '🍣'; return x; }
+  function D(id, name, price, img) { var x = { id: id, cat: 'daily', name: name, price: price, img: img ? I + img + '.webp' : '', desc: '10 шт' }; if (!img) x.icon = '🍣'; return x; }
   function P(id, name, price) { return { id: id, cat: 'pizza', name: name, price: price, img: I + id + '.webp', desc: '30 см' }; }
   function N(id, name, price, desc, on) { return { id: id, cat: 'new', name: name, price: price, img: I + id + '.webp', desc: desc, on: on !== false }; }
   var NEW5 = [
     D('dl-cezar-t', 'Цезарь темпура', 990, 'cezar-t'), D('dl-cezar-z', 'Цезарь запечённый', 1200, 'cezar-z'),
     D('dl-saki-t', 'Саки темпура', 1100, 'saki-t'), D('dl-america-t', 'Америка темпура', 1100),
-    D('dl-crab-t', 'Краб темпура', 990), D('dl-filo-g', 'Философия гриль', 1290),
+    D('dl-crab-t', 'Краб темпура', 990), D('dl-filo-g', 'Филадельфия гриль', 1290),
     D('dl-fila', 'Филадельфия', 1290, 'fila'), D('dl-kalif', 'Калифорния', 1100, 'kalif'),
     D('dl-kalif-z', 'Калифорния запечённая', 1190, 'z-kalif'), D('dl-kappa', 'Каппа маки', 790, 'kappa'),
     D('dl-saki', 'Саки маки', 890, 'saki-m'),
     P('pz-pepperoni', 'Пепперони', 1590), P('pz-cheese', 'Сырная', 1590), P('pz-margarita', 'Маргарита', 1390),
     P('pz-caesar', 'Цезарь', 1390), P('pz-chicken', 'Куриная', 1390), P('pz-4seasons', '4 сезона', 1590),
-    P('pz-mushroom', 'Курица с грибами', 1390),
+    P('pz-mushroom', 'Курица с грибами', 1090),
     N('sb-chicken', 'Суши-бургер с курицей', 2800, 'Горячий, в хрустящей панировке'),
     N('sb-crab', 'Суши-бургер со снежным крабом', 2590, 'Горячий, в хрустящей панировке'),
     N('sb-salmon', 'Суши-бургер с сёмгой', 3000, 'Горячий, в хрустящей панировке'),
     N('sa-crab', 'Саше с миксом краба', 2290, 'Суши-сэндвич в хрустящей панировке'),
     N('sa-salmon', 'Саше с сёмгой', 2990, 'Суши-сэндвич в хрустящей панировке'),
     N('sa-chicken', 'Саше с курицей терияки', 2290, 'Суши-сэндвич в хрустящей панировке'),
-    N('sushi-pizza', 'Суши-пицца', 0, 'Хит продаж', false)
+    N('sushi-pizza', 'Суши-пицца', 4400, 'Хит продаж')
   ];
   var NEW_ITEMS = [
     R8('r-lava', 'Лава ролл', 2490, 'lava', 'Запечённые'), R8('r-vulkan', 'Вулкан хот', 2390, 'vulkan', 'Запечённые'),
@@ -161,6 +161,16 @@ window.Store = (function () {
       var have5 = {}; d.items.forEach(function (x) { have5[x.id] = 1; });
       NEW5.forEach(function (x) { if (!have5[x.id]) d.items.push(JSON.parse(JSON.stringify(x))); });
       d.menuV = 5;
+    }
+    // v6: ответы заказчика — суши-пицца 4 400, акция дня по 10 шт, «Филадельфия гриль», грибная 1 090
+    if ((+d.menuV || 1) < 6) {
+      d.items.forEach(function (x) {
+        if (x.id === 'sushi-pizza' && !(+x.price)) { x.price = 4400; x.on = true; }
+        if (x.cat === 'daily' && /^dl-/.test(x.id) && !x.desc) x.desc = '10 шт';
+        if (x.id === 'dl-filo-g' && x.name === 'Философия гриль') x.name = 'Филадельфия гриль';
+        if (x.id === 'pz-mushroom' && +x.price === 1390) x.price = 1090;
+      });
+      d.menuV = 6;
     }
     d.items = d.items.map(function (x) {
       x.cat = x.cat || 'sets';
